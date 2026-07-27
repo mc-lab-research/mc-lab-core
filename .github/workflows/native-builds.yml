@@ -46,16 +46,33 @@ jobs:
             runner: macos-15
             preset: macos-appleclang-release
             compiler: clang++
+          - name: Windows 2022 / MSVC / Debug
+            runner: windows-2022
+            preset: windows-msvc-debug
+            compiler: cl
+          - name: Windows 2022 / MSVC / Release
+            runner: windows-2022
+            preset: windows-msvc-release
+            compiler: cl
 
     steps:
       - name: Check out the repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
+      - name: Set up MSVC developer environment
+        if: runner.os == 'Windows'
+        uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1.13.0
+        with:
+          arch: x64
+
       - name: Report build tools
         run: |
           cmake --version
           ninja --version
-          "${{ matrix.compiler }}" --version
+
+      - name: Report compiler version
+        if: runner.os != 'Windows'
+        run: '"${{ matrix.compiler }}" --version'
 
       - name: Configure, build, and test
         run: cmake --workflow --preset "${{ matrix.preset }}" --fresh
