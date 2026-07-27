@@ -1,0 +1,122 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "include": [
+    "../platforms.json"
+  ],
+  "buildPresets": [
+    {
+      "name": "tidy-target",
+      "hidden": true,
+      "targets": [
+        "static-analysis"
+      ]
+    },
+    {
+      "name": "windows-clangcl-tidy",
+      "inherits": [
+        "tidy-target",
+        "build-host-windows"
+      ],
+      "displayName": "Run Windows clang-cl clang-tidy",
+      "description": "Run strict clang-tidy analysis in the Windows clang-cl Debug platform build.",
+      "configurePreset": "windows-clangcl-debug"
+    },
+    {
+      "name": "windows-clang64-tidy",
+      "inherits": [
+        "tidy-target",
+        "build-host-windows"
+      ],
+      "displayName": "Run Windows MSYS2 CLANG64 clang-tidy",
+      "description": "Run strict clang-tidy analysis in the Windows MSYS2 CLANG64 Debug platform build.",
+      "configurePreset": "windows-clang64-debug"
+    },
+    {
+      "name": "linux-clang-tidy",
+      "inherits": [
+        "tidy-target",
+        "build-host-linux"
+      ],
+      "displayName": "Run Linux Clang clang-tidy",
+      "description": "Run strict clang-tidy analysis in the Linux Clang Debug platform build.",
+      "configurePreset": "linux-clang-debug"
+    },
+    {
+      "name": "macos-appleclang-tidy",
+      "inherits": [
+        "tidy-target",
+        "build-host-macos"
+      ],
+      "displayName": "Run macOS AppleClang clang-tidy",
+      "description": "Run strict clang-tidy analysis in the macOS AppleClang Debug platform build.",
+      "configurePreset": "macos-appleclang-debug"
+    }
+  ],
+  "workflowPresets": [
+    {
+      "name": "windows-clangcl-tidy",
+      "displayName": "Windows clang-cl clang-tidy Workflow",
+      "description": "Configure the Windows clang-cl platform build and run strict clang-tidy analysis.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows-clangcl-debug"
+        },
+        {
+          "type": "build",
+          "name": "windows-clangcl-tidy"
+        }
+      ]
+    },
+    {
+      "name": "windows-clang64-tidy",
+      "displayName": "Windows MSYS2 CLANG64 clang-tidy Workflow",
+      "description": "Configure the Windows MSYS2 CLANG64 platform build and run strict clang-tidy analysis.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows-clang64-debug"
+        },
+        {
+          "type": "build",
+          "name": "windows-clang64-tidy"
+        }
+      ]
+    },
+    {
+      "name": "linux-clang-tidy",
+      "displayName": "Linux Clang clang-tidy Workflow",
+      "description": "Configure the Linux Clang platform build and run strict clang-tidy analysis.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "linux-clang-debug"
+        },
+        {
+          "type": "build",
+          "name": "linux-clang-tidy"
+        }
+      ]
+    },
+    {
+      "name": "macos-appleclang-tidy",
+      "displayName": "macOS AppleClang clang-tidy Workflow",
+      "description": "Configure the macOS AppleClang platform build and run strict clang-tidy analysis.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "macos-appleclang-debug"
+        },
+        {
+          "type": "build",
+          "name": "macos-appleclang-tidy"
+        }
+      ]
+    }
+  ]
+}

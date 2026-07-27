@@ -1,0 +1,322 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "include": [
+    "../platforms.json"
+  ],
+  "configurePresets": [
+    {
+      "name": "asan",
+      "hidden": true,
+      "cacheVariables": {
+        "MC_LAB_CORE_SANITIZER": "ADDRESS"
+      }
+    },
+    {
+      "name": "windows-msvc-asan",
+      "inherits": [
+        "asan",
+        "windows-msvc-debug"
+      ],
+      "displayName": "Windows / MSVC / AddressSanitizer",
+      "description": "Configure a Windows MSVC RelWithDebInfo platform build instrumented with AddressSanitizer.",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo"
+      }
+    },
+    {
+      "name": "windows-visualstudio-asan",
+      "inherits": [
+        "asan",
+        "windows-visualstudio"
+      ],
+      "displayName": "Windows / Visual Studio 2026 / AddressSanitizer",
+      "description": "Configure a native Visual Studio RelWithDebInfo platform build instrumented with AddressSanitizer.",
+      "cacheVariables": {
+        "CMAKE_CONFIGURATION_TYPES": "RelWithDebInfo"
+      }
+    },
+    {
+      "name": "windows-clangcl-asan",
+      "inherits": [
+        "asan",
+        "windows-clangcl-debug"
+      ],
+      "displayName": "Windows / clang-cl / AddressSanitizer",
+      "description": "Configure a Windows clang-cl RelWithDebInfo platform build instrumented with AddressSanitizer.",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo"
+      }
+    },
+    {
+      "name": "windows-clang64-asan",
+      "inherits": [
+        "asan",
+        "windows-clang64-debug"
+      ],
+      "displayName": "Windows / MSYS2 CLANG64 / AddressSanitizer",
+      "description": "Configure an MSYS2 CLANG64 RelWithDebInfo platform build instrumented with AddressSanitizer.",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo"
+      }
+    },
+    {
+      "name": "linux-gcc-asan",
+      "inherits": [
+        "asan",
+        "linux-gcc-debug"
+      ],
+      "displayName": "Linux / GCC / AddressSanitizer",
+      "description": "Configure a Linux GCC RelWithDebInfo platform build instrumented with AddressSanitizer.",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo"
+      }
+    },
+    {
+      "name": "linux-clang-asan",
+      "inherits": [
+        "asan",
+        "linux-clang-debug"
+      ],
+      "displayName": "Linux / Clang / AddressSanitizer",
+      "description": "Configure a Linux Clang RelWithDebInfo platform build instrumented with AddressSanitizer.",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo"
+      }
+    },
+    {
+      "name": "macos-appleclang-asan",
+      "inherits": [
+        "asan",
+        "macos-appleclang-debug"
+      ],
+      "displayName": "macOS / AppleClang / AddressSanitizer",
+      "description": "Configure a macOS AppleClang RelWithDebInfo platform build instrumented with AddressSanitizer.",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "windows-msvc-asan",
+      "inherits": "build-host-windows",
+      "displayName": "Build Windows MSVC AddressSanitizer",
+      "configurePreset": "windows-msvc-asan"
+    },
+    {
+      "name": "windows-visualstudio-asan",
+      "inherits": "build-host-windows",
+      "displayName": "Build Windows Visual Studio AddressSanitizer",
+      "configurePreset": "windows-visualstudio-asan",
+      "configuration": "RelWithDebInfo"
+    },
+    {
+      "name": "windows-clangcl-asan",
+      "inherits": "build-host-windows",
+      "displayName": "Build Windows clang-cl AddressSanitizer",
+      "configurePreset": "windows-clangcl-asan"
+    },
+    {
+      "name": "windows-clang64-asan",
+      "inherits": "build-host-windows",
+      "displayName": "Build Windows MSYS2 CLANG64 AddressSanitizer",
+      "configurePreset": "windows-clang64-asan"
+    },
+    {
+      "name": "linux-gcc-asan",
+      "inherits": "build-host-linux",
+      "displayName": "Build Linux GCC AddressSanitizer",
+      "configurePreset": "linux-gcc-asan"
+    },
+    {
+      "name": "linux-clang-asan",
+      "inherits": "build-host-linux",
+      "displayName": "Build Linux Clang AddressSanitizer",
+      "configurePreset": "linux-clang-asan"
+    },
+    {
+      "name": "macos-appleclang-asan",
+      "inherits": "build-host-macos",
+      "displayName": "Build macOS AppleClang AddressSanitizer",
+      "configurePreset": "macos-appleclang-asan"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "windows-msvc-asan",
+      "inherits": "test-host-windows",
+      "displayName": "Test Windows MSVC AddressSanitizer",
+      "configurePreset": "windows-msvc-asan"
+    },
+    {
+      "name": "windows-visualstudio-asan",
+      "inherits": "test-host-windows",
+      "displayName": "Test Windows Visual Studio AddressSanitizer",
+      "configurePreset": "windows-visualstudio-asan",
+      "configuration": "RelWithDebInfo"
+    },
+    {
+      "name": "windows-clangcl-asan",
+      "inherits": "test-host-windows",
+      "displayName": "Test Windows clang-cl AddressSanitizer",
+      "configurePreset": "windows-clangcl-asan"
+    },
+    {
+      "name": "windows-clang64-asan",
+      "inherits": "test-host-windows",
+      "displayName": "Test Windows MSYS2 CLANG64 AddressSanitizer",
+      "configurePreset": "windows-clang64-asan"
+    },
+    {
+      "name": "linux-gcc-asan",
+      "inherits": "test-host-linux",
+      "displayName": "Test Linux GCC AddressSanitizer",
+      "configurePreset": "linux-gcc-asan"
+    },
+    {
+      "name": "linux-clang-asan",
+      "inherits": "test-host-linux",
+      "displayName": "Test Linux Clang AddressSanitizer",
+      "configurePreset": "linux-clang-asan"
+    },
+    {
+      "name": "macos-appleclang-asan",
+      "inherits": "test-host-macos",
+      "displayName": "Test macOS AppleClang AddressSanitizer",
+      "configurePreset": "macos-appleclang-asan"
+    }
+  ],
+  "workflowPresets": [
+    {
+      "name": "windows-msvc-asan",
+      "displayName": "Windows MSVC AddressSanitizer Workflow",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows-msvc-asan"
+        },
+        {
+          "type": "build",
+          "name": "windows-msvc-asan"
+        },
+        {
+          "type": "test",
+          "name": "windows-msvc-asan"
+        }
+      ]
+    },
+    {
+      "name": "windows-visualstudio-asan",
+      "displayName": "Windows Visual Studio AddressSanitizer Workflow",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows-visualstudio-asan"
+        },
+        {
+          "type": "build",
+          "name": "windows-visualstudio-asan"
+        },
+        {
+          "type": "test",
+          "name": "windows-visualstudio-asan"
+        }
+      ]
+    },
+    {
+      "name": "windows-clangcl-asan",
+      "displayName": "Windows clang-cl AddressSanitizer Workflow",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows-clangcl-asan"
+        },
+        {
+          "type": "build",
+          "name": "windows-clangcl-asan"
+        },
+        {
+          "type": "test",
+          "name": "windows-clangcl-asan"
+        }
+      ]
+    },
+    {
+      "name": "windows-clang64-asan",
+      "displayName": "Windows MSYS2 CLANG64 AddressSanitizer Workflow",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows-clang64-asan"
+        },
+        {
+          "type": "build",
+          "name": "windows-clang64-asan"
+        },
+        {
+          "type": "test",
+          "name": "windows-clang64-asan"
+        }
+      ]
+    },
+    {
+      "name": "linux-gcc-asan",
+      "displayName": "Linux GCC AddressSanitizer Workflow",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "linux-gcc-asan"
+        },
+        {
+          "type": "build",
+          "name": "linux-gcc-asan"
+        },
+        {
+          "type": "test",
+          "name": "linux-gcc-asan"
+        }
+      ]
+    },
+    {
+      "name": "linux-clang-asan",
+      "displayName": "Linux Clang AddressSanitizer Workflow",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "linux-clang-asan"
+        },
+        {
+          "type": "build",
+          "name": "linux-clang-asan"
+        },
+        {
+          "type": "test",
+          "name": "linux-clang-asan"
+        }
+      ]
+    },
+    {
+      "name": "macos-appleclang-asan",
+      "displayName": "macOS AppleClang AddressSanitizer Workflow",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "macos-appleclang-asan"
+        },
+        {
+          "type": "build",
+          "name": "macos-appleclang-asan"
+        },
+        {
+          "type": "test",
+          "name": "macos-appleclang-asan"
+        }
+      ]
+    }
+  ]
+}

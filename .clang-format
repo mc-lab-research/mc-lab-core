@@ -1,0 +1,101 @@
+# Put non-assignment operators at the beginning of continuation lines.
+BreakBeforeBinaryOperators: NonAssignment
+BreakBeforeTernaryOperators: true
+# Keep string contents unchanged. Long strings may exceed the column limit when
+# splitting them would reduce clarity or alter their representation.
+BreakStringLiterals: false
+# Preserve visible return types when function names wrap.
+IndentWrappedFunctionNames: false
+# Function definitions stay compact when their complete signature fits.
+BreakFunctionDefinitionParameters: false
+# ==============================================================================
+# Constructors and inheritance
+# ==============================================================================
+# Long constructor initializer lists use one initializer per line.
+BreakConstructorInitializers: BeforeColon
+PackConstructorInitializers: Never
+# Long inheritance lists follow the same visual structure.
+BreakInheritanceList: BeforeColon
+# ==============================================================================
+# Templates, concepts, and requires expressions
+# ==============================================================================
+# Template declarations always appear separately from the declaration they
+# parameterize.
+BreakTemplateDeclarations: Yes
+# Requires clauses form an explicit part of a declaration's contract.
+RequiresClausePosition: OwnLine
+IndentRequiresClause: false
+# Align requires-expression bodies with the surrounding scope.
+RequiresExpressionIndentation: OuterScope
+# ==============================================================================
+# Pointers, references, and qualifiers
+# ==============================================================================
+# Pointer and reference symbols bind visually to the type.
+DerivePointerAlignment: false
+PointerAlignment: Left
+ReferenceAlignment: Pointer
+# clang-format must not reorder const, volatile, or other qualifiers because
+# doing so may require semantic interpretation.
+QualifierAlignment: Leave
+# ==============================================================================
+# Includes
+# ==============================================================================
+# Merge and rebuild include groups according to the categories below.
+IncludeBlocks: Regroup
+SortIncludes:
+  Enabled: true
+  IgnoreCase: false
+  IgnoreExtension: false
+# The source file's own header is automatically placed first by clang-format.
+#
+# Remaining includes are grouped as:
+#   1. MC-LAB-CORE public headers;
+#   2. local quoted headers;
+#   3. standard-library and external headers.
+IncludeCategories:
+  - Regex: '^<mc_lab_core/'
+    Priority: 1
+    SortPriority: 1
+    CaseSensitive: true
+  - Regex: '^"mc_lab_core/'
+    Priority: 1
+    SortPriority: 1
+    CaseSensitive: true
+  - Regex: '^"'
+    Priority: 2
+    SortPriority: 2
+    CaseSensitive: true
+  - Regex: '^<'
+    Priority: 3
+    SortPriority: 3
+    CaseSensitive: true
+# Public headers may be included using angle brackets while internal headers may
+# use quotes.
+MainIncludeChar: Any
+# ==============================================================================
+# Spacing
+# ==============================================================================
+SpaceBeforeParens: ControlStatements
+SpaceBeforeCpp11BracedList: false
+SpaceBeforeInheritanceColon: true
+SpaceBeforeRangeBasedForLoopColon: true
+SpaceBeforeSquareBrackets: false
+SpaceAfterCStyleCast: false
+SpaceAfterTemplateKeyword: true
+SpacesInAngles: Never
+SpacesInSquareBrackets: false
+# ==============================================================================
+# Comments
+# ==============================================================================
+# Reflow ordinary comments to respect the column limit.
+ReflowComments: Always
+# Comments carrying tool directives must remain intact.
+CommentPragmas: '^(IWYU pragma:|NOLINT|clang-format)'
+# Keep trailing comments visually separated from code.
+SpacesBeforeTrailingComments: 2
+# ==============================================================================
+# Definition grouping
+# ==============================================================================
+# Preserve intentional logical grouping chosen by the author. clang-format
+# normalizes spacing inside those groups but does not invent new architecture.
+SeparateDefinitionBlocks: Leave

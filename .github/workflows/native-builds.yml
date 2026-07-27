@@ -1,0 +1,61 @@
+name: Native builds
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: native-builds-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 20
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Ubuntu 24.04 / GCC / Debug
+            runner: ubuntu-24.04
+            preset: linux-gcc-debug
+            compiler: g++
+          - name: Ubuntu 24.04 / GCC / Release
+            runner: ubuntu-24.04
+            preset: linux-gcc-release
+            compiler: g++
+          - name: Ubuntu 24.04 / Clang / Debug
+            runner: ubuntu-24.04
+            preset: linux-clang-debug
+            compiler: clang++
+          - name: Ubuntu 24.04 / Clang / Release
+            runner: ubuntu-24.04
+            preset: linux-clang-release
+            compiler: clang++
+          - name: macOS 15 / AppleClang / Debug
+            runner: macos-15
+            preset: macos-appleclang-debug
+            compiler: clang++
+          - name: macOS 15 / AppleClang / Release
+            runner: macos-15
+            preset: macos-appleclang-release
+            compiler: clang++
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Report build tools
+        run: |
+          cmake --version
+          ninja --version
+          "${{ matrix.compiler }}" --version
+
+      - name: Configure, build, and test
+        run: cmake --workflow --preset "${{ matrix.preset }}" --fresh

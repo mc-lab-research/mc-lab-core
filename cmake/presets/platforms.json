@@ -1,0 +1,481 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "include": [
+    "compilers.json",
+    "generators.json",
+    "hosts.json",
+    "profiles.json"
+  ],
+  "configurePresets": [
+    {
+      "name": "windows-msvc-debug",
+      "inherits": [
+        "base",
+        "host-windows",
+        "generator-ninja",
+        "compiler-msvc",
+        "config-debug"
+      ],
+      "displayName": "Windows / MSVC / Debug",
+      "description": "Configure a Windows Debug build with MSVC from a Visual Studio developer environment.",
+      "cacheVariables": {
+        "MC_LAB_CORE_EXPECTED_TOOLCHAIN": "WINDOWS_MSVC"
+      }
+    },
+    {
+      "name": "windows-msvc-release",
+      "inherits": [
+        "base",
+        "host-windows",
+        "generator-ninja",
+        "compiler-msvc",
+        "config-release"
+      ],
+      "displayName": "Windows / MSVC / Release",
+      "description": "Configure a Windows Release build with MSVC from a Visual Studio developer environment.",
+      "cacheVariables": {
+        "MC_LAB_CORE_EXPECTED_TOOLCHAIN": "WINDOWS_MSVC",
+        "MC_LAB_CORE_COMPILER_WARNINGS_AS_ERRORS": true
+      }
+    },
+    {
+      "name": "windows-visualstudio",
+      "inherits": [
+        "base",
+        "host-windows",
+        "generator-visualstudio-2026"
+      ],
+      "displayName": "Windows / Visual Studio 2026",
+      "description": "Configure one native x64 multi-configuration Visual Studio build tree shared by Debug, Release, and quality build presets.",
+      "cacheVariables": {
+        "CMAKE_CONFIGURATION_TYPES": "Debug;Release",
+        "MC_LAB_CORE_EXPECTED_TOOLCHAIN": "WINDOWS_VISUAL_STUDIO",
+        "MC_LAB_CORE_COMPILER_WARNINGS_AS_ERRORS": true,
+        "MC_LAB_CORE_WARNINGS_AS_ERRORS_CONFIGURATIONS": "Release"
+      }
+    },
+    {
+      "name": "windows-clangcl-debug",
+      "inherits": [
+        "base",
+        "host-windows",
+        "generator-ninja",
+        "compiler-clangcl",
+        "config-debug"
+      ],
+      "displayName": "Windows / clang-cl / Debug",
+      "description": "Configure a Microsoft-ABI Debug build with clang-cl from an activated Visual Studio developer environment.",
+      "cacheVariables": {
+        "MC_LAB_CORE_EXPECTED_TOOLCHAIN": "WINDOWS_CLANGCL"
+      }
+    },
+    {
+      "name": "windows-clangcl-release",
+      "inherits": [
+        "base",
+        "host-windows",
+        "generator-ninja",
+        "compiler-clangcl",
+        "config-release"
+      ],
+      "displayName": "Windows / clang-cl / Release",
+      "description": "Configure a Microsoft-ABI Release build with clang-cl from an activated Visual Studio developer environment.",
+      "cacheVariables": {
+        "MC_LAB_CORE_EXPECTED_TOOLCHAIN": "WINDOWS_CLANGCL",
+        "MC_LAB_CORE_COMPILER_WARNINGS_AS_ERRORS": true
+      }
+    },
+    {
+      "name": "windows-ucrt64-gcc-debug",
+      "inherits": [
+        "base",
+        "host-windows",
+        "generator-ninja",
+        "compiler-gcc",
+        "config-debug"
+      ],
+      "displayName": "Windows / MSYS2 UCRT64 GCC / Debug",
+      "description": "Configure a MinGW-w64 UCRT Debug build with GCC from an activated MSYS2 UCRT64 environment.",
+      "cacheVariables": {
+        "MC_LAB_CORE_EXPECTED_TOOLCHAIN": "WINDOWS_UCRT64_GCC"
+      }
+    },
+    {
+      "name": "windows-ucrt64-gcc-release",
+      "inherits": [
+        "base",
+        "host-windows",
+        "generator-ninja",
+        "compiler-gcc",
+        "config-release"
+      ],
+      "displayName": "Windows / MSYS2 UCRT64 GCC / Release",
+      "description": "Configure a MinGW-w64 UCRT Release build with GCC from an activated MSYS2 UCRT64 environment.",
+      "cacheVariables": {
+        "MC_LAB_CORE_EXPECTED_TOOLCHAIN": "WINDOWS_UCRT64_GCC",
+        "MC_LAB_CORE_COMPILER_WARNINGS_AS_ERRORS": true
+      }
+    },
+    {
+      "name": "windows-clang64-debug",
+      "inherits": [
+        "base",
+        "host-windows",
+        "generator-ninja",
+        "compiler-clang",
+        "config-debug"
+      ],
+      "displayName": "Windows / MSYS2 CLANG64 / Debug",
+      "description": "Configure a MinGW-w64 UCRT Debug build with Clang, LLD, and libc++ from an activated MSYS2 CLANG64 environment.",
+      "cacheVariables": {
+        "MC_LAB_CORE_EXPECTED_TOOLCHAIN": "WINDOWS_CLANG64"
+      }
+    },
+    {
+      "name": "windows-clang64-release",
+      "inherits": [
+        "base",
+        "host-windows",
+        "generator-ninja",
+        "compiler-clang",
+        "config-release"
+      ],
+      "displayName": "Windows / MSYS2 CLANG64 / Release",
+      "description": "Configure a MinGW-w64 UCRT Release build with Clang, LLD, and libc++ from an activated MSYS2 CLANG64 environment.",
+      "cacheVariables": {
+        "MC_LAB_CORE_EXPECTED_TOOLCHAIN": "WINDOWS_CLANG64",
+        "MC_LAB_CORE_COMPILER_WARNINGS_AS_ERRORS": true
+      }
+    },
+    {
+      "name": "linux-gcc-debug",
+      "inherits": [
+        "base",
+        "host-linux",
+        "generator-ninja",
+        "compiler-gcc",
+        "config-debug"
+      ],
+      "displayName": "Linux / GCC / Debug",
+      "description": "Configure a native Linux Debug build with GCC.",
+      "cacheVariables": {
+        "MC_LAB_CORE_EXPECTED_TOOLCHAIN": "LINUX_GCC"
+      }
+    },
+    {
+      "name": "linux-gcc-release",
+      "inherits": [
+        "base",
+        "host-linux",
+        "generator-ninja",
+        "compiler-gcc",
+        "config-release"
+      ],
+      "displayName": "Linux / GCC / Release",
+      "description": "Configure a native Linux Release build with GCC.",
+      "cacheVariables": {
+        "MC_LAB_CORE_EXPECTED_TOOLCHAIN": "LINUX_GCC",
+        "MC_LAB_CORE_COMPILER_WARNINGS_AS_ERRORS": true
+      }
+    },
+    {
+      "name": "linux-clang-debug",
+      "inherits": [
+        "base",
+        "host-linux",
+        "generator-ninja",
+        "compiler-clang",
+        "config-debug"
+      ],
+      "displayName": "Linux / Clang / Debug",
+      "description": "Configure a native Linux Debug build with Clang.",
+      "cacheVariables": {
+        "MC_LAB_CORE_EXPECTED_TOOLCHAIN": "LINUX_CLANG"
+      }
+    },
+    {
+      "name": "linux-clang-release",
+      "inherits": [
+        "base",
+        "host-linux",
+        "generator-ninja",
+        "compiler-clang",
+        "config-release"
+      ],
+      "displayName": "Linux / Clang / Release",
+      "description": "Configure a native Linux Release build with Clang.",
+      "cacheVariables": {
+        "MC_LAB_CORE_EXPECTED_TOOLCHAIN": "LINUX_CLANG",
+        "MC_LAB_CORE_COMPILER_WARNINGS_AS_ERRORS": true
+      }
+    },
+    {
+      "name": "macos-appleclang-debug",
+      "inherits": [
+        "base",
+        "host-macos",
+        "generator-ninja",
+        "compiler-clang",
+        "config-debug"
+      ],
+      "displayName": "macOS / AppleClang / Debug",
+      "description": "Configure a native macOS Debug build with AppleClang.",
+      "cacheVariables": {
+        "MC_LAB_CORE_EXPECTED_TOOLCHAIN": "MACOS_APPLECLANG"
+      }
+    },
+    {
+      "name": "macos-appleclang-release",
+      "inherits": [
+        "base",
+        "host-macos",
+        "generator-ninja",
+        "compiler-clang",
+        "config-release"
+      ],
+      "displayName": "macOS / AppleClang / Release",
+      "description": "Configure a native macOS Release build with AppleClang.",
+      "cacheVariables": {
+        "MC_LAB_CORE_EXPECTED_TOOLCHAIN": "MACOS_APPLECLANG",
+        "MC_LAB_CORE_COMPILER_WARNINGS_AS_ERRORS": true
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "windows-msvc-debug",
+      "inherits": "build-host-windows",
+      "configurePreset": "windows-msvc-debug",
+      "displayName": "Windows / MSVC / Debug",
+      "description": "Build a Windows Debug build with MSVC with a Visual Studio developer environment."
+    },
+    {
+      "name": "windows-msvc-release",
+      "inherits": "build-host-windows",
+      "configurePreset": "windows-msvc-release",
+      "displayName": "Windows / MSVC / Release",
+      "description": "Build a Windows Release build with MSVC with a Visual Studio developer environment."
+    },
+    {
+      "name": "windows-visualstudio-debug",
+      "inherits": "build-host-windows",
+      "configurePreset": "windows-visualstudio",
+      "configuration": "Debug",
+      "displayName": "Windows / Visual Studio 2026 / Debug",
+      "description": "Build a native x64 Visual Studio Debug solution."
+    },
+    {
+      "name": "windows-visualstudio-release",
+      "inherits": "build-host-windows",
+      "configurePreset": "windows-visualstudio",
+      "configuration": "Release",
+      "displayName": "Windows / Visual Studio 2026 / Release",
+      "description": "Build a native x64 Visual Studio Release solution with compiler warnings treated as errors."
+    },
+{
+      "name": "windows-clangcl-debug",
+      "inherits": "build-host-windows",
+      "configurePreset": "windows-clangcl-debug",
+      "displayName": "Windows / clang-cl / Debug",
+      "description": "Build a Microsoft-ABI Debug build with clang-cl from an activated Visual Studio developer environment."
+    },
+    {
+      "name": "windows-clangcl-release",
+      "inherits": "build-host-windows",
+      "configurePreset": "windows-clangcl-release",
+      "displayName": "Windows / clang-cl / Release",
+      "description": "Build a Microsoft-ABI Release build with clang-cl from an activated Visual Studio developer environment, with compiler warnings treated as errors."
+    },
+    {
+      "name": "windows-ucrt64-gcc-debug",
+      "inherits": "build-host-windows",
+      "configurePreset": "windows-ucrt64-gcc-debug",
+      "displayName": "Windows / MSYS2 UCRT64 GCC / Debug",
+      "description": "Build a MinGW-w64 UCRT Debug build with GCC from an activated MSYS2 UCRT64 environment."
+    },
+    {
+      "name": "windows-ucrt64-gcc-release",
+      "inherits": "build-host-windows",
+      "configurePreset": "windows-ucrt64-gcc-release",
+      "displayName": "Windows / MSYS2 UCRT64 GCC / Release",
+      "description": "Build a MinGW-w64 UCRT Release build with GCC from an activated MSYS2 UCRT64 environment, with compiler warnings treated as errors."
+    },
+    {
+      "name": "windows-clang64-debug",
+      "inherits": "build-host-windows",
+      "configurePreset": "windows-clang64-debug",
+      "displayName": "Windows / MSYS2 CLANG64 / Debug",
+      "description": "Build a MinGW-w64 UCRT Debug build with Clang, LLD, and libc++ from an activated MSYS2 CLANG64 environment."
+    },
+    {
+      "name": "windows-clang64-release",
+      "inherits": "build-host-windows",
+      "configurePreset": "windows-clang64-release",
+      "displayName": "Windows / MSYS2 CLANG64 / Release",
+      "description": "Build a MinGW-w64 UCRT Release build with Clang, LLD, and libc++ from an activated MSYS2 CLANG64 environment, with compiler warnings treated as errors."
+    },
+    {
+      "name": "linux-gcc-debug",
+      "inherits": "build-host-linux",
+      "configurePreset": "linux-gcc-debug",
+      "displayName": "Linux / GCC / Debug",
+      "description": "Build a native Linux Debug build with GCC."
+    },
+    {
+      "name": "linux-gcc-release",
+      "inherits": "build-host-linux",
+      "configurePreset": "linux-gcc-release",
+      "displayName": "Linux / GCC / Release",
+      "description": "Build a native Linux Release build with GCC, with compiler warnings treated as errors."
+    },
+    {
+      "name": "linux-clang-debug",
+      "inherits": "build-host-linux",
+      "configurePreset": "linux-clang-debug",
+      "displayName": "Linux / Clang / Debug",
+      "description": "Build a native Linux Debug build with Clang."
+    },
+    {
+      "name": "linux-clang-release",
+      "inherits": "build-host-linux",
+      "configurePreset": "linux-clang-release",
+      "displayName": "Linux / Clang / Release",
+      "description": "Build a native Linux Release build with Clang, with compiler warnings treated as errors."
+    },
+    {
+      "name": "macos-appleclang-debug",
+      "inherits": "build-host-macos",
+      "configurePreset": "macos-appleclang-debug",
+      "displayName": "macOS / AppleClang / Debug",
+      "description": "Build a native macOS Debug build with AppleClang."
+    },
+    {
+      "name": "macos-appleclang-release",
+      "inherits": "build-host-macos",
+      "configurePreset": "macos-appleclang-release",
+      "displayName": "macOS / AppleClang / Release",
+      "description": "Build a native macOS Release build with AppleClang, with compiler warnings treated as errors."
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "windows-msvc-debug",
+      "inherits": "test-host-windows",
+      "configurePreset": "windows-msvc-debug",
+      "displayName": "Windows / MSVC / Debug",
+      "description": "Run the test suite for the Windows MSVC Debug build."
+    },
+    {
+      "name": "windows-msvc-release",
+      "inherits": "test-host-windows",
+      "configurePreset": "windows-msvc-release",
+      "displayName": "Windows / MSVC / Release",
+      "description": "Run the test suite for the Windows MSVC Release build."
+    },
+    {
+      "name": "windows-visualstudio-debug",
+      "inherits": "test-host-windows",
+      "configurePreset": "windows-visualstudio",
+      "configuration": "Debug",
+      "displayName": "Windows / Visual Studio 2026 / Debug",
+      "description": "Run the test suite for the native x64 Visual Studio Debug build."
+    },
+    {
+      "name": "windows-visualstudio-release",
+      "inherits": "test-host-windows",
+      "configurePreset": "windows-visualstudio",
+      "configuration": "Release",
+      "displayName": "Windows / Visual Studio 2026 / Release",
+      "description": "Run the test suite for the native x64 Visual Studio Release build."
+    },
+    {
+      "name": "windows-clangcl-debug",
+      "inherits": "test-host-windows",
+      "configurePreset": "windows-clangcl-debug",
+      "displayName": "Windows / clang-cl / Debug",
+      "description": "Run the test suite for the Windows clang-cl Debug build."
+    },
+    {
+      "name": "windows-clangcl-release",
+      "inherits": "test-host-windows",
+      "configurePreset": "windows-clangcl-release",
+      "displayName": "Windows / clang-cl / Release",
+      "description": "Run the test suite for the Windows clang-cl Release build."
+    },
+    {
+      "name": "windows-ucrt64-gcc-debug",
+      "inherits": "test-host-windows",
+      "configurePreset": "windows-ucrt64-gcc-debug",
+      "displayName": "Windows / MSYS2 UCRT64 GCC / Debug",
+      "description": "Run the test suite for the Windows MSYS2 UCRT64 GCC Debug build."
+    },
+    {
+      "name": "windows-ucrt64-gcc-release",
+      "inherits": "test-host-windows",
+      "configurePreset": "windows-ucrt64-gcc-release",
+      "displayName": "Windows / MSYS2 UCRT64 GCC / Release",
+      "description": "Run the test suite for the Windows MSYS2 UCRT64 GCC Release build."
+    },
+    {
+      "name": "windows-clang64-debug",
+      "inherits": "test-host-windows",
+      "configurePreset": "windows-clang64-debug",
+      "displayName": "Windows / MSYS2 CLANG64 / Debug",
+      "description": "Run the test suite for the Windows MSYS2 CLANG64 Debug build."
+    },
+    {
+      "name": "windows-clang64-release",
+      "inherits": "test-host-windows",
+      "configurePreset": "windows-clang64-release",
+      "displayName": "Windows / MSYS2 CLANG64 / Release",
+      "description": "Run the test suite for the Windows MSYS2 CLANG64 Release build."
+    },
+    {
+      "name": "linux-gcc-debug",
+      "inherits": "test-host-linux",
+      "configurePreset": "linux-gcc-debug",
+      "displayName": "Linux / GCC / Debug",
+      "description": "Run the test suite for the native Linux GCC Debug build."
+    },
+    {
+      "name": "linux-gcc-release",
+      "inherits": "test-host-linux",
+      "configurePreset": "linux-gcc-release",
+      "displayName": "Linux / GCC / Release",
+      "description": "Run the test suite for the native Linux GCC Release build."
+    },
+    {
+      "name": "linux-clang-debug",
+      "inherits": "test-host-linux",
+      "configurePreset": "linux-clang-debug",
+      "displayName": "Linux / Clang / Debug",
+      "description": "Run the test suite for the native Linux Clang Debug build."
+    },
+    {
+      "name": "linux-clang-release",
+      "inherits": "test-host-linux",
+      "configurePreset": "linux-clang-release",
+      "displayName": "Linux / Clang / Release",
+      "description": "Run the test suite for the native Linux Clang Release build."
+    },
+    {
+      "name": "macos-appleclang-debug",
+      "inherits": "test-host-macos",
+      "configurePreset": "macos-appleclang-debug",
+      "displayName": "macOS / AppleClang / Debug",
+      "description": "Run the test suite for the native macOS AppleClang Debug build."
+    },
+    {
+      "name": "macos-appleclang-release",
+      "inherits": "test-host-macos",
+      "configurePreset": "macos-appleclang-release",
+      "displayName": "macOS / AppleClang / Release",
+      "description": "Run the test suite for the native macOS AppleClang Release build."
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "include": [
+    "cmake/presets/base.json",
+    "cmake/presets/compilers.json",
+    "cmake/presets/generators.json",
+    "cmake/presets/hosts.json",
+    "cmake/presets/platforms.json",
+    "cmake/presets/workflows.json",
+    "cmake/presets/quality/formatting.json",
+    "cmake/presets/quality/commit-gate.json",
+    "cmake/presets/quality/asan.json",
+    "cmake/presets/quality/coverage.json",
+    "cmake/presets/quality/tidy.json"
+  ]
+}

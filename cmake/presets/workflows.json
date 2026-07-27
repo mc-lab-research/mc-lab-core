@@ -1,0 +1,317 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "include": [
+    "platforms.json"
+  ],
+  "workflowPresets": [
+    {
+      "name": "windows-msvc-debug",
+      "displayName": "Windows MSVC Debug Build and Test",
+      "description": "Configure, build, and test the Windows MSVC Debug platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows-msvc-debug"
+        },
+        {
+          "type": "build",
+          "name": "windows-msvc-debug"
+        },
+        {
+          "type": "test",
+          "name": "windows-msvc-debug"
+        }
+      ]
+    },
+    {
+      "name": "windows-msvc-release",
+      "displayName": "Windows MSVC Release Build and Test",
+      "description": "Configure, build, and test the Windows MSVC Release platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows-msvc-release"
+        },
+        {
+          "type": "build",
+          "name": "windows-msvc-release"
+        },
+        {
+          "type": "test",
+          "name": "windows-msvc-release"
+        }
+      ]
+    },
+    {
+      "name": "windows-visualstudio-debug",
+      "displayName": "Windows Visual Studio Debug Build and Test",
+      "description": "Configure the shared Visual Studio tree, then build and test Debug.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows-visualstudio"
+        },
+        {
+          "type": "build",
+          "name": "windows-visualstudio-debug"
+        },
+        {
+          "type": "test",
+          "name": "windows-visualstudio-debug"
+        }
+      ]
+    },
+    {
+      "name": "windows-visualstudio-release",
+      "displayName": "Windows Visual Studio Release Build and Test",
+      "description": "Configure the shared Visual Studio tree, then build and test Release.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows-visualstudio"
+        },
+        {
+          "type": "build",
+          "name": "windows-visualstudio-release"
+        },
+        {
+          "type": "test",
+          "name": "windows-visualstudio-release"
+        }
+      ]
+    },
+    {
+      "name": "windows-clangcl-debug",
+      "displayName": "Windows clang-cl Debug Build and Test",
+      "description": "Configure, build, and test the Windows clang-cl Debug platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows-clangcl-debug"
+        },
+        {
+          "type": "build",
+          "name": "windows-clangcl-debug"
+        },
+        {
+          "type": "test",
+          "name": "windows-clangcl-debug"
+        }
+      ]
+    },
+    {
+      "name": "windows-clangcl-release",
+      "displayName": "Windows clang-cl Release Build and Test",
+      "description": "Configure, build, and test the Windows clang-cl Release platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows-clangcl-release"
+        },
+        {
+          "type": "build",
+          "name": "windows-clangcl-release"
+        },
+        {
+          "type": "test",
+          "name": "windows-clangcl-release"
+        }
+      ]
+    },
+    {
+      "name": "windows-ucrt64-gcc-debug",
+      "displayName": "Windows MSYS2 UCRT64 GCC Debug Build and Test",
+      "description": "Configure, build, and test the Windows MSYS2 UCRT64 GCC Debug platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows-ucrt64-gcc-debug"
+        },
+        {
+          "type": "build",
+          "name": "windows-ucrt64-gcc-debug"
+        },
+        {
+          "type": "test",
+          "name": "windows-ucrt64-gcc-debug"
+        }
+      ]
+    },
+    {
+      "name": "windows-ucrt64-gcc-release",
+      "displayName": "Windows MSYS2 UCRT64 GCC Release Build and Test",
+      "description": "Configure, build, and test the Windows MSYS2 UCRT64 GCC Release platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows-ucrt64-gcc-release"
+        },
+        {
+          "type": "build",
+          "name": "windows-ucrt64-gcc-release"
+        },
+        {
+          "type": "test",
+          "name": "windows-ucrt64-gcc-release"
+        }
+      ]
+    },
+    {
+      "name": "windows-clang64-debug",
+      "displayName": "Windows MSYS2 CLANG64 Debug Build and Test",
+      "description": "Configure, build, and test the Windows MSYS2 CLANG64 Debug platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows-clang64-debug"
+        },
+        {
+          "type": "build",
+          "name": "windows-clang64-debug"
+        },
+        {
+          "type": "test",
+          "name": "windows-clang64-debug"
+        }
+      ]
+    },
+    {
+      "name": "windows-clang64-release",
+      "displayName": "Windows MSYS2 CLANG64 Release Build and Test",
+      "description": "Configure, build, and test the Windows MSYS2 CLANG64 Release platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows-clang64-release"
+        },
+        {
+          "type": "build",
+          "name": "windows-clang64-release"
+        },
+        {
+          "type": "test",
+          "name": "windows-clang64-release"
+        }
+      ]
+    },
+    {
+      "name": "linux-gcc-debug",
+      "displayName": "Linux GCC Debug Build and Test",
+      "description": "Configure, build, and test the native Linux GCC Debug platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "linux-gcc-debug"
+        },
+        {
+          "type": "build",
+          "name": "linux-gcc-debug"
+        },
+        {
+          "type": "test",
+          "name": "linux-gcc-debug"
+        }
+      ]
+    },
+    {
+      "name": "linux-gcc-release",
+      "displayName": "Linux GCC Release Build and Test",
+      "description": "Configure, build, and test the native Linux GCC Release platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "linux-gcc-release"
+        },
+        {
+          "type": "build",
+          "name": "linux-gcc-release"
+        },
+        {
+          "type": "test",
+          "name": "linux-gcc-release"
+        }
+      ]
+    },
+    {
+      "name": "linux-clang-debug",
+      "displayName": "Linux Clang Debug Build and Test",
+      "description": "Configure, build, and test the native Linux Clang Debug platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "linux-clang-debug"
+        },
+        {
+          "type": "build",
+          "name": "linux-clang-debug"
+        },
+        {
+          "type": "test",
+          "name": "linux-clang-debug"
+        }
+      ]
+    },
+    {
+      "name": "linux-clang-release",
+      "displayName": "Linux Clang Release Build and Test",
+      "description": "Configure, build, and test the native Linux Clang Release platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "linux-clang-release"
+        },
+        {
+          "type": "build",
+          "name": "linux-clang-release"
+        },
+        {
+          "type": "test",
+          "name": "linux-clang-release"
+        }
+      ]
+    },
+    {
+      "name": "macos-appleclang-debug",
+      "displayName": "macOS AppleClang Debug Build and Test",
+      "description": "Configure, build, and test the native macOS AppleClang Debug platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "macos-appleclang-debug"
+        },
+        {
+          "type": "build",
+          "name": "macos-appleclang-debug"
+        },
+        {
+          "type": "test",
+          "name": "macos-appleclang-debug"
+        }
+      ]
+    },
+    {
+      "name": "macos-appleclang-release",
+      "displayName": "macOS AppleClang Release Build and Test",
+      "description": "Configure, build, and test the native macOS AppleClang Release platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "macos-appleclang-release"
+        },
+        {
+          "type": "build",
+          "name": "macos-appleclang-release"
+        },
+        {
+          "type": "test",
+          "name": "macos-appleclang-release"
+        }
+      ]
+    }
+  ]
+}

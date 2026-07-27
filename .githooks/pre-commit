@@ -1,0 +1,102 @@
+#!/usr/bin/env sh
+set -eu
+
+fail() {
+    printf '%s\n' "MC-LAB-CORE pre-commit: $*" >&2
+    exit 1
+}
+
+repository_root=$(git rev-parse --show-toplevel 2>/dev/null) ||
+    fail "repository root could not be determined."
+
+cd "$repository_root"
+
+command -v cmake >/dev/null 2>&1 ||
+    fail "CMake was not found in this shell PATH."
+
+is_supported_gate() {
+    case "$1" in
+        windows-msvc-commit-gate | \
+        windows-visualstudio-commit-gate | \
+        windows-clangcl-commit-gate | \
+        windows-ucrt64-gcc-commit-gate | \
+        windows-clang64-commit-gate | \
+        linux-gcc-commit-gate | \
+        linux-clang-commit-gate | \
+        macos-appleclang-commit-gate)
+            return 0
+            ;;
+        *)
+            return 1
+            ;;
+    esac
+}
+
+select_windows_gate() {
+    compiler_hint=${CXX:-${CC:-}}
+
+    if [ -n "${VSCMD_VER:-}" ]; then
+        case "$compiler_hint" in
+            *clang-cl*)
+                printf '%s\n' "windows-clangcl-commit-gate"
+                ;;
+            *)
+                printf '%s\n' "windows-msvc-commit-gate"
+                ;;
+        esac
+    else
+        # The Visual Studio generator discovers its installation without an
+        # activated vendor shell and is the safest generic Windows fallback.
+        printf '%s\n' "windows-visualstudio-commit-gate"
+    fi
+}
+
+gate_preset=${MC_LAB_CORE_COMMIT_GATE_PRESET:-}
+
+if [ -n "$gate_preset" ]; then
+    is_supported_gate "$gate_preset" ||
+        fail "unsupported MC_LAB_CORE_COMMIT_GATE_PRESET '$gate_preset'."
+else
+    case "${MSYSTEM:-}" in
+        UCRT64)
+            gate_preset=windows-ucrt64-gcc-commit-gate
+            ;;
+        CLANG64)
+            gate_preset=windows-clang64-commit-gate
+            ;;
+        *)
+            host_system=$(uname -s 2>/dev/null || printf '%s\n' "unknown")
+
+            case "$host_system" in
+                Darwin)
+                    gate_preset=macos-appleclang-commit-gate
+                    ;;
+                Linux)
+                    compiler_hint=${CXX:-${CC:-}}
+
+                    case "$compiler_hint" in
+                        *clang*)
+                            gate_preset=linux-clang-commit-gate
+                            ;;
+                        *)
+                            gate_preset=linux-gcc-commit-gate
+                            ;;
+                    esac
+                    ;;
+                CYGWIN* | MINGW* | MSYS*)
+                    gate_preset=$(select_windows_gate)
+                    ;;
+                *)
+                    if [ "${OS:-}" = "Windows_NT" ]; then
+                        gate_preset=$(select_windows_gate)
+                    else
+                        fail "unsupported host '$host_system'. Set MC_LAB_CORE_COMMIT_GATE_PRESET explicitly."
+                    fi
+                    ;;
+            esac
+            ;;
+    esac
+fi
+
+printf '%s\n' "MC-LAB-CORE pre-commit gate: $gate_preset"
+exec cmake --workflow --preset "$gate_preset"

@@ -1,0 +1,273 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "include": [
+    "../platforms.json",
+    "formatting.json"
+  ],
+  "buildPresets": [
+    {
+      "name": "windows-msvc-commit-gate",
+      "inherits": [
+        "format-check-target",
+        "build-host-windows"
+      ],
+      "displayName": "Check Windows MSVC Commit Formatting",
+      "configurePreset": "windows-msvc-release"
+    },
+    {
+      "name": "windows-visualstudio-commit-gate",
+      "inherits": [
+        "format-check-target",
+        "build-host-windows"
+      ],
+      "displayName": "Check Windows Visual Studio Commit Formatting",
+      "configurePreset": "windows-visualstudio",
+      "configuration": "Release"
+    },
+    {
+      "name": "windows-clangcl-commit-gate",
+      "inherits": [
+        "format-check-target",
+        "build-host-windows"
+      ],
+      "displayName": "Check Windows clang-cl Commit Formatting",
+      "configurePreset": "windows-clangcl-release"
+    },
+    {
+      "name": "windows-ucrt64-gcc-commit-gate",
+      "inherits": [
+        "format-check-target",
+        "build-host-windows"
+      ],
+      "displayName": "Check Windows MSYS2 UCRT64 GCC Commit Formatting",
+      "configurePreset": "windows-ucrt64-gcc-release"
+    },
+    {
+      "name": "windows-clang64-commit-gate",
+      "inherits": [
+        "format-check-target",
+        "build-host-windows"
+      ],
+      "displayName": "Check Windows MSYS2 CLANG64 Commit Formatting",
+      "configurePreset": "windows-clang64-release"
+    },
+    {
+      "name": "linux-gcc-commit-gate",
+      "inherits": [
+        "format-check-target",
+        "build-host-linux"
+      ],
+      "displayName": "Check Linux GCC Commit Formatting",
+      "configurePreset": "linux-gcc-release"
+    },
+    {
+      "name": "linux-clang-commit-gate",
+      "inherits": [
+        "format-check-target",
+        "build-host-linux"
+      ],
+      "displayName": "Check Linux Clang Commit Formatting",
+      "configurePreset": "linux-clang-release"
+    },
+    {
+      "name": "macos-appleclang-commit-gate",
+      "inherits": [
+        "format-check-target",
+        "build-host-macos"
+      ],
+      "displayName": "Check macOS AppleClang Commit Formatting",
+      "configurePreset": "macos-appleclang-release"
+    }
+  ],
+  "workflowPresets": [
+    {
+      "name": "windows-msvc-commit-gate",
+      "displayName": "Windows MSVC Commit Gate",
+      "description": "Block the commit on formatting violations, compiler warnings, build failures, or test failures using the Windows MSVC Release platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows-msvc-release"
+        },
+        {
+          "type": "build",
+          "name": "windows-msvc-commit-gate"
+        },
+        {
+          "type": "build",
+          "name": "windows-msvc-release"
+        },
+        {
+          "type": "test",
+          "name": "windows-msvc-release"
+        }
+      ]
+    },
+    {
+      "name": "windows-visualstudio-commit-gate",
+      "displayName": "Windows Visual Studio Commit Gate",
+      "description": "Block the commit on formatting violations, compiler warnings, build failures, or test failures using the Windows Visual Studio Release platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows-visualstudio"
+        },
+        {
+          "type": "build",
+          "name": "windows-visualstudio-commit-gate"
+        },
+        {
+          "type": "build",
+          "name": "windows-visualstudio-release"
+        },
+        {
+          "type": "test",
+          "name": "windows-visualstudio-release"
+        }
+      ]
+    },
+    {
+      "name": "windows-clangcl-commit-gate",
+      "displayName": "Windows clang-cl Commit Gate",
+      "description": "Block the commit on formatting violations, compiler warnings, build failures, or test failures using the Windows clang-cl Release platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows-clangcl-release"
+        },
+        {
+          "type": "build",
+          "name": "windows-clangcl-commit-gate"
+        },
+        {
+          "type": "build",
+          "name": "windows-clangcl-release"
+        },
+        {
+          "type": "test",
+          "name": "windows-clangcl-release"
+        }
+      ]
+    },
+    {
+      "name": "windows-ucrt64-gcc-commit-gate",
+      "displayName": "Windows MSYS2 UCRT64 GCC Commit Gate",
+      "description": "Block the commit on formatting violations, compiler warnings, build failures, or test failures using the Windows MSYS2 UCRT64 GCC Release platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows-ucrt64-gcc-release"
+        },
+        {
+          "type": "build",
+          "name": "windows-ucrt64-gcc-commit-gate"
+        },
+        {
+          "type": "build",
+          "name": "windows-ucrt64-gcc-release"
+        },
+        {
+          "type": "test",
+          "name": "windows-ucrt64-gcc-release"
+        }
+      ]
+    },
+    {
+      "name": "windows-clang64-commit-gate",
+      "displayName": "Windows MSYS2 CLANG64 Commit Gate",
+      "description": "Block the commit on formatting violations, compiler warnings, build failures, or test failures using the Windows MSYS2 CLANG64 Release platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows-clang64-release"
+        },
+        {
+          "type": "build",
+          "name": "windows-clang64-commit-gate"
+        },
+        {
+          "type": "build",
+          "name": "windows-clang64-release"
+        },
+        {
+          "type": "test",
+          "name": "windows-clang64-release"
+        }
+      ]
+    },
+    {
+      "name": "linux-gcc-commit-gate",
+      "displayName": "Linux GCC Commit Gate",
+      "description": "Block the commit on formatting violations, compiler warnings, build failures, or test failures using the Linux GCC Release platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "linux-gcc-release"
+        },
+        {
+          "type": "build",
+          "name": "linux-gcc-commit-gate"
+        },
+        {
+          "type": "build",
+          "name": "linux-gcc-release"
+        },
+        {
+          "type": "test",
+          "name": "linux-gcc-release"
+        }
+      ]
+    },
+    {
+      "name": "linux-clang-commit-gate",
+      "displayName": "Linux Clang Commit Gate",
+      "description": "Block the commit on formatting violations, compiler warnings, build failures, or test failures using the Linux Clang Release platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "linux-clang-release"
+        },
+        {
+          "type": "build",
+          "name": "linux-clang-commit-gate"
+        },
+        {
+          "type": "build",
+          "name": "linux-clang-release"
+        },
+        {
+          "type": "test",
+          "name": "linux-clang-release"
+        }
+      ]
+    },
+    {
+      "name": "macos-appleclang-commit-gate",
+      "displayName": "macOS AppleClang Commit Gate",
+      "description": "Block the commit on formatting violations, compiler warnings, build failures, or test failures using the macOS AppleClang Release platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "macos-appleclang-release"
+        },
+        {
+          "type": "build",
+          "name": "macos-appleclang-commit-gate"
+        },
+        {
+          "type": "build",
+          "name": "macos-appleclang-release"
+        },
+        {
+          "type": "test",
+          "name": "macos-appleclang-release"
+        }
+      ]
+    }
+  ]
+}

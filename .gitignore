@@ -1,0 +1,275 @@
+# ==============================================================================
+# Daedalux — Git Ignore Rules
+# ==============================================================================
+#
+# Keep generated artifacts, machine-specific configuration, temporary files,
+# local tooling state, and secrets outside the repository.
+#
+# Authoritative project sources, CMake modules, repository policies, tests, and
+# intentionally committed generated frontend sources must remain tracked.
+# ==============================================================================
+
+
+# ==============================================================================
+# CMake Build Trees
+# ==============================================================================
+
+# Daedalux requires out-of-source builds. Ignore the standard project build
+# locations as well as common IDE-generated build-directory conventions.
+/build/
+/out/
+/build-*/
+/cmake-build-*/
+
+
+# ==============================================================================
+# CMake and Generator Artifacts
+# ==============================================================================
+
+# These entries provide defensive coverage if CMake or another generator is
+# accidentally invoked outside an already ignored build directory.
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+CTestTestfile.cmake
+CPackConfig.cmake
+CPackSourceConfig.cmake
+install_manifest.txt
+compile_commands.json
+
+# Makefile generators
+Makefile
+
+# Ninja generators
+build.ninja
+rules.ninja
+.ninja_deps
+.ninja_log
+
+# CTest and CDash state
+Testing/
+
+
+# ==============================================================================
+# Machine-Specific CMake Configuration
+# ==============================================================================
+
+# CMakePresets.json defines the portable repository workflows and is tracked.
+# CMakeUserPresets.json contains developer- and machine-specific overrides.
+CMakeUserPresets.json
+
+
+# ==============================================================================
+# Compiled Objects, Libraries, and Executables
+# ==============================================================================
+
+# Unix-like object files and libraries
+*.a
+*.o
+*.so
+*.so.*
+*.dylib
+
+# Windows object files, libraries, and executables
+*.dll
+*.exe
+*.lib
+*.obj
+
+# C++20 module artifacts
+*.ifc
+*.pcm
+*.gcm
+
+
+# ==============================================================================
+# Compiler and Linker Artifacts
+# ==============================================================================
+
+# Apple debug-symbol bundles
+*.dSYM/
+
+# Microsoft compiler and linker state
+*.exp
+*.idb
+*.ilk
+*.ipdb
+*.iobj
+*.pdb
+*.pch
+
+# GCC and Clang dependency files
+*.d
+
+
+# ==============================================================================
+# Test, Benchmark, Coverage, and Profiling Outputs
+# ==============================================================================
+
+# Coverage instrumentation and reports
+*.gcda
+*.gcno
+*.gcov
+*.lcov
+*.profdata
+*.profraw
+
+/coverage/
+/coverage.xml
+/htmlcov/
+
+# Test, benchmark, and profiling reports
+/test-results/
+/benchmark-results/
+/profiling/
+/reports/
+
+# Common machine-readable test reports
+junit.xml
+test-results.xml
+
+
+# ==============================================================================
+# Sanitizer Outputs
+# ==============================================================================
+
+asan.log*
+lsan.log*
+msan.log*
+tsan.log*
+ubsan.log*
+
+
+# ==============================================================================
+# Static-Analysis and Formatting Tool State
+# ==============================================================================
+
+# Tool caches must never become repository inputs.
+.cache/
+.clangd/
+.clang-tidy-cache/
+.cache-clang-tidy/
+
+# Locally exported analysis findings and temporary fix files
+*.clang-tidy.tmp
+*.yaml.tmp
+
+
+# ==============================================================================
+# Visual Studio
+# ==============================================================================
+
+.vs/
+
+# User- and machine-specific state
+*.suo
+*.user
+*.userosscache
+
+# Generated Visual Studio project files
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+
+
+# ==============================================================================
+# Visual Studio Code
+# ==============================================================================
+
+# Ignore all workspace configuration by default. Selectively preserve only
+# portable files that intentionally improve the shared contributor experience.
+.vscode/*
+
+# settings.json remains local because it commonly contains personal preferences,
+# selected presets, extension state, or machine-specific executable paths.
+#
+# The files below may be tracked only when they use portable workspace-relative
+# paths and have been validated as repository-level contributor tooling.
+!.vscode/extensions.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+
+# ==============================================================================
+# JetBrains IDEs
+# ==============================================================================
+
+.idea/
+*.iml
+*.ipr
+*.iws
+
+
+# ==============================================================================
+# Python Tooling State
+# ==============================================================================
+
+# Python may be used by optional LLVM contributor tooling such as
+# git-clang-format and run-clang-tidy. Its local environments and caches are not
+# repository artifacts.
+__pycache__/
+*.py[cod]
+
+.venv/
+venv/
+env/
+
+
+# ==============================================================================
+# Editor Temporary Files
+# ==============================================================================
+
+# Vim and compatible editors
+*.swp
+*.swo
+
+# General editor backups
+*~
+.#*
+\#*\#
+
+
+# ==============================================================================
+# Operating-System Metadata
+# ==============================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux desktop environments
+.directory
+
+
+# ==============================================================================
+# Temporary Files and Logs
+# ==============================================================================
+
+*.bak
+*.log
+*.orig
+*.rej
+*.tmp
+*.temp
+
+
+# ==============================================================================
+# Local Environment, Credentials, and Secrets
+# ==============================================================================
+
+# Local environment files may contain credentials or machine-specific settings.
+.env
+.env.*
+!.env.example
+
+*.local
+*.secret
+
+/secrets/

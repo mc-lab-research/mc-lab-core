@@ -1,0 +1,126 @@
+# ==============================================================================
+# Daedalux — Editor Defaults
+# ==============================================================================
+#
+# EditorConfig provides portable defaults for editors and IDEs.
+#
+# It does not define the complete C++ formatting policy and does not replace
+# clang-format. Developers remain free to experiment locally, while shared C++
+# contributions are formatted through the repository quality workflow.
+# ==============================================================================
+
+# Stop searching for another .editorconfig file in parent directories.
+root = true
+
+
+# ------------------------------------------------------------------------------
+# Repository-wide text defaults
+# ------------------------------------------------------------------------------
+
+[*]
+
+# All repository text files use UTF-8 without an encoding-specific dependency
+# on the developer operating system.
+charset = utf-8
+
+# Git stores and checks out ordinary project text files using LF line endings.
+end_of_line = lf
+
+# Every text file ends with a newline.
+insert_final_newline = true
+
+# Remove accidental trailing whitespace.
+trim_trailing_whitespace = true
+
+# Spaces are the default indentation mechanism.
+indent_style = space
+indent_size = 4
+tab_width = 4
+
+
+# ------------------------------------------------------------------------------
+# C and C++
+# ------------------------------------------------------------------------------
+
+[*.{c,cc,cpp,cxx,h,hh,hpp,hxx,inc,inl,ipp,tpp,ixx,cppm}]
+
+# The complete C++ layout is defined by .clang-format.
+indent_style = space
+indent_size = 4
+tab_width = 4
+max_line_length = 100
+
+
+# ------------------------------------------------------------------------------
+# CMake
+# ------------------------------------------------------------------------------
+
+[CMakeLists.txt]
+indent_style = space
+indent_size = 4
+
+[*.cmake]
+indent_style = space
+indent_size = 4
+
+
+# ------------------------------------------------------------------------------
+# Flex, Bison, and Promela
+# ------------------------------------------------------------------------------
+
+[*.{l,ll,lex,y,yy,yacc,pml}]
+indent_style = space
+indent_size = 4
+
+
+# ------------------------------------------------------------------------------
+# Structured configuration files
+# ------------------------------------------------------------------------------
+
+[*.{json,yaml,yml}]
+indent_style = space
+indent_size = 2
+
+[*.{toml,ini,cfg}]
+indent_style = space
+indent_size = 4
+
+
+# ------------------------------------------------------------------------------
+# Documentation
+# ------------------------------------------------------------------------------
+
+[*.md]
+indent_style = space
+indent_size = 4
+
+# Markdown may intentionally use trailing spaces to express a hard line break.
+trim_trailing_whitespace = false
+
+[*.txt]
+indent_style = space
+indent_size = 4
+
+
+# ------------------------------------------------------------------------------
+# Scripts
+# ------------------------------------------------------------------------------
+
+[*.{sh,bash,zsh,py,ps1}]
+indent_style = space
+indent_size = 4
+
+# Native Windows command scripts use CRLF according to .gitattributes.
+[*.{bat,cmd}]
+end_of_line = crlf
+indent_style = space
+indent_size = 4
+
+
+# ------------------------------------------------------------------------------
+# Git and tool configuration
+# ------------------------------------------------------------------------------
+
+[.{gitignore,gitattributes,clang-format,clang-tidy,clang-tidy-audit}]
+indent_style = space
+indent_size = 2

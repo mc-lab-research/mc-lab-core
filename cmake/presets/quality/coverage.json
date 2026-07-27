@@ -1,0 +1,296 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "include": [
+    "../platforms.json"
+  ],
+  "configurePresets": [
+    {
+      "name": "coverage",
+      "hidden": true,
+      "cacheVariables": {
+        "MC_LAB_CORE_ENABLE_COVERAGE": true
+      }
+    },
+    {
+      "name": "windows-clangcl-coverage",
+      "inherits": [
+        "coverage",
+        "windows-clangcl-debug"
+      ],
+      "displayName": "Windows / clang-cl / Coverage",
+      "description": "Configure a Windows clang-cl Debug platform build with LLVM source-based coverage instrumentation."
+    },
+    {
+      "name": "linux-gcc-coverage",
+      "inherits": [
+        "coverage",
+        "linux-gcc-debug"
+      ],
+      "displayName": "Linux / GCC / Coverage",
+      "description": "Configure a Linux GCC Debug platform build with coverage instrumentation."
+    },
+    {
+      "name": "linux-clang-coverage",
+      "inherits": [
+        "coverage",
+        "linux-clang-debug"
+      ],
+      "displayName": "Linux / Clang / Coverage",
+      "description": "Configure a Linux Clang Debug platform build with coverage instrumentation."
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "coverage-reset-target",
+      "hidden": true,
+      "targets": [
+        "coverage-reset"
+      ]
+    },
+    {
+      "name": "coverage-report-target",
+      "hidden": true,
+      "targets": [
+        "coverage-report"
+      ]
+    },
+    {
+      "name": "coverage-check-target",
+      "hidden": true,
+      "targets": [
+        "coverage-check"
+      ]
+    },
+    {
+      "name": "windows-clangcl-coverage",
+      "inherits": "build-host-windows",
+      "displayName": "Build Windows clang-cl Coverage",
+      "description": "Build the instrumented Windows clang-cl coverage configuration.",
+      "configurePreset": "windows-clangcl-coverage"
+    },
+    {
+      "name": "windows-clangcl-coverage-reset",
+      "inherits": [
+        "coverage-reset-target",
+        "build-host-windows"
+      ],
+      "displayName": "Reset Windows clang-cl Coverage Data",
+      "description": "Remove runtime coverage profiles before executing the Windows clang-cl test suite.",
+      "configurePreset": "windows-clangcl-coverage"
+    },
+    {
+      "name": "windows-clangcl-coverage-report",
+      "inherits": [
+        "coverage-report-target",
+        "build-host-windows"
+      ],
+      "displayName": "Generate Windows clang-cl Coverage Report",
+      "description": "Generate the LCOV report from the Windows clang-cl test execution.",
+      "configurePreset": "windows-clangcl-coverage"
+    },
+    {
+      "name": "windows-clangcl-coverage-check",
+      "inherits": [
+        "coverage-check-target",
+        "build-host-windows"
+      ],
+      "displayName": "Check Windows clang-cl Coverage Policy",
+      "description": "Validate the Windows clang-cl coverage report against the repository policy.",
+      "configurePreset": "windows-clangcl-coverage"
+    },
+    {
+      "name": "linux-gcc-coverage",
+      "inherits": "build-host-linux",
+      "displayName": "Build Linux GCC Coverage",
+      "description": "Build the instrumented Linux GCC coverage configuration.",
+      "configurePreset": "linux-gcc-coverage"
+    },
+    {
+      "name": "linux-gcc-coverage-reset",
+      "inherits": [
+        "coverage-reset-target",
+        "build-host-linux"
+      ],
+      "displayName": "Reset Linux GCC Coverage Data",
+      "description": "Remove runtime coverage data before executing the Linux GCC test suite.",
+      "configurePreset": "linux-gcc-coverage"
+    },
+    {
+      "name": "linux-gcc-coverage-report",
+      "inherits": [
+        "coverage-report-target",
+        "build-host-linux"
+      ],
+      "displayName": "Generate Linux GCC Coverage Report",
+      "description": "Generate the normalized coverage report from the Linux GCC test execution.",
+      "configurePreset": "linux-gcc-coverage"
+    },
+    {
+      "name": "linux-gcc-coverage-check",
+      "inherits": [
+        "coverage-check-target",
+        "build-host-linux"
+      ],
+      "displayName": "Check Linux GCC Coverage Policy",
+      "description": "Validate the Linux GCC coverage report against the repository policy.",
+      "configurePreset": "linux-gcc-coverage"
+    },
+    {
+      "name": "linux-clang-coverage",
+      "inherits": "build-host-linux",
+      "displayName": "Build Linux Clang Coverage",
+      "description": "Build the instrumented Linux Clang coverage configuration.",
+      "configurePreset": "linux-clang-coverage"
+    },
+    {
+      "name": "linux-clang-coverage-reset",
+      "inherits": [
+        "coverage-reset-target",
+        "build-host-linux"
+      ],
+      "displayName": "Reset Linux Clang Coverage Data",
+      "description": "Remove runtime coverage data before executing the Linux Clang test suite.",
+      "configurePreset": "linux-clang-coverage"
+    },
+    {
+      "name": "linux-clang-coverage-report",
+      "inherits": [
+        "coverage-report-target",
+        "build-host-linux"
+      ],
+      "displayName": "Generate Linux Clang Coverage Report",
+      "description": "Generate the normalized coverage report from the Linux Clang test execution.",
+      "configurePreset": "linux-clang-coverage"
+    },
+    {
+      "name": "linux-clang-coverage-check",
+      "inherits": [
+        "coverage-check-target",
+        "build-host-linux"
+      ],
+      "displayName": "Check Linux Clang Coverage Policy",
+      "description": "Validate the Linux Clang coverage report against the repository policy.",
+      "configurePreset": "linux-clang-coverage"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "windows-clangcl-coverage",
+      "inherits": "test-host-windows",
+      "displayName": "Test Windows clang-cl Coverage",
+      "configurePreset": "windows-clangcl-coverage"
+    },
+    {
+      "name": "linux-gcc-coverage",
+      "inherits": "test-host-linux",
+      "displayName": "Test Linux GCC Coverage",
+      "configurePreset": "linux-gcc-coverage"
+    },
+    {
+      "name": "linux-clang-coverage",
+      "inherits": "test-host-linux",
+      "displayName": "Test Linux Clang Coverage",
+      "configurePreset": "linux-clang-coverage"
+    }
+  ],
+  "workflowPresets": [
+    {
+      "name": "windows-clangcl-coverage",
+      "displayName": "Windows clang-cl Coverage Workflow",
+      "description": "Build, test, report, and enforce LLVM coverage using the Windows clang-cl platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows-clangcl-coverage"
+        },
+        {
+          "type": "build",
+          "name": "windows-clangcl-coverage"
+        },
+        {
+          "type": "build",
+          "name": "windows-clangcl-coverage-reset"
+        },
+        {
+          "type": "test",
+          "name": "windows-clangcl-coverage"
+        },
+        {
+          "type": "build",
+          "name": "windows-clangcl-coverage-report"
+        },
+        {
+          "type": "build",
+          "name": "windows-clangcl-coverage-check"
+        }
+      ]
+    },
+    {
+      "name": "linux-gcc-coverage",
+      "displayName": "Linux GCC Coverage Workflow",
+      "description": "Build, test, report, and enforce coverage using the Linux GCC platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "linux-gcc-coverage"
+        },
+        {
+          "type": "build",
+          "name": "linux-gcc-coverage"
+        },
+        {
+          "type": "build",
+          "name": "linux-gcc-coverage-reset"
+        },
+        {
+          "type": "test",
+          "name": "linux-gcc-coverage"
+        },
+        {
+          "type": "build",
+          "name": "linux-gcc-coverage-report"
+        },
+        {
+          "type": "build",
+          "name": "linux-gcc-coverage-check"
+        }
+      ]
+    },
+    {
+      "name": "linux-clang-coverage",
+      "displayName": "Linux Clang Coverage Workflow",
+      "description": "Build, test, report, and enforce coverage using the Linux Clang platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "linux-clang-coverage"
+        },
+        {
+          "type": "build",
+          "name": "linux-clang-coverage"
+        },
+        {
+          "type": "build",
+          "name": "linux-clang-coverage-reset"
+        },
+        {
+          "type": "test",
+          "name": "linux-clang-coverage"
+        },
+        {
+          "type": "build",
+          "name": "linux-clang-coverage-report"
+        },
+        {
+          "type": "build",
+          "name": "linux-clang-coverage-check"
+        }
+      ]
+    }
+  ]
+}
