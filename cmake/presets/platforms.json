@@ -44,7 +44,23 @@
       }
     },
     {
-      "name": "windows-visualstudio",
+      "name": "windows-visualstudio-2022",
+      "inherits": [
+        "base",
+        "host-windows",
+        "generator-visualstudio-2022"
+      ],
+      "displayName": "Windows / Visual Studio 2022",
+      "description": "Configure one native x64 multi-configuration Visual Studio build tree shared by Debug, Release, and quality build presets.",
+      "cacheVariables": {
+        "CMAKE_CONFIGURATION_TYPES": "Debug;Release",
+        "MC_LAB_CORE_EXPECTED_TOOLCHAIN": "WINDOWS_VISUAL_STUDIO",
+        "MC_LAB_CORE_COMPILER_WARNINGS_AS_ERRORS": true,
+        "MC_LAB_CORE_WARNINGS_AS_ERRORS_CONFIGURATIONS": "Release"
+      }
+    },
+    {
+      "name": "windows-visualstudio-2026",
       "inherits": [
         "base",
         "host-windows",
@@ -262,22 +278,38 @@
       "description": "Build a Windows Release build with MSVC with a Visual Studio developer environment."
     },
     {
-      "name": "windows-visualstudio-debug",
+      "name": "windows-visualstudio-2022-debug",
       "inherits": "build-host-windows",
-      "configurePreset": "windows-visualstudio",
+      "configurePreset": "windows-visualstudio-2022",
+      "configuration": "Debug",
+      "displayName": "Windows / Visual Studio 2022 / Debug",
+      "description": "Build a native x64 Visual Studio Debug solution."
+    },
+    {
+      "name": "windows-visualstudio-2022-release",
+      "inherits": "build-host-windows",
+      "configurePreset": "windows-visualstudio-2022",
+      "configuration": "Release",
+      "displayName": "Windows / Visual Studio 2022 / Release",
+      "description": "Build a native x64 Visual Studio Release solution with compiler warnings treated as errors."
+    },
+    {
+      "name": "windows-visualstudio-2026-debug",
+      "inherits": "build-host-windows",
+      "configurePreset": "windows-visualstudio-2026",
       "configuration": "Debug",
       "displayName": "Windows / Visual Studio 2026 / Debug",
       "description": "Build a native x64 Visual Studio Debug solution."
     },
     {
-      "name": "windows-visualstudio-release",
+      "name": "windows-visualstudio-2026-release",
       "inherits": "build-host-windows",
-      "configurePreset": "windows-visualstudio",
+      "configurePreset": "windows-visualstudio-2026",
       "configuration": "Release",
       "displayName": "Windows / Visual Studio 2026 / Release",
       "description": "Build a native x64 Visual Studio Release solution with compiler warnings treated as errors."
     },
-{
+    {
       "name": "windows-clangcl-debug",
       "inherits": "build-host-windows",
       "configurePreset": "windows-clangcl-debug",
@@ -378,17 +410,33 @@
       "description": "Run the test suite for the Windows MSVC Release build."
     },
     {
-      "name": "windows-visualstudio-debug",
+      "name": "windows-visualstudio-2022-debug",
       "inherits": "test-host-windows",
-      "configurePreset": "windows-visualstudio",
+      "configurePreset": "windows-visualstudio-2022",
+      "configuration": "Debug",
+      "displayName": "Windows / Visual Studio 2022 / Debug",
+      "description": "Run the test suite for the native x64 Visual Studio Debug build."
+    },
+    {
+      "name": "windows-visualstudio-2022-release",
+      "inherits": "test-host-windows",
+      "configurePreset": "windows-visualstudio-2022",
+      "configuration": "Release",
+      "displayName": "Windows / Visual Studio 2022 / Release",
+      "description": "Run the test suite for the native x64 Visual Studio Release build."
+    },
+    {
+      "name": "windows-visualstudio-2026-debug",
+      "inherits": "test-host-windows",
+      "configurePreset": "windows-visualstudio-2026",
       "configuration": "Debug",
       "displayName": "Windows / Visual Studio 2026 / Debug",
       "description": "Run the test suite for the native x64 Visual Studio Debug build."
     },
     {
-      "name": "windows-visualstudio-release",
+      "name": "windows-visualstudio-2026-release",
       "inherits": "test-host-windows",
-      "configurePreset": "windows-visualstudio",
+      "configurePreset": "windows-visualstudio-2026",
       "configuration": "Release",
       "displayName": "Windows / Visual Studio 2026 / Release",
       "description": "Run the test suite for the native x64 Visual Studio Release build."

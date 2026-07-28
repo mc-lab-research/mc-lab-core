@@ -29,10 +29,22 @@
       }
     },
     {
-      "name": "windows-visualstudio-asan",
+      "name": "windows-visualstudio-2022-asan",
       "inherits": [
         "asan",
-        "windows-visualstudio"
+        "windows-visualstudio-2022"
+      ],
+      "displayName": "Windows / Visual Studio 2022 / AddressSanitizer",
+      "description": "Configure a native Visual Studio RelWithDebInfo platform build instrumented with AddressSanitizer.",
+      "cacheVariables": {
+        "CMAKE_CONFIGURATION_TYPES": "RelWithDebInfo"
+      }
+    },
+    {
+      "name": "windows-visualstudio-2026-asan",
+      "inherits": [
+        "asan",
+        "windows-visualstudio-2026"
       ],
       "displayName": "Windows / Visual Studio 2026 / AddressSanitizer",
       "description": "Configure a native Visual Studio RelWithDebInfo platform build instrumented with AddressSanitizer.",
@@ -109,10 +121,17 @@
       "configurePreset": "windows-msvc-asan"
     },
     {
-      "name": "windows-visualstudio-asan",
+      "name": "windows-visualstudio-2022-asan",
       "inherits": "build-host-windows",
-      "displayName": "Build Windows Visual Studio AddressSanitizer",
-      "configurePreset": "windows-visualstudio-asan",
+      "displayName": "Build Windows Visual Studio 2022 AddressSanitizer",
+      "configurePreset": "windows-visualstudio-2022-asan",
+      "configuration": "RelWithDebInfo"
+    },
+    {
+      "name": "windows-visualstudio-2026-asan",
+      "inherits": "build-host-windows",
+      "displayName": "Build Windows Visual Studio 2026 AddressSanitizer",
+      "configurePreset": "windows-visualstudio-2026-asan",
       "configuration": "RelWithDebInfo"
     },
     {
@@ -154,10 +173,17 @@
       "configurePreset": "windows-msvc-asan"
     },
     {
-      "name": "windows-visualstudio-asan",
+      "name": "windows-visualstudio-2022-asan",
       "inherits": "test-host-windows",
-      "displayName": "Test Windows Visual Studio AddressSanitizer",
-      "configurePreset": "windows-visualstudio-asan",
+      "displayName": "Test Windows Visual Studio 2022 AddressSanitizer",
+      "configurePreset": "windows-visualstudio-2022-asan",
+      "configuration": "RelWithDebInfo"
+    },
+    {
+      "name": "windows-visualstudio-2026-asan",
+      "inherits": "test-host-windows",
+      "displayName": "Test Windows Visual Studio 2026 AddressSanitizer",
+      "configurePreset": "windows-visualstudio-2026-asan",
       "configuration": "RelWithDebInfo"
     },
     {
@@ -211,20 +237,38 @@
       ]
     },
     {
-      "name": "windows-visualstudio-asan",
-      "displayName": "Windows Visual Studio AddressSanitizer Workflow",
+      "name": "windows-visualstudio-2022-asan",
+      "displayName": "Windows Visual Studio 2022 AddressSanitizer Workflow",
       "steps": [
         {
           "type": "configure",
-          "name": "windows-visualstudio-asan"
+          "name": "windows-visualstudio-2022-asan"
         },
         {
           "type": "build",
-          "name": "windows-visualstudio-asan"
+          "name": "windows-visualstudio-2022-asan"
         },
         {
           "type": "test",
-          "name": "windows-visualstudio-asan"
+          "name": "windows-visualstudio-2022-asan"
+        }
+      ]
+    },
+    {
+      "name": "windows-visualstudio-2026-asan",
+      "displayName": "Windows Visual Studio 2026 AddressSanitizer Workflow",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows-visualstudio-2026-asan"
+        },
+        {
+          "type": "build",
+          "name": "windows-visualstudio-2026-asan"
+        },
+        {
+          "type": "test",
+          "name": "windows-visualstudio-2026-asan"
         }
       ]
     },

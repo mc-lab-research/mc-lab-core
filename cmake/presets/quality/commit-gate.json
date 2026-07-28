@@ -20,13 +20,23 @@
       "configurePreset": "windows-msvc-release"
     },
     {
-      "name": "windows-visualstudio-commit-gate",
+      "name": "windows-visualstudio-2022-commit-gate",
       "inherits": [
         "format-check-target",
         "build-host-windows"
       ],
       "displayName": "Check Windows Visual Studio Commit Formatting",
-      "configurePreset": "windows-visualstudio",
+      "configurePreset": "windows-visualstudio-2022",
+      "configuration": "Release"
+    },
+    {
+      "name": "windows-visualstudio-2026-commit-gate",
+      "inherits": [
+        "format-check-target",
+        "build-host-windows"
+      ],
+      "displayName": "Check Windows Visual Studio Commit Formatting",
+      "configurePreset": "windows-visualstudio-2026",
       "configuration": "Release"
     },
     {
@@ -109,25 +119,48 @@
       ]
     },
     {
-      "name": "windows-visualstudio-commit-gate",
-      "displayName": "Windows Visual Studio Commit Gate",
+      "name": "windows-visualstudio-2022-commit-gate",
+      "displayName": "Windows Visual Studio 2022 Commit Gate",
       "description": "Block the commit on formatting violations, compiler warnings, build failures, or test failures using the Windows Visual Studio Release platform.",
       "steps": [
         {
           "type": "configure",
-          "name": "windows-visualstudio"
+          "name": "windows-visualstudio-2022"
         },
         {
           "type": "build",
-          "name": "windows-visualstudio-commit-gate"
+          "name": "windows-visualstudio-2022-commit-gate"
         },
         {
           "type": "build",
-          "name": "windows-visualstudio-release"
+          "name": "windows-visualstudio-2022-release"
         },
         {
           "type": "test",
-          "name": "windows-visualstudio-release"
+          "name": "windows-visualstudio-2022-release"
+        }
+      ]
+    },
+    {
+      "name": "windows-visualstudio-2026-commit-gate",
+      "displayName": "Windows Visual Studio 2026 Commit Gate",
+      "description": "Block the commit on formatting violations, compiler warnings, build failures, or test failures using the Windows Visual Studio Release platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows-visualstudio-2026"
+        },
+        {
+          "type": "build",
+          "name": "windows-visualstudio-2026-commit-gate"
+        },
+        {
+          "type": "build",
+          "name": "windows-visualstudio-2026-release"
+        },
+        {
+          "type": "test",
+          "name": "windows-visualstudio-2026-release"
         }
       ]
     },

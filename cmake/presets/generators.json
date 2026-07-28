@@ -12,6 +12,14 @@
       "generator": "Ninja"
     },
     {
+      "name": "generator-visualstudio-2022",
+      "hidden": true,
+      "generator": "Visual Studio 17 2022",
+      "description": "Requires CMake 3.25 or newer",
+      "architecture": "x64",
+      "toolset": "host=x64"
+    },
+    {
       "name": "generator-visualstudio-2026",
       "hidden": true,
       "generator": "Visual Studio 18 2026",

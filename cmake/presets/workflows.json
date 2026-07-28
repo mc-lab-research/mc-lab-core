@@ -48,40 +48,78 @@
       ]
     },
     {
-      "name": "windows-visualstudio-debug",
-      "displayName": "Windows Visual Studio Debug Build and Test",
-      "description": "Configure the shared Visual Studio tree, then build and test Debug.",
+      "name": "windows-visualstudio-2022-debug",
+      "displayName": "Windows Visual Studio 2022 Debug Build and Test",
+      "description": "Configure the shared Visual Studio 2022 tree, then build and test Debug.",
       "steps": [
         {
           "type": "configure",
-          "name": "windows-visualstudio"
+          "name": "windows-visualstudio-2022"
         },
         {
           "type": "build",
-          "name": "windows-visualstudio-debug"
+          "name": "windows-visualstudio-2022-debug"
         },
         {
           "type": "test",
-          "name": "windows-visualstudio-debug"
+          "name": "windows-visualstudio-2022-debug"
         }
       ]
     },
     {
-      "name": "windows-visualstudio-release",
-      "displayName": "Windows Visual Studio Release Build and Test",
-      "description": "Configure the shared Visual Studio tree, then build and test Release.",
+      "name": "windows-visualstudio-2022-release",
+      "displayName": "Windows Visual Studio 2022 Release Build and Test",
+      "description": "Configure the shared Visual Studio 2022 tree, then build and test Release.",
       "steps": [
         {
           "type": "configure",
-          "name": "windows-visualstudio"
+          "name": "windows-visualstudio-2022"
         },
         {
           "type": "build",
-          "name": "windows-visualstudio-release"
+          "name": "windows-visualstudio-2022-release"
         },
         {
           "type": "test",
-          "name": "windows-visualstudio-release"
+          "name": "windows-visualstudio-2022-release"
+        }
+      ]
+    },
+    {
+      "name": "windows-visualstudio-2026-debug",
+      "displayName": "Windows Visual Studio 2026 Debug Build and Test",
+      "description": "Configure the shared Visual Studio 2026 tree, then build and test Debug.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows-visualstudio-2026"
+        },
+        {
+          "type": "build",
+          "name": "windows-visualstudio-2026-debug"
+        },
+        {
+          "type": "test",
+          "name": "windows-visualstudio-2026-debug"
+        }
+      ]
+    },
+    {
+      "name": "windows-visualstudio-2026-release",
+      "displayName": "Windows Visual Studio 2026 Release Build and Test",
+      "description": "Configure the shared Visual Studio 2026 tree, then build and test Release.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "windows-visualstudio-2026"
+        },
+        {
+          "type": "build",
+          "name": "windows-visualstudio-2026-release"
+        },
+        {
+          "type": "test",
+          "name": "windows-visualstudio-2026-release"
         }
       ]
     },

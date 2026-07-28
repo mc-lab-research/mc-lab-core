@@ -17,7 +17,7 @@ command -v cmake >/dev/null 2>&1 ||
 is_supported_gate() {
     case "$1" in
         windows-msvc-commit-gate | \
-        windows-visualstudio-commit-gate | \
+        windows-visualstudio-2026-commit-gate | \
         windows-clangcl-commit-gate | \
         windows-ucrt64-gcc-commit-gate | \
         windows-clang64-commit-gate | \
@@ -47,7 +47,7 @@ select_windows_gate() {
     else
         # The Visual Studio generator discovers its installation without an
         # activated vendor shell and is the safest generic Windows fallback.
-        printf '%s\n' "windows-visualstudio-commit-gate"
+        printf '%s\n' "windows-visualstudio-2026-commit-gate"
     fi
 }
 
