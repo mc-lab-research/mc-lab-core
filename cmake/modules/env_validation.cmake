@@ -400,7 +400,7 @@ function(
         "     ${mc_lab_core_retry_command}\n"
         "\n"
         "Detailed guide:\n"
-        "  docs/cmake-presets-v2.md"
+        "  docs/cmake/cmake-presets.md"
     )
 
     set(

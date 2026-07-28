@@ -23,7 +23,7 @@
       "name": "generator-visualstudio-2026",
       "hidden": true,
       "generator": "Visual Studio 18 2026",
-      "description": "Requires CMake 4.2. or newer",
+      "description": "Requires CMake 4.2 or newer",
       "architecture": "x64",
       "toolset": "host=x64"
     }
