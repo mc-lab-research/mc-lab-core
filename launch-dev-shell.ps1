@@ -150,6 +150,10 @@ function Get-MSys2EnvironmentStatus {
                 Program = 'ninja.exe'
                 Package = 'mingw-w64-ucrt-x86_64-ninja'
             }
+            [pscustomobject]@{
+                Program = 'git.exe'
+                Package = 'mingw-w64-ucrt-x86_64-git'
+            }
         )
     } else {
         @(
@@ -164,6 +168,10 @@ function Get-MSys2EnvironmentStatus {
             [pscustomobject]@{
                 Program = 'ninja.exe'
                 Package = 'mingw-w64-clang-x86_64-ninja'
+            }
+            [pscustomobject]@{
+                Program = 'git.exe'
+                Package = 'mingw-w64-clang-x86_64-git'
             }
         )
     }
