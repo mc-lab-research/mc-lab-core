@@ -391,6 +391,23 @@ function Start-VisualStudioEnvironment {
     $targetArchitecture = 'amd64'
     $hostArchitecture = 'amd64'
 
+    $visualStudioMajor = [int](
+    $visualStudio.InstallationVersion.Split('.')[0]
+    )
+
+    $visualStudioYear = switch ($visualStudioMajor) {
+        17 { '2022' }
+        18 { '2026' }
+        default { $null }
+    }
+
+    $recommendedWorkflow = if ($null -ne $visualStudioYear) {
+        "windows-visualstudio-$visualStudioYear-debug"
+    }
+    else {
+        'windows-msvc-debug'
+    }
+
     $powerShellExecutable = (Get-Process -Id $PID).Path
     $escapedDeveloperShell = $developerShell.Replace("'", "''")
     $escapedInstanceId = $visualStudio.InstanceId.Replace("'", "''")
@@ -401,12 +418,17 @@ function Start-VisualStudioEnvironment {
 if (-not `$?) {
     throw 'Visual Studio Developer PowerShell initialization failed.'
 }
+
 Set-Location -LiteralPath '$escapedRepositoryRoot'
+
 Write-Information '' -InformationAction Continue
 Write-Information 'MC-LAB-CORE Visual Studio developer environment is ready.' -InformationAction Continue
 Write-Information '' -InformationAction Continue
-Write-Information 'Recommended MSVC configure, build, and test workflow:' -InformationAction Continue
-Write-Information '  cmake --workflow --preset windows-msvc-debug --fresh' -InformationAction Continue
+Write-Information 'Detected Visual Studio build environment:' -InformationAction Continue
+Write-Information '  Generator : Visual Studio $visualStudioMajor $visualStudioYear' -InformationAction Continue
+Write-Information '' -InformationAction Continue
+Write-Information 'Recommended configure, build, and test workflow:' -InformationAction Continue
+Write-Information '  cmake --workflow --preset $recommendedWorkflow --fresh' -InformationAction Continue
 Write-Information '' -InformationAction Continue
 Write-Information 'To discover clang-cl and quality alternatives:' -InformationAction Continue
 Write-Information '  cmake --list-presets=configure' -InformationAction Continue
@@ -417,21 +439,38 @@ Write-Information '  cmake --list-presets=configure' -InformationAction Continue
     )
 
     Write-MCLabCoreInformation 'MC-LAB-CORE development environment'
-    Write-MCLabCoreInformation "  Environment : $($visualStudio.DisplayName) Developer PowerShell"
-    Write-MCLabCoreInformation "  Version     : $($visualStudio.InstallationVersion)"
-    Write-MCLabCoreInformation "  Instance    : $($visualStudio.InstanceId)"
-    Write-MCLabCoreInformation '  Target       : x64'
-    Write-MCLabCoreInformation "  Launcher     : $developerShell"
-    Write-MCLabCoreInformation "  Repository   : $RepositoryRoot"
+    Write-MCLabCoreInformation (
+        "  Environment : $($visualStudio.DisplayName) Developer PowerShell"
+    )
+    Write-MCLabCoreInformation (
+        "  Version     : $($visualStudio.InstallationVersion)"
+    )
+    Write-MCLabCoreInformation (
+        "  Generator   : Visual Studio $visualStudioMajor $visualStudioYear"
+    )
+    Write-MCLabCoreInformation (
+        "  Instance    : $($visualStudio.InstanceId)"
+    )
+    Write-MCLabCoreInformation '  Target      : x64'
+    Write-MCLabCoreInformation "  Launcher    : $developerShell"
+    Write-MCLabCoreInformation "  Repository  : $RepositoryRoot"
 
     if ($CheckOnly) {
         Write-MCLabCoreInformation ''
-        Write-MCLabCoreInformation 'After the development shell opens, configure, build, and test with:'
-        Write-MCLabCoreInformation '  cmake --workflow --preset windows-msvc-debug --fresh'
+        Write-MCLabCoreInformation (
+            'Recommended configure, build, and test workflow:'
+        )
+        Write-MCLabCoreInformation (
+            "  cmake --workflow --preset $recommendedWorkflow --fresh"
+        )
         Write-MCLabCoreInformation ''
-        Write-MCLabCoreInformation 'Check completed. No shell was opened.'
+        Write-MCLabCoreInformation (
+            'Check completed. No shell was opened.'
+        )
         Write-MCLabCoreInformation 'To open it, run:'
-        Write-MCLabCoreInformation '  .\launch-dev-shell.ps1 msvc'
+        Write-MCLabCoreInformation (
+            '  .\launch-dev-shell.ps1 msvc'
+        )
         return
     }
 
