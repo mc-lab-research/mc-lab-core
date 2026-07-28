@@ -59,3 +59,33 @@ jobs:
 
       - name: Configure, build, and test
         run: cmake --workflow --preset "${{ matrix.preset }}" --fresh
+
+  build-and-test-windows-msvc:
+    name: ${{ matrix.name }}
+    runs-on: windows-2022
+    timeout-minutes: 30
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Windows 2022 / MSVC / Debug
+            preset: windows-msvc-debug
+          - name: Windows 2022 / MSVC / Release
+            preset: windows-msvc-release
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Activate Visual Studio developer environment
+        uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1.13.0
+
+      - name: Report build tools
+        run: |
+          cmake --version
+          ninja --version
+          cl
+
+      - name: Configure, build, and test
+        run: cmake --workflow --preset "${{ matrix.preset }}" --fresh
