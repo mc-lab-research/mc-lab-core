@@ -163,13 +163,12 @@ function Get-MSys2EnvironmentStatus {
                 Package = 'mingw-w64-ucrt-x86_64-ninja'
             }
             [pscustomobject]@{
-<<<<<<< HEAD
                 Program = 'clang-format.exe'
                 Package = 'mingw-w64-ucrt-x86_64-clang'
-=======
+            }
+            [pscustomobject]@{
                 Program = 'git.exe'
                 Package = 'mingw-w64-ucrt-x86_64-git'
->>>>>>> 74e3c871803199abfb3797b2f7a9d72565810575
             }
         )
     } else {
@@ -187,13 +186,12 @@ function Get-MSys2EnvironmentStatus {
                 Package = 'mingw-w64-clang-x86_64-ninja'
             }
             [pscustomobject]@{
-<<<<<<< HEAD
                 Program = 'clang-format.exe'
                 Package = 'mingw-w64-clang-x86_64-clang'
-=======
+            }
+            [pscustomobject]@{
                 Program = 'git.exe'
                 Package = 'mingw-w64-clang-x86_64-git'
->>>>>>> 74e3c871803199abfb3797b2f7a9d72565810575
             }
         )
     }
