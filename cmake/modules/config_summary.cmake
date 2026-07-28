@@ -514,17 +514,19 @@ function(mc_lab_core_print_configuration_summary)
     if(NOT mc_lab_core_active_preset STREQUAL "manual configuration")
         set(mc_lab_core_developer_commands_available TRUE)
 
-        if(mc_lab_core_active_preset STREQUAL "windows-visualstudio")
+        if(mc_lab_core_active_preset MATCHES "^windows-visualstudio")
             # One Visual Studio configure tree intentionally serves both
             # ordinary configurations. Its workflows select the build and test
             # configuration through their corresponding build/test presets.
+            # The configure preset is e.g. windows-visualstudio-2022; the
+            # derived workflow, build, and test presets append -debug/-release.
             set(
                 mc_lab_core_full_workflow_label
                 "Clean Debug workflow"
             )
             set(
                 mc_lab_core_full_workflow
-                "cmake --workflow --preset windows-visualstudio-debug --fresh"
+                "cmake --workflow --preset ${mc_lab_core_active_preset}-debug --fresh"
             )
             set(
                 mc_lab_core_alternate_workflow_label
@@ -532,7 +534,7 @@ function(mc_lab_core_print_configuration_summary)
             )
             set(
                 mc_lab_core_alternate_workflow
-                "cmake --workflow --preset windows-visualstudio-release --fresh"
+                "cmake --workflow --preset ${mc_lab_core_active_preset}-release --fresh"
             )
             set(
                 mc_lab_core_incremental_build_label
@@ -540,11 +542,11 @@ function(mc_lab_core_print_configuration_summary)
             )
             set(
                 mc_lab_core_incremental_build
-                "cmake --build --preset windows-visualstudio-debug"
+                "cmake --build --preset ${mc_lab_core_active_preset}-debug"
             )
             set(
                 mc_lab_core_alternate_build
-                "cmake --build --preset windows-visualstudio-release"
+                "cmake --build --preset ${mc_lab_core_active_preset}-release"
             )
             set(
                 mc_lab_core_incremental_test_label
@@ -552,11 +554,11 @@ function(mc_lab_core_print_configuration_summary)
             )
             set(
                 mc_lab_core_incremental_test
-                "ctest --preset windows-visualstudio-debug"
+                "ctest --preset ${mc_lab_core_active_preset}-debug"
             )
             set(
                 mc_lab_core_alternate_test
-                "ctest --preset windows-visualstudio-release"
+                "ctest --preset ${mc_lab_core_active_preset}-release"
             )
         else()
             set(
