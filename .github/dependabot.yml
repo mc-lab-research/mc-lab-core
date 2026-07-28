@@ -1,0 +1,52 @@
+```yaml
+# Dependabot configuration for mc-lab-core.
+#
+# This file enables automated dependency update pull requests.
+# Documentation:
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates
+
+version: 2
+
+updates:
+  # Monitor GitHub Actions used in workflows under .github/workflows/.
+  #
+  # Dependabot will detect references such as:
+  #   actions/checkout@v4
+  #   actions/setup-python@v5
+  #   github/codeql-action/init@v3
+  - package-ecosystem: "github-actions"
+
+    # "/" represents the repository root.
+    # For GitHub Actions, Dependabot automatically inspects
+    # workflow files located under .github/workflows/.
+    directory: "/"
+
+    # Check for available updates once per week.
+    schedule:
+      interval: "weekly"
+
+      # Run the dependency check every Monday.
+      day: "monday"
+
+      # Start the check at 06:00.
+      time: "06:00"
+
+      # Interpret the configured time using the project timezone.
+      timezone: "Europe/Paris"
+
+    # Prefix Dependabot commit messages, for example:
+    #   chore(ci): bump actions/checkout from 4.1.0 to 4.2.0
+    commit-message:
+      prefix: "chore(ci)"
+
+    # Apply these labels to Dependabot pull requests.
+    #
+    # These labels should exist in the repository.
+    labels:
+      - "dependencies"
+      - "ci"
+
+    # Limit the number of simultaneously open Dependabot pull requests.
+    # Additional updates remain pending until an existing PR is closed or merged.
+    open-pull-requests-limit: 5
+```
