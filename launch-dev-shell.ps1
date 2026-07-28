@@ -24,6 +24,9 @@ The development environment to open:
 Diagnoses the selected vendor environment without opening an interactive shell.
 
 .EXAMPLE
+./launch-dev-shell.ps1 --help
+
+.EXAMPLE
 ./launch-dev-shell.ps1 ucrt64
 
 .EXAMPLE
@@ -35,9 +38,18 @@ Use -WhatIf to preview the shell-opening operation after discovery succeeds.
 
 [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Low')]
 param(
-    [Parameter(Mandatory = $true, Position = 0)]
-    [ValidateSet('ucrt64', 'clang64', 'msvc')]
+    [Parameter(Position = 0)]
+    [ValidateSet(
+        'ucrt64',
+        'clang64',
+        'msvc',
+        '--help'
+    )]
     [string] $Environment,
+
+    [Parameter()]
+    [Alias('h')]
+    [switch] $Help,
 
     [Parameter()]
     [switch] $Check
@@ -150,6 +162,10 @@ function Get-MSys2EnvironmentStatus {
                 Program = 'ninja.exe'
                 Package = 'mingw-w64-ucrt-x86_64-ninja'
             }
+            [pscustomobject]@{
+                Program = 'clang-format.exe'
+                Package = 'mingw-w64-ucrt-x86_64-clang'
+            }
         )
     } else {
         @(
@@ -165,6 +181,10 @@ function Get-MSys2EnvironmentStatus {
                 Program = 'ninja.exe'
                 Package = 'mingw-w64-clang-x86_64-ninja'
             }
+            [pscustomobject]@{
+                Program = 'clang-format.exe'
+                Package = 'mingw-w64-clang-x86_64-clang'
+            }
         )
     }
 
@@ -177,6 +197,15 @@ function Get-MSys2EnvironmentStatus {
             }
         }
     )
+
+    $gitPath = Join-Path $msys2Root 'usr\bin\git.exe'
+
+    if (-not (Test-Path -LiteralPath $gitPath -PathType Leaf)) {
+        $missingRequirements += [pscustomobject]@{
+            Program = 'git.exe'
+            Package = 'git'
+        }
+    }
 
     $missingPackages = @(
         $missingRequirements |
@@ -490,6 +519,31 @@ Write-Information '  cmake --list-presets=configure' -InformationAction Continue
             ) `
             -WorkingDirectory $RepositoryRoot
     }
+}
+
+if ($Help -or $Environment -eq '--help') {
+    Get-Help `
+        -Name $PSCommandPath `
+        -Detailed
+
+    return
+}
+
+if ([string]::IsNullOrWhiteSpace($Environment)) {
+    throw @"
+A development environment is required.
+
+Usage:
+  ./launch-dev-shell.ps1 <environment> [-Check]
+
+Supported environments:
+  ucrt64
+  clang64
+  msvc
+
+For detailed help:
+  ./launch-dev-shell.ps1 --help
+"@
 }
 
 if ($env:OS -ne 'Windows_NT') {
