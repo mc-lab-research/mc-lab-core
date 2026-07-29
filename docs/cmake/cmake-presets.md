@@ -160,10 +160,11 @@ Ninja, Visual Studio, clang-cl, MSYS2 CLANG64, Linux GCC/Clang, and
 AppleClang. MSYS2 UCRT64 GCC ASan is intentionally omitted from the guaranteed
 matrix because availability and runtime packaging vary between distributions.
 
-The coverage presets are Windows clang-cl, Linux GCC, and Linux Clang. A CI
-configuration may use Linux Clang as the canonical threshold while Windows
-coverage exercises Windows-specific code paths. Debian, Fedora, and Ubuntu
-can invoke the Linux presets from separate runners or containers.
+The coverage presets are Windows clang-cl, Linux GCC, Linux Clang, and macOS
+AppleClang. A CI configuration may use Linux Clang as the canonical threshold
+while the Windows and macOS workflows remain available for local
+platform-specific validation. Debian, Fedora, and Ubuntu can invoke the Linux
+presets from separate runners or containers.
 
 ## Workflow behavior
 
@@ -248,6 +249,7 @@ Run the complete coverage pipeline:
 ```sh
 cmake --workflow --preset linux-clang-coverage
 cmake --workflow --preset windows-clangcl-coverage
+cmake --workflow --preset macos-appleclang-coverage
 ```
 
 ## Requirements

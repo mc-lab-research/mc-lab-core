@@ -12,7 +12,8 @@ include_guard(GLOBAL)
 #
 #   LLVM
 #       Clang and clang-cl source-based coverage using llvm-profdata and
-#       llvm-cov. This is the Windows clang-cl and Linux Clang contract.
+#       llvm-cov. This is the Windows clang-cl, Linux Clang, and macOS
+#       AppleClang contract.
 #
 #   GCOV
 #       GCC arc instrumentation using gcov, LCOV, and genhtml. This is the
@@ -113,8 +114,8 @@ if(MC_LAB_CORE_ENABLE_COVERAGE)
         message(
             FATAL_ERROR
             "Coverage requires a single-configuration generator. Use the "
-            "Ninja-based windows-clangcl-coverage, linux-gcc-coverage, or "
-            "linux-clang-coverage preset."
+            "Ninja-based windows-clangcl-coverage, linux-gcc-coverage, "
+            "linux-clang-coverage, or macos-appleclang-coverage preset."
         )
     endif()
 
@@ -190,13 +191,79 @@ if(MC_LAB_CORE_ENABLE_COVERAGE)
     )
 
     if(MC_LAB_CORE_COVERAGE_BACKEND STREQUAL "LLVM")
+        set(
+            mc_lab_core_llvm_tool_hints
+            "${mc_lab_core_compiler_directory}"
+        )
+
+        if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
+            find_program(
+                MC_LAB_CORE_XCRUN
+                NAMES
+                    xcrun
+                DOC
+                    "xcrun executable used to locate Apple LLVM coverage tools"
+            )
+
+            mark_as_advanced(
+                MC_LAB_CORE_XCRUN
+            )
+
+            if(MC_LAB_CORE_XCRUN)
+                foreach(
+                    mc_lab_core_apple_llvm_tool
+                    IN ITEMS
+                        llvm-profdata
+                        llvm-cov
+                )
+                    execute_process(
+                        COMMAND
+                            "${MC_LAB_CORE_XCRUN}"
+                            --find
+                            "${mc_lab_core_apple_llvm_tool}"
+                        RESULT_VARIABLE
+                            mc_lab_core_xcrun_result
+                        OUTPUT_VARIABLE
+                            mc_lab_core_xcrun_tool
+                        ERROR_QUIET
+                        OUTPUT_STRIP_TRAILING_WHITESPACE
+                        ENCODING
+                            UTF-8
+                    )
+
+                    if(
+                        mc_lab_core_xcrun_result EQUAL 0
+                        AND EXISTS "${mc_lab_core_xcrun_tool}"
+                    )
+                        get_filename_component(
+                            mc_lab_core_xcrun_tool_directory
+                            "${mc_lab_core_xcrun_tool}"
+                            DIRECTORY
+                        )
+
+                        list(
+                            APPEND
+                            mc_lab_core_llvm_tool_hints
+                            "${mc_lab_core_xcrun_tool_directory}"
+                        )
+                    endif()
+                endforeach()
+
+                list(
+                    REMOVE_DUPLICATES
+                    mc_lab_core_llvm_tool_hints
+                )
+            endif()
+        endif()
+
         find_program(
             MC_LAB_CORE_LLVM_PROFDATA
             NAMES
                 llvm-profdata-22
+                llvm-profdata-18
                 llvm-profdata
             HINTS
-                "${mc_lab_core_compiler_directory}"
+                ${mc_lab_core_llvm_tool_hints}
             DOC
                 "llvm-profdata executable used to merge MC-LAB-CORE profiles"
         )
@@ -205,9 +272,10 @@ if(MC_LAB_CORE_ENABLE_COVERAGE)
             MC_LAB_CORE_LLVM_COV
             NAMES
                 llvm-cov-22
+                llvm-cov-18
                 llvm-cov
             HINTS
-                "${mc_lab_core_compiler_directory}"
+                ${mc_lab_core_llvm_tool_hints}
             DOC
                 "llvm-cov executable used to report MC-LAB-CORE coverage"
         )

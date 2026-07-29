@@ -42,6 +42,15 @@
       ],
       "displayName": "Linux / Clang / Coverage",
       "description": "Configure a Linux Clang Debug platform build with coverage instrumentation."
+    },
+    {
+      "name": "macos-appleclang-coverage",
+      "inherits": [
+        "coverage",
+        "macos-appleclang-debug"
+      ],
+      "displayName": "macOS / AppleClang / Coverage",
+      "description": "Configure a macOS AppleClang Debug platform build with LLVM source-based coverage instrumentation."
     }
   ],
   "buildPresets": [
@@ -176,6 +185,43 @@
       "displayName": "Check Linux Clang Coverage Policy",
       "description": "Validate the Linux Clang coverage report against the repository policy.",
       "configurePreset": "linux-clang-coverage"
+    },
+    {
+      "name": "macos-appleclang-coverage",
+      "inherits": "build-host-macos",
+      "displayName": "Build macOS AppleClang Coverage",
+      "description": "Build the instrumented macOS AppleClang coverage configuration.",
+      "configurePreset": "macos-appleclang-coverage"
+    },
+    {
+      "name": "macos-appleclang-coverage-reset",
+      "inherits": [
+        "coverage-reset-target",
+        "build-host-macos"
+      ],
+      "displayName": "Reset macOS AppleClang Coverage Data",
+      "description": "Remove runtime coverage profiles before executing the macOS AppleClang test suite.",
+      "configurePreset": "macos-appleclang-coverage"
+    },
+    {
+      "name": "macos-appleclang-coverage-report",
+      "inherits": [
+        "coverage-report-target",
+        "build-host-macos"
+      ],
+      "displayName": "Generate macOS AppleClang Coverage Report",
+      "description": "Generate the normalized coverage report from the macOS AppleClang test execution.",
+      "configurePreset": "macos-appleclang-coverage"
+    },
+    {
+      "name": "macos-appleclang-coverage-check",
+      "inherits": [
+        "coverage-check-target",
+        "build-host-macos"
+      ],
+      "displayName": "Check macOS AppleClang Coverage Policy",
+      "description": "Validate the macOS AppleClang coverage report against the repository policy.",
+      "configurePreset": "macos-appleclang-coverage"
     }
   ],
   "testPresets": [
@@ -196,6 +242,12 @@
       "inherits": "test-host-linux",
       "displayName": "Test Linux Clang Coverage",
       "configurePreset": "linux-clang-coverage"
+    },
+    {
+      "name": "macos-appleclang-coverage",
+      "inherits": "test-host-macos",
+      "displayName": "Test macOS AppleClang Coverage",
+      "configurePreset": "macos-appleclang-coverage"
     }
   ],
   "workflowPresets": [
@@ -289,6 +341,37 @@
         {
           "type": "build",
           "name": "linux-clang-coverage-check"
+        }
+      ]
+    },
+    {
+      "name": "macos-appleclang-coverage",
+      "displayName": "macOS AppleClang Coverage Workflow",
+      "description": "Build, test, report, and enforce LLVM coverage using the macOS AppleClang platform.",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "macos-appleclang-coverage"
+        },
+        {
+          "type": "build",
+          "name": "macos-appleclang-coverage"
+        },
+        {
+          "type": "build",
+          "name": "macos-appleclang-coverage-reset"
+        },
+        {
+          "type": "test",
+          "name": "macos-appleclang-coverage"
+        },
+        {
+          "type": "build",
+          "name": "macos-appleclang-coverage-report"
+        },
+        {
+          "type": "build",
+          "name": "macos-appleclang-coverage-check"
         }
       ]
     }
