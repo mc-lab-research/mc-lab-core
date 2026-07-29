@@ -2,6 +2,8 @@
 
 **A portable C++20 platform for executable semantics and formal verification research.**
 
+[![Coverage](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/coverage.yml/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/coverage.yml)
+
 mcLab brings high-quality software engineering infrastructure to the definition, execution, exploration, and checking of formal semantics.
 
 It is being developed as an open foundation for researchers, engineers, educators, and students who want to build semantic models and verification tools without starting from a monolithic model checker.
@@ -41,7 +43,7 @@ The repository provides or is establishing:
 - compiler warning policies;
 - sanitizers;
 - static analysis;
-- code coverage;
+- [code coverage](docs/cmake/coverage.md);
 - reproducible builds;
 - explicit architectural boundaries.
 
