@@ -260,6 +260,7 @@ if(MC_LAB_CORE_ENABLE_COVERAGE)
             MC_LAB_CORE_LLVM_PROFDATA
             NAMES
                 llvm-profdata-22
+                llvm-profdata-18
                 llvm-profdata
             HINTS
                 ${mc_lab_core_llvm_tool_hints}
@@ -271,6 +272,7 @@ if(MC_LAB_CORE_ENABLE_COVERAGE)
             MC_LAB_CORE_LLVM_COV
             NAMES
                 llvm-cov-22
+                llvm-cov-18
                 llvm-cov
             HINTS
                 ${mc_lab_core_llvm_tool_hints}
