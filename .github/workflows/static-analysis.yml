@@ -52,8 +52,8 @@ jobs:
 
       - name: Install clang-tidy
         run: |
-          brew install llvm
-          echo "$(brew --prefix llvm)/bin" >> "$GITHUB_PATH"
+          brew install llvm@18
+          echo "$(brew --prefix llvm@18)/bin" >> "$GITHUB_PATH"
 
       - name: Report analysis tools
         run: |
@@ -75,9 +75,16 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: Activate, report tools, and run static analysis
+      - name: Install LLVM 18 and run static analysis
         shell: pwsh
         run: |
+          choco install llvm --version=18.1.8 --yes --no-progress
+
+          $llvmBin = 'C:\Program Files\LLVM\bin'
+          if (-not (Test-Path -LiteralPath $llvmBin)) {
+            throw "LLVM 18 installation directory was not found: $llvmBin"
+          }
+
           $vswhere = Join-Path ${env:ProgramFiles(x86)} `
             'Microsoft Visual Studio\Installer\vswhere.exe'
           $installationPath = & $vswhere `
@@ -96,6 +103,8 @@ jobs:
             -Arch amd64 `
             -HostArch amd64 `
             -SkipAutomaticLocation
+
+          $env:Path = "$llvmBin;$env:Path"
 
           cmake --version
           ninja --version
