@@ -1,6 +1,6 @@
 # mcLab
 
-**A portable C++20 platform for executable semantics and formal verification research of AI agents.**
+**A portable C++20 platform for executable semantics and formal verification of AI agents.**
 
 [![Windows MSVC](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/windows-msvc.yml/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/windows-msvc.yml)
 [![Linux GCC](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/linux-gcc.yml/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/linux-gcc.yml)
