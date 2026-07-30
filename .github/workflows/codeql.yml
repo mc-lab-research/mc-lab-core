@@ -28,9 +28,6 @@ jobs:
         with:
           languages: ${{ matrix.language }}
 
-      - name: Setup CMake
-        uses: cmake-developers/cmake-ci-cd/setup-cmake@master
-
       - name: Configure CMake
         run: cmake -B ${{ runner.temp }}/build -S . -DCMAKE_BUILD_TYPE=Release
 
