@@ -7,7 +7,7 @@
 [![macOS AppleClang](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/macos-appleclang.yml/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/macos-appleclang.yml)
 [![Quality Gate](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/quality-gate.yml/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/quality-gate.yml)
 [![Coverage](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/coverage.yml/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/coverage.yml)
-[![CodeQL](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/github-code-scanning/codeql)
+[![CodeQL](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/codeql.yml/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/codeql.yml)
 
 mcLab brings high-quality software engineering infrastructure to the definition, execution, exploration, and checking of formal semantics.
 

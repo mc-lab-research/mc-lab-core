@@ -1,0 +1,43 @@
+name: CodeQL
+on:
+  push:
+    branches: [master, develop]
+  pull_request:
+    branches: [master]
+  schedule:
+    - cron: '0 12 * * 1'
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [cpp]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+
+      - name: Setup CMake
+        uses: cmake-developers/cmake-ci-cd/setup-cmake@master
+
+      - name: Configure CMake
+        run: cmake -B ${{ runner.temp }}/build -S . -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build ${{ runner.temp }}/build --config Release
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:cpp"
