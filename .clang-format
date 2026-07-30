@@ -6,8 +6,6 @@ BreakBeforeTernaryOperators: true
 BreakStringLiterals: false
 # Preserve visible return types when function names wrap.
 IndentWrappedFunctionNames: false
-# Function definitions stay compact when their complete signature fits.
-BreakFunctionDefinitionParameters: false
 # ==============================================================================
 # Constructors and inheritance
 # ==============================================================================
@@ -19,9 +17,6 @@ BreakInheritanceList: BeforeColon
 # ==============================================================================
 # Templates, concepts, and requires expressions
 # ==============================================================================
-# Template declarations always appear separately from the declaration they
-# parameterize.
-BreakTemplateDeclarations: Yes
 # Requires clauses form an explicit part of a declaration's contract.
 RequiresClausePosition: OwnLine
 IndentRequiresClause: false
@@ -66,9 +61,6 @@ IncludeCategories:
     Priority: 3
     SortPriority: 3
     CaseSensitive: true
-# Public headers may be included using angle brackets while internal headers may
-# use quotes.
-MainIncludeChar: Any
 # ==============================================================================
 # Spacing
 # ==============================================================================
