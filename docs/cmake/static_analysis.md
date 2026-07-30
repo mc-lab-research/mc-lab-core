@@ -224,5 +224,8 @@ cmake --preset linux-clang-debug
 cmake --build --preset linux-clang-tidy
 ```
 
-When CI is introduced, it should pin the clang-tidy family selected by the
-repository policy. Ordinary builds remain independent from that tool version.
+The `Static analysis` GitHub Actions workflow runs the canonical Linux Clang,
+macOS AppleClang, and Windows clang-cl presets from a clean checkout. It
+reports the CMake, compiler, LLVM, and clang-tidy versions before running the
+same command shown above. Ordinary builds remain independent from the
+clang-tidy tool version.
