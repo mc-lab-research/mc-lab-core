@@ -53,14 +53,17 @@ jobs:
       - name: Install clang-tidy
         run: |
           brew install llvm@18
-          echo "$(brew --prefix llvm@18)/bin" >> "$GITHUB_PATH"
+          mkdir --parents "$RUNNER_TEMP/llvm-tidy-bin"
+          ln --symbolic "$(brew --prefix llvm@18)/bin/clang-tidy" \
+            "$RUNNER_TEMP/llvm-tidy-bin/clang-tidy"
+          echo "$RUNNER_TEMP/llvm-tidy-bin" >> "$GITHUB_PATH"
 
       - name: Report analysis tools
         run: |
           cmake --version
           ninja --version
           clang++ --version
-          llvm-config --version
+          "$(brew --prefix llvm@18)/bin/llvm-config" --version
           clang-tidy --version
 
       - name: Run static analysis
