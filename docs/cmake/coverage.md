@@ -30,11 +30,12 @@ The canonical outputs are written below the preset build directory:
 - `coverage/coverage-summary.txt`: human-readable summary;
 - `coverage/html/index.html`: browsable source report.
 
-The `Coverage` GitHub Actions workflow runs Linux Clang, macOS AppleClang, and
-Windows clang-cl for every pull request and every push to `master`. Each job
-publishes its complete `coverage` directory for 14 days under a distinct
-artifact name:
+The `Coverage` GitHub Actions workflow runs Linux GCC, Linux Clang, macOS
+AppleClang, and Windows clang-cl for every pull request and every push to
+`master`. Each job publishes its complete `coverage` directory for 14 days
+under a distinct artifact name:
 
+- `coverage-linux-gcc`;
 - `coverage-linux-clang`;
 - `coverage-macos-appleclang`;
 - `coverage-windows-clangcl`.
@@ -43,9 +44,9 @@ An artifact step also runs after a failed quality gate when that job
 successfully generated `coverage.info`, so a platform-specific regression can
 be investigated.
 
-Linux Clang remains the canonical CI measurement and baseline. The Windows
-clang-cl and macOS AppleClang jobs continuously validate portability and
-provide GitHub-hosted diagnostics for their respective contributor
+Linux GCC is the canonical CI measurement and baseline. The Linux Clang,
+Windows clang-cl, and macOS AppleClang jobs continuously validate portability
+and provide GitHub-hosted diagnostics for their respective contributor
 environments.
 
 ## Scope and exclusions
