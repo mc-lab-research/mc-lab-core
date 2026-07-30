@@ -1,0 +1,40 @@
+name: Windows MSVC
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: windows-msvc-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  windows-msvc:
+    name: ${{ matrix.name }}
+    runs-on: windows-2022
+    timeout-minutes: 30
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Windows MSVC / Debug
+            preset: windows-visualstudio-2022-debug
+          - name: Windows MSVC / Release
+            preset: windows-visualstudio-2022-release
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Report build tools
+        run: cmake --version
+
+      - name: Configure, build, and test
+        run: cmake --workflow --preset "${{ matrix.preset }}" --fresh
