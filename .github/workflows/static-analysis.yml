@@ -1,0 +1,117 @@
+name: Static analysis
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: static-analysis-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linux-clang:
+    name: Linux / Clang / Static analysis (canonical)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install clang-tidy
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends clang-tidy-18 llvm-18
+          sudo ln --symbolic --force "$(command -v clang-tidy-18)" /usr/local/bin/clang-tidy
+
+      - name: Report analysis tools
+        run: |
+          cmake --version
+          ninja --version
+          clang++ --version
+          llvm-config-18 --version
+          clang-tidy --version
+
+      - name: Run static analysis
+        run: cmake --workflow --preset linux-clang-tidy --fresh
+
+  macos-appleclang:
+    name: macOS 15 / AppleClang / Static analysis
+    runs-on: macos-15
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install clang-tidy
+        run: |
+          brew install llvm@18
+          mkdir -p "$RUNNER_TEMP/llvm-tidy-bin"
+          ln -sf "$(brew --prefix llvm@18)/bin/clang-tidy" \
+            "$RUNNER_TEMP/llvm-tidy-bin/clang-tidy"
+          echo "$RUNNER_TEMP/llvm-tidy-bin" >> "$GITHUB_PATH"
+
+      - name: Report analysis tools
+        run: |
+          cmake --version
+          ninja --version
+          clang++ --version
+          "$(brew --prefix llvm@18)/bin/llvm-config" --version
+          clang-tidy --version
+
+      - name: Run static analysis
+        run: cmake --workflow --preset macos-appleclang-tidy --fresh
+
+  windows-clangcl:
+    name: Windows 2022 / clang-cl / Static analysis
+    runs-on: windows-2022
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install LLVM 18 and run static analysis
+        shell: pwsh
+        run: |
+          choco install llvm --version=18.1.8 --yes --no-progress
+
+          $llvmBin = 'C:\Program Files\LLVM\bin'
+          if (-not (Test-Path -LiteralPath $llvmBin)) {
+            throw "LLVM 18 installation directory was not found: $llvmBin"
+          }
+
+          $vswhere = Join-Path ${env:ProgramFiles(x86)} `
+            'Microsoft Visual Studio\Installer\vswhere.exe'
+          $installationPath = & $vswhere `
+            -latest `
+            -products '*' `
+            -requires 'Microsoft.VisualStudio.Component.VC.Tools.x86.x64' `
+            -property installationPath
+
+          if (-not $installationPath) {
+            throw 'A Visual Studio installation with the C++ tools was not found.'
+          }
+
+          $developerShell = Join-Path $installationPath `
+            'Common7\Tools\Launch-VsDevShell.ps1'
+          & $developerShell `
+            -Arch amd64 `
+            -HostArch amd64 `
+            -SkipAutomaticLocation
+
+          $env:Path = "$llvmBin;$env:Path"
+
+          cmake --version
+          ninja --version
+          clang-cl --version
+          clang-tidy --version
+
+          cmake --workflow --preset windows-clangcl-tidy --fresh
