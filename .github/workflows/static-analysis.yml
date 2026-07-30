@@ -53,8 +53,8 @@ jobs:
       - name: Install clang-tidy
         run: |
           brew install llvm@18
-          mkdir --parents "$RUNNER_TEMP/llvm-tidy-bin"
-          ln --symbolic "$(brew --prefix llvm@18)/bin/clang-tidy" \
+          mkdir -p "$RUNNER_TEMP/llvm-tidy-bin"
+          ln -sf "$(brew --prefix llvm@18)/bin/clang-tidy" \
             "$RUNNER_TEMP/llvm-tidy-bin/clang-tidy"
           echo "$RUNNER_TEMP/llvm-tidy-bin" >> "$GITHUB_PATH"
 
