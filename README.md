@@ -7,7 +7,7 @@
 [![macOS AppleClang](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/macos-appleclang.yml/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/macos-appleclang.yml)
 [![Quality Gate](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/quality-gate.yml/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/quality-gate.yml)
 [![Coverage](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/coverage.yml/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/coverage.yml)
-[![CodeQL](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/322485259/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/322485259)
+[![CodeQL](https://github.com/mc-lab-research/mc-lab-core/workflows/CodeQL/badge.svg)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/323700157)
 
 mcLab explores software foundations for defining, executing, and analyzing formal semantics.
 
@@ -55,4 +55,3 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the current contribution status and t
 ## License
 
 mcLab is released under the [MIT License](LICENSE).
-
