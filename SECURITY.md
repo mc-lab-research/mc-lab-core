@@ -25,6 +25,8 @@ Please include:
 
 Relevant reports may concern the C++ code, parsers, build system, dependencies, GitHub Actions, secrets, artifacts, or software supply chain.
 
+The repository security baseline and its current validation evidence are tracked in [docs/security/baseline.md](docs/security/baseline.md).
+
 ## Response
 
 Maintainers will aim to acknowledge reports within **7 days**, investigate the issue, prepare a fix, and coordinate disclosure with the reporter.
