@@ -6,8 +6,6 @@ BreakBeforeTernaryOperators: true
 BreakStringLiterals: false
 # Preserve visible return types when function names wrap.
 IndentWrappedFunctionNames: false
-# Function definitions stay compact when their complete signature fits.
-BreakFunctionDefinitionParameters: false
 # ==============================================================================
 # Constructors and inheritance
 # ==============================================================================
@@ -19,9 +17,6 @@ BreakInheritanceList: BeforeColon
 # ==============================================================================
 # Templates, concepts, and requires expressions
 # ==============================================================================
-# Template declarations always appear separately from the declaration they
-# parameterize.
-BreakTemplateDeclarations: Yes
 # Requires clauses form an explicit part of a declaration's contract.
 RequiresClausePosition: OwnLine
 IndentRequiresClause: false
@@ -42,10 +37,7 @@ QualifierAlignment: Leave
 # ==============================================================================
 # Merge and rebuild include groups according to the categories below.
 IncludeBlocks: Regroup
-SortIncludes:
-  Enabled: true
-  IgnoreCase: false
-  IgnoreExtension: false
+SortIncludes: CaseSensitive
 # The source file's own header is automatically placed first by clang-format.
 #
 # Remaining includes are grouped as:
@@ -69,9 +61,6 @@ IncludeCategories:
     Priority: 3
     SortPriority: 3
     CaseSensitive: true
-# Public headers may be included using angle brackets while internal headers may
-# use quotes.
-MainIncludeChar: Any
 # ==============================================================================
 # Spacing
 # ==============================================================================
@@ -88,7 +77,7 @@ SpacesInSquareBrackets: false
 # Comments
 # ==============================================================================
 # Reflow ordinary comments to respect the column limit.
-ReflowComments: Always
+ReflowComments: true
 # Comments carrying tool directives must remain intact.
 CommentPragmas: '^(IWYU pragma:|NOLINT|clang-format)'
 # Keep trailing comments visually separated from code.

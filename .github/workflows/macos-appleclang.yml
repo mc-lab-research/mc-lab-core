@@ -1,0 +1,45 @@
+name: macOS AppleClang
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: macos-appleclang-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  macos-appleclang:
+    name: ${{ matrix.name }}
+    runs-on: macos-15
+    timeout-minutes: 20
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: macOS AppleClang / Debug
+            preset: macos-appleclang-debug
+            compiler: clang++
+          - name: macOS AppleClang / Release
+            preset: macos-appleclang-release
+            compiler: clang++
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Report build tools
+        run: |
+          cmake --version
+          ninja --version
+          "${{ matrix.compiler }}" --version
+
+      - name: Configure, build, and test
+        run: cmake --workflow --preset "${{ matrix.preset }}" --fresh
