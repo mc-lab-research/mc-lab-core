@@ -378,7 +378,6 @@ else()
             --gcov-tool
             "${MC_LAB_CORE_GCOV}"
             --branch-coverage
-            --no-external
         RESULT_VARIABLE
             mc_lab_core_lcov_capture_result
         ERROR_VARIABLE
