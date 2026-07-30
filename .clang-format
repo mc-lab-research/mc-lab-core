@@ -42,10 +42,7 @@ QualifierAlignment: Leave
 # ==============================================================================
 # Merge and rebuild include groups according to the categories below.
 IncludeBlocks: Regroup
-SortIncludes:
-  Enabled: true
-  IgnoreCase: false
-  IgnoreExtension: false
+SortIncludes: CaseSensitive
 # The source file's own header is automatically placed first by clang-format.
 #
 # Remaining includes are grouped as:
@@ -88,7 +85,7 @@ SpacesInSquareBrackets: false
 # Comments
 # ==============================================================================
 # Reflow ordinary comments to respect the column limit.
-ReflowComments: Always
+ReflowComments: true
 # Comments carrying tool directives must remain intact.
 CommentPragmas: '^(IWYU pragma:|NOLINT|clang-format)'
 # Keep trailing comments visually separated from code.
