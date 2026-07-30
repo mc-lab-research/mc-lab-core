@@ -15,8 +15,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  coverage:
-    name: Ubuntu 24.04 / Clang / Coverage
+  linux-clang:
+    name: Linux / Clang / Coverage (canonical)
     runs-on: ubuntu-24.04
     timeout-minutes: 20
 
@@ -44,7 +44,84 @@ jobs:
         if: ${{ !cancelled() && hashFiles('build/linux-clang-coverage/coverage/coverage.info') != '' }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: coverage-report
+          name: coverage-linux-clang
           path: build/linux-clang-coverage/coverage/
+          if-no-files-found: error
+          retention-days: 14
+
+  macos-appleclang:
+    name: macOS 15 / AppleClang / Coverage
+    runs-on: macos-15
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Report coverage tools
+        run: |
+          cmake --version
+          ninja --version
+          clang++ --version
+          xcrun llvm-cov --version
+          xcrun llvm-profdata --version
+
+      - name: Configure, build, test, report, and enforce coverage
+        run: cmake --workflow --preset macos-appleclang-coverage --fresh
+
+      - name: Publish coverage report
+        if: ${{ !cancelled() && hashFiles('build/macos-appleclang-coverage/coverage/coverage.info') != '' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: coverage-macos-appleclang
+          path: build/macos-appleclang-coverage/coverage/
+          if-no-files-found: error
+          retention-days: 14
+
+  windows-clangcl:
+    name: Windows 2022 / clang-cl / Coverage
+    runs-on: windows-2022
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Activate, report tools, and run coverage
+        shell: pwsh
+        run: |
+          $vswhere = Join-Path ${env:ProgramFiles(x86)} `
+            'Microsoft Visual Studio\Installer\vswhere.exe'
+          $installationPath = & $vswhere `
+            -latest `
+            -products '*' `
+            -requires 'Microsoft.VisualStudio.Component.VC.Tools.x86.x64' `
+            -property installationPath
+
+          if (-not $installationPath) {
+            throw 'A Visual Studio installation with the C++ tools was not found.'
+          }
+
+          $developerShell = Join-Path $installationPath `
+            'Common7\Tools\Launch-VsDevShell.ps1'
+          & $developerShell `
+            -Arch amd64 `
+            -HostArch amd64 `
+            -SkipAutomaticLocation
+
+          cmake --version
+          ninja --version
+          clang-cl --version
+          llvm-cov --version
+          llvm-profdata --version
+
+          cmake --workflow --preset windows-clangcl-coverage --fresh
+
+      - name: Publish coverage report
+        if: ${{ !cancelled() && hashFiles('build/windows-clangcl-coverage/coverage/coverage.info') != '' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: coverage-windows-clangcl
+          path: build/windows-clangcl-coverage/coverage/
           if-no-files-found: error
           retention-days: 14
