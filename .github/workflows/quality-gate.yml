@@ -1,0 +1,34 @@
+name: Quality Gate
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-gate-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality-gate:
+    name: Linux GCC Commit Gate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Report quality gate tools
+        run: |
+          cmake --version
+          ninja --version
+          g++ --version
+
+      - name: Enforce commit gate
+        run: cmake --workflow --preset linux-gcc-commit-gate --fresh

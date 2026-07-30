@@ -2,7 +2,12 @@
 
 **A portable C++20 platform for executable semantics and formal verification research.**
 
+[![Windows MSVC](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/windows-msvc.yml/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/windows-msvc.yml)
+[![Linux GCC](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/linux-gcc.yml/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/linux-gcc.yml)
+[![macOS AppleClang](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/macos-appleclang.yml/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/macos-appleclang.yml)
+[![Quality Gate](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/quality-gate.yml/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/quality-gate.yml)
 [![Coverage](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/coverage.yml/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/coverage.yml)
+[![CodeQL](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/322485259/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/322485259)
 
 mcLab brings high-quality software engineering infrastructure to the definition, execution, exploration, and checking of formal semantics.
 
@@ -16,7 +21,7 @@ It is a modular platform in which languages, semantic models, analysis domains, 
 
 The long-term semantic pipeline is:
 
-**Source language → Semantic IR → Executable semantics → Exploration → Verification**
+**Source language â†’ Semantic IR â†’ Executable semantics â†’ Exploration â†’ Verification**
 
 mcLab aims to support several semantic families, including:
 
@@ -55,7 +60,7 @@ The Core is headless and independent from graphical interfaces.
 
 mcLab follows a strict dependency direction:
 
-**Tools → Extensions → Core**
+**Tools â†’ Extensions â†’ Core**
 
 ### Core
 
@@ -115,8 +120,9 @@ Advanced semantic families, family-based analyses, Studio features, and AI-assis
 
 mcLab is not yet open to external contributions while its foundational architecture and public contracts are being established.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the current contribution status and the project’s future contribution principles.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the current contribution status and the projectâ€™s future contribution principles.
 
 ## License
 
 mcLab is released under the [MIT License](LICENSE).
+
