@@ -1,0 +1,36 @@
+name: AddressSanitizer
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: asan-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linux-gcc:
+    name: Linux / GCC / AddressSanitizer (canonical)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Report AddressSanitizer environment
+        run: |
+          cmake --version
+          ninja --version
+          g++ --version
+          printf 'AddressSanitizer runtime: '
+          g++ -print-file-name=libasan.so
+
+      - name: Configure, build, and test with AddressSanitizer
+        run: cmake --workflow --preset linux-gcc-asan --fresh
