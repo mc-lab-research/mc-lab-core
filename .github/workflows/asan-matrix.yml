@@ -1,0 +1,242 @@
+name: AddressSanitizer matrix
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Platform and toolchain to validate
+        required: true
+        default: all
+        type: choice
+        options:
+          - all
+          - linux-gcc
+          - linux-clang
+          - macos-appleclang
+          - windows-msvc
+          - windows-visualstudio-2022
+          - windows-visualstudio-2026
+          - windows-clangcl
+          - windows-clang64
+
+permissions:
+  contents: read
+
+concurrency:
+  group: asan-matrix-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  resolve-matrix:
+    name: Resolve requested matrix
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      matrix: ${{ steps.matrix.outputs.value }}
+
+    steps:
+      - name: Select matrix entries
+        id: matrix
+        env:
+          TARGET: ${{ inputs.target }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          value="$(
+            jq --compact-output --arg target "$TARGET" '
+              {
+                include: [
+                  .include[]
+                  | select($target == "all" or .id == $target)
+                ]
+              }
+            ' <<'JSON'
+          {
+            "include": [
+              {
+                "id": "linux-gcc",
+                "name": "Linux / GCC",
+                "runner": "ubuntu-24.04",
+                "preset": "linux-gcc-asan",
+                "environment": "linux-gcc"
+              },
+              {
+                "id": "linux-clang",
+                "name": "Linux / Clang",
+                "runner": "ubuntu-24.04",
+                "preset": "linux-clang-asan",
+                "environment": "linux-clang"
+              },
+              {
+                "id": "macos-appleclang",
+                "name": "macOS 15 / AppleClang",
+                "runner": "macos-15",
+                "preset": "macos-appleclang-asan",
+                "environment": "macos"
+              },
+              {
+                "id": "windows-msvc",
+                "name": "Windows 2022 / MSVC / Ninja",
+                "runner": "windows-2022",
+                "preset": "windows-msvc-asan",
+                "environment": "windows-native"
+              },
+              {
+                "id": "windows-visualstudio-2022",
+                "name": "Windows 2022 / Visual Studio 2022",
+                "runner": "windows-2022",
+                "preset": "windows-visualstudio-2022-asan",
+                "environment": "windows-native"
+              },
+              {
+                "id": "windows-visualstudio-2026",
+                "name": "Windows 2025 / Visual Studio 2026",
+                "runner": "windows-2025-vs2026",
+                "preset": "windows-visualstudio-2026-asan",
+                "environment": "windows-native"
+              },
+              {
+                "id": "windows-clangcl",
+                "name": "Windows 2022 / clang-cl / Ninja",
+                "runner": "windows-2022",
+                "preset": "windows-clangcl-asan",
+                "environment": "windows-clangcl"
+              },
+              {
+                "id": "windows-clang64",
+                "name": "Windows 2022 / MSYS2 CLANG64",
+                "runner": "windows-2022",
+                "preset": "windows-clang64-asan",
+                "environment": "windows-clang64"
+              }
+            ]
+          }
+          JSON
+          )"
+
+          if [ "$(jq '.include | length' <<< "$value")" -eq 0 ]; then
+            echo "Unsupported target: $TARGET" >&2
+            exit 1
+          fi
+          echo "value=$value" >> "$GITHUB_OUTPUT"
+
+  validate:
+    name: ${{ matrix.name }}
+    needs: resolve-matrix
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 30
+
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.resolve-matrix.outputs.matrix) }}
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Report Linux GCC AddressSanitizer environment
+        if: matrix.environment == 'linux-gcc'
+        shell: bash
+        run: |
+          cmake --version
+          ninja --version
+          g++ --version
+          printf 'AddressSanitizer runtime: '
+          g++ -print-file-name=libasan.so
+
+      - name: Report Linux Clang AddressSanitizer environment
+        if: matrix.environment == 'linux-clang'
+        shell: bash
+        run: |
+          cmake --version
+          ninja --version
+          clang++ --version
+          printf 'Clang resource directory: '
+          clang++ -print-resource-dir
+          command -v llvm-symbolizer || true
+
+      - name: Report macOS AddressSanitizer environment
+        if: matrix.environment == 'macos'
+        shell: bash
+        run: |
+          sw_vers
+          xcodebuild -version
+          cmake --version
+          ninja --version
+          clang++ --version
+          printf 'AppleClang resource directory: '
+          clang++ -print-resource-dir
+
+      - name: Set up MSYS2 CLANG64
+        if: matrix.environment == 'windows-clang64'
+        uses: msys2/setup-msys2@66cd2cce69caa17b53920067426061ca1de3a884 # v2
+        with:
+          msystem: CLANG64
+          update: true
+          install: >-
+            mingw-w64-clang-x86_64-clang
+            mingw-w64-clang-x86_64-compiler-rt
+            mingw-w64-clang-x86_64-cmake
+            mingw-w64-clang-x86_64-ninja
+
+      - name: Report and run MSYS2 CLANG64 AddressSanitizer
+        if: matrix.environment == 'windows-clang64'
+        shell: msys2 {0}
+        run: |
+          set -euo pipefail
+          cmake --version
+          ninja --version
+          clang++ --version
+          resource_dir="$(clang++ -print-resource-dir)"
+          printf 'Clang resource directory: %s\n' "$resource_dir"
+          test -f /clang64/bin/libclang_rt.asan_dynamic-x86_64.dll
+          cmake --workflow --preset "${{ matrix.preset }}" --fresh
+
+      - name: Report and run native Windows AddressSanitizer
+        if: startsWith(matrix.environment, 'windows-') && matrix.environment != 'windows-clang64'
+        shell: pwsh
+        run: |
+          $vswhere = Join-Path ${env:ProgramFiles(x86)} `
+            'Microsoft Visual Studio\Installer\vswhere.exe'
+          $installationPath = & $vswhere `
+            -latest `
+            -products '*' `
+            -requires 'Microsoft.VisualStudio.Component.VC.Tools.x86.x64' `
+            -property installationPath
+
+          if (-not $installationPath) {
+            throw 'A Visual Studio installation with the C++ tools was not found.'
+          }
+
+          $developerShell = Join-Path $installationPath `
+            'Common7\Tools\Launch-VsDevShell.ps1'
+          & $developerShell `
+            -Arch amd64 `
+            -HostArch amd64 `
+            -SkipAutomaticLocation
+
+          cmake --version
+          cl
+
+          if ('${{ matrix.environment }}' -eq 'windows-clangcl') {
+            clang-cl --version
+            $resourceDirectory = clang-cl -print-resource-dir
+            Write-Host "Clang resource directory: $resourceDirectory"
+
+            $runtime = Join-Path $resourceDirectory `
+              'lib\windows\clang_rt.asan_dynamic-x86_64.dll'
+            if (-not (Test-Path -LiteralPath $runtime)) {
+              throw "The clang-cl AddressSanitizer runtime was not found: $runtime"
+            }
+          }
+
+          cmake --workflow --preset '${{ matrix.preset }}' --fresh
+
+      - name: Run Unix AddressSanitizer workflow
+        if: >-
+          matrix.environment == 'linux-gcc' ||
+          matrix.environment == 'linux-clang' ||
+          matrix.environment == 'macos'
+        shell: bash
+        run: cmake --workflow --preset "${{ matrix.preset }}" --fresh

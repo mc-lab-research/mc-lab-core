@@ -79,7 +79,8 @@ The repository currently provides AddressSanitizer workflows for:
 | Platform | Toolchain or environment | Workflow preset |
 | --- | --- | --- |
 | Windows | Native MSVC with Ninja | `windows-msvc-asan` |
-| Windows | Visual Studio | `windows-visualstudio-asan` |
+| Windows | Visual Studio 2022 | `windows-visualstudio-2022-asan` |
+| Windows | Visual Studio 2026 | `windows-visualstudio-2026-asan` |
 | Windows | clang-cl with Ninja | `windows-clangcl-asan` |
 | Windows | MSYS2 CLANG64 | `windows-clang64-asan` |
 | Linux | GCC | `linux-gcc-asan` |
@@ -89,6 +90,31 @@ The repository currently provides AddressSanitizer workflows for:
 MSYS2 UCRT64 GCC is deliberately outside the current Windows AddressSanitizer
 contract because runtime availability and packaging vary between
 distributions. Use the CLANG64 workflow for a GNU-style Windows environment.
+
+## Continuous integration
+
+The `AddressSanitizer` workflow is the automatic sanitizer quality gate. It
+runs `linux-gcc-asan` on `ubuntu-24.04` for every pull request and every push to
+`master`. This canonical job keeps the required sanitizer path stable and
+reasonably fast.
+
+The `AddressSanitizer matrix` workflow is manual. Its `target` input runs either
+the complete supported matrix or one selected platform and toolchain:
+
+| Target | GitHub-hosted runner | Workflow preset |
+| --- | --- | --- |
+| `linux-gcc` | `ubuntu-24.04` | `linux-gcc-asan` |
+| `linux-clang` | `ubuntu-24.04` | `linux-clang-asan` |
+| `macos-appleclang` | `macos-15` | `macos-appleclang-asan` |
+| `windows-msvc` | `windows-2022` | `windows-msvc-asan` |
+| `windows-visualstudio-2022` | `windows-2022` | `windows-visualstudio-2022-asan` |
+| `windows-visualstudio-2026` | `windows-2025-vs2026` | `windows-visualstudio-2026-asan` |
+| `windows-clangcl` | `windows-2022` | `windows-clangcl-asan` |
+| `windows-clang64` | `windows-2022` | `windows-clang64-asan` |
+
+The matrix reports the selected compiler and runtime environment before running
+the repository workflow preset. A configuration, build, CTest, or sanitizer
+failure therefore fails the corresponding job without a CI-specific test path.
 
 ## Build isolation
 
@@ -204,5 +230,6 @@ cmake --workflow --preset macos-appleclang-asan
 The Visual Studio workflow may also be exercised explicitly:
 
 ```sh
-cmake --workflow --preset windows-visualstudio-asan
+cmake --workflow --preset windows-visualstudio-2022-asan
+cmake --workflow --preset windows-visualstudio-2026-asan
 ```
