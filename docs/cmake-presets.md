@@ -55,9 +55,8 @@ from `CMakePresets.json` would not make them reachable from each other.
 The platform include chain is similarly layered:
 
 ```text
-base.json <- hosts.json <- platforms.json
-                            ^ compilers.json
-                            ^ generators.json
+base.json <- hosts.json <- profiles.json <- compilers.json <- generators.json <- platforms.json
+
 ```
 
 Only `hosts.json` includes `base.json`, because its test guards inherit the
@@ -83,9 +82,9 @@ in
 
 | Environment | Compiler presets | Architectures | Configurations |
 | --- | --- | --- | --- |
-| Windows | MSVC, clang-cl, MSYS2 UCRT64 GCC, MSYS2 CLANG64 | Native x64 host and x64 target | Debug, Release |
-| Linux | GCC, Clang | Native | Debug, Release |
-| macOS | AppleClang | Native | Debug, Release |
+| Windows x64 | MSVC, clang-cl, MSYS2 UCRT64 GCC & CLANG64 | Debug, Release |
+| Linux | GCC, Clang | Debug, Release |
+| macOS | AppleClang | Debug, Release |
 
 Ubuntu, Debian, and Fedora use the same Linux presets. Distribution-specific
 validation belongs in the CI runner or container matrix rather than in
