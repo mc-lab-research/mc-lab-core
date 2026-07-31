@@ -82,9 +82,9 @@ in
 
 | Environment | Compiler presets | Architectures | Configurations |
 | --- | --- | --- | --- |
-| Windows x64 | MSVC, clang-cl, MSYS2 UCRT64 GCC & CLANG64 | Debug, Release |
-| Linux | GCC, Clang | Debug, Release |
-| macOS | AppleClang | Debug, Release |
+| Windows x64 | MSVC, clang-cl, MSYS2 UCRT64 GCC & CLANG64 | Native x64 | Debug, Release |
+| Linux | GCC, Clang | Native | Debug, Release | 
+| macOS | AppleClang | Native | Debug, Release |
 
 Ubuntu, Debian, and Fedora use the same Linux presets. Distribution-specific
 validation belongs in the CI runner or container matrix rather than in
