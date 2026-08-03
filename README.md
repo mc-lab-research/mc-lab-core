@@ -39,7 +39,7 @@ The Core is headless and independent from graphical interfaces and specific AI f
 
 mcLab is developed as a portable C++20 codebase with CMake, CTest, continuous integration, static analysis, and code coverage.
 
-The active CI workflows define the platforms and toolchains currently validated by the project.
+The active CI workflows define the platforms and toolchains currently validated by the project; see [CI architecture and governance](docs/ci/README.md).
 
 ## Status
 
