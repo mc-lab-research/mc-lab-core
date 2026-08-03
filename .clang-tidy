@@ -116,3 +116,5 @@ Checks:
   # C++ Core Guidelines — mandatory safety and ownership rules
   # ============================================================================
   - 'cppcoreguidelines-avoid-goto'
+
+WarningsAsErrors: '*'
