@@ -5,7 +5,7 @@ host environments, compiler families, build configurations, and quality tools.
 
 > The preset catalog describes the build configurations provided by the
 > repository. Official platform support is established only by the active CI
-> matrix and published project status.
+> matrix and published project status; see [CI architecture and governance](../ci/README.md).
 
 ## Scope and source of truth
 
@@ -92,7 +92,7 @@ duplicate CMake preset aliases.
 
 The table above is a configured preset matrix, not a claim that every
 combination is already continuously validated. The active CI workflows are
-the source of truth for validated combinations.
+the source of truth for validated combinations (see [CI architecture and governance](../ci/README.md)).
 
 AppleClang is the portable macOS default. Non-Apple LLVM and GNU GCC
 installations commonly use package-manager-specific, versioned paths and belong

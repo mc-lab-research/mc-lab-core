@@ -11,7 +11,7 @@ The summary is intended to answer three questions immediately:
 
 The summary reports configured state. It does not establish official platform
 support; the active CI matrix remains the source of truth for continuously
-validated combinations.
+validated combinations (see [CI architecture and governance](../ci/README.md)).
 
 ## Public API
 
