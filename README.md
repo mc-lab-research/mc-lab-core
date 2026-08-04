@@ -2,6 +2,7 @@
 
 **A portable C++20 platform for executable semantics and formal verification of AI agents.**
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4bc2b7e139cd428da402cffb07a3c13e)](https://app.codacy.com/gh/mc-lab-research/mc-lab-core?utm_source=github.com&utm_medium=referral&utm_content=mc-lab-research/mc-lab-core&utm_campaign=Badge_Grade)
 [![Windows MSVC](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/windows-msvc.yml/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/windows-msvc.yml)
 [![Linux GCC](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/linux-gcc.yml/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/linux-gcc.yml)
 [![macOS AppleClang](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/macos-appleclang.yml/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/macos-appleclang.yml)
