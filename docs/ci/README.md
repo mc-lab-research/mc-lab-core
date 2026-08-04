@@ -80,7 +80,6 @@ Automatically validated on pull requests:
 - Linux GCC AddressSanitizer
 - Linux Clang static analysis (canonical)
 - Additional optional/advisory jobs in static analysis and coverage
-
 Automatically validated outside pull requests:
 
 - Native builds on every branch push

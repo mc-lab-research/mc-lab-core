@@ -1,7 +1,6 @@
 name: Windows MSVC
 
 on:
-  pull_request:
   push:
     branches:
       - master
