@@ -1,0 +1,47 @@
+name: Release portability
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-portability-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: ${{ matrix.timeout_minutes }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Linux GCC / Release
+            runner: ubuntu-24.04
+            timeout_minutes: 20
+            preset: linux-gcc-release
+          - name: macOS AppleClang / Release
+            runner: macos-15
+            timeout_minutes: 20
+            preset: macos-appleclang-release
+          - name: Windows MSVC / Release
+            runner: windows-2022
+            timeout_minutes: 30
+            preset: windows-visualstudio-2022-release
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Report build tools
+        run: cmake --version
+
+      - name: Configure, build, and test
+        run: cmake --workflow --preset "${{ matrix.preset }}" --fresh

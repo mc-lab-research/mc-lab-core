@@ -1,7 +1,6 @@
 name: macOS AppleClang
 
 on:
-  pull_request:
   push:
     branches:
       - master
