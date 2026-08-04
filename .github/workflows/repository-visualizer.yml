@@ -24,6 +24,9 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Prepare artifact directory
+        run: mkdir -p artifacts
+
       - name: Generate repository structure diagram
         uses: githubocto/repo-visualizer@a999615bdab757559bf94bda1fe6eef232765f85 # v0.9.1
         with:
