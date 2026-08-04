@@ -80,21 +80,25 @@ report containing a source outside the configured first-party paths.
 
 The accepted baseline is `master` commit
 `f8961dc2b0c8445fb3a50ba5f0ff46b902928fe1`. It was measured on 2026-08-03
-with the `windows-clangcl-coverage` workflow and LLVM 22.1.8, using the same
-normalized LCOV report and policy gate used by CI:
+by the canonical `linux-gcc-coverage` workflow on Ubuntu 24.04, using GCC/gcov
+13.3.0 and the same normalized LCOV report and policy gate used by CI:
 
 | Metric | Covered | Total | Baseline |
 | --- | ---: | ---: | ---: |
-| Lines | 33 | 33 | 100.00% |
-| Branches | 10 | 10 | 100.00% |
+| Lines | 20 | 20 | 100.00% |
+| Branches | 14 | 16 | 87.50% |
 | Functions | 3 | 3 | 100.00% |
 
 The platform-independent LCOV representation makes metric names, source paths,
 and report locations toolchain-neutral. Minor backend differences may occur as
 compilers evolve, so the enforced policy uses stable whole-number floors rather
 than exact snapshot equality. Linux GCC is the canonical CI baseline job; the
-accepted values above record the reviewed evidence for the named commit and do
-not make the Windows toolchain a second policy authority.
+values above are its recorded evidence for the named commit.
+
+This historical measurement predates the current 90% hard floors and was
+evaluated against the then-active 80/70/80 policy. It records the initial
+baseline only; it does not exempt current or future changes from the stricter
+90/90/90 gate.
 
 ## Regression policy
 
