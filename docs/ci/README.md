@@ -8,6 +8,8 @@ Related governance audit: [CI governance baseline](governance.md).
 
 mcLab CI separates:
 
+- **Tracked repository workflows**: workflow files versioned under `.github/workflows/`.
+- **GitHub-managed automation**: repository services such as Dependabot that act on CI configuration but are not tracked workflow YAML files.
 - **Canonical quality gates**: required checks that must pass before merge to `master`.
 - **Continuously validated configurations**: workflows that run automatically on pull requests and/or pushes.
 - **Advisory coverage**: automatically executed checks that are informative but not merge-blocking.
@@ -15,6 +17,8 @@ mcLab CI separates:
 - **Configured but not continuously validated presets**: available CMake presets that are not part of always-on CI.
 
 ## Workflow inventory
+
+### Tracked repository workflows
 
 | Workflow | Concern | Trigger | Status | Platform | Toolchain | Local reproduction | Artifacts |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -29,6 +33,12 @@ mcLab CI separates:
 | AddressSanitizer matrix | sanitizer, portability | `workflow_dispatch` (manual target input) | **Manual** (exhaustive matrix) | Ubuntu 24.04, macOS 15, Windows 2022, Windows 2025-vs2026 | GCC, Clang, AppleClang, MSVC, Visual Studio 2022/2026, clang-cl, MSYS2 CLANG64 | `cmake --workflow --preset linux-gcc-asan --fresh`, `linux-clang-asan`, `macos-appleclang-asan`, `windows-msvc-asan`, `windows-visualstudio-2022-asan`, `windows-visualstudio-2026-asan`, `windows-clangcl-asan`, `windows-clang64-asan` | none |
 | Repository visualization | repository documentation | weekly schedule, `workflow_dispatch` | **Advisory** | Ubuntu 24.04 | Repo Visualizer | no direct local equivalent (GitHub-hosted workflow) | `repository-visualization` artifact (SVG, 14-day retention) |
 | OpenSSF Scorecard | security governance | `push` (`master`), `schedule`, `workflow_dispatch` | **Advisory** | Ubuntu 24.04 | OpenSSF Scorecard action | no direct CMake equivalent (GitHub-hosted security workflow) | SARIF uploaded to GitHub Security dashboard |
+
+### GitHub-managed automation related to CI governance
+
+| Automation | Source | Scope | Evidence |
+| --- | --- | --- | --- |
+| Dependabot version updates | GitHub-managed service using [`.github/dependabot.yml`](../../.github/dependabot.yml) | Weekly GitHub Actions dependency update checks for workflow action references | Repository configuration file plus closed follow-up issue [#52](https://github.com/mc-lab-research/mc-lab-core/issues/52) documenting GitHub acceptance and a successful update-check validation |
 
 ## Validation categories
 
@@ -46,7 +56,7 @@ Expected required checks for merge to `master`:
 - `Windows MSVC / Debug`
 - `Windows MSVC / Release`
 
-These names come from job `name:` fields and must stay aligned with branch protection/ruleset configuration.
+These names come from job `name:` fields and must stay aligned with the live branch ruleset configuration for `master`.
 
 ### Continuously validated configurations
 
@@ -58,6 +68,12 @@ Automatically validated on pull requests:
 - Linux GCC AddressSanitizer
 - Linux Clang static analysis (canonical)
 - Additional optional/advisory jobs in static analysis, coverage, and native-builds
+
+Automatically validated outside pull requests:
+
+- Native builds on every branch push
+- Repository visualization on weekly schedule or manual dispatch
+- OpenSSF Scorecard on pushes to `master`, weekly schedule, or manual dispatch
 
 ### Manual exhaustive matrices
 
@@ -80,6 +96,7 @@ CMake presets include additional configurations not always run in required CI (f
 - **Automatic (`push` all branches)**: broader `Native builds` matrix feedback.
 - **Manual (`workflow_dispatch`)**: maintainers can run any enabled workflow on demand.
 - **Scheduled**: `OpenSSF Scorecard` and `Repository visualization` run weekly.
+- **GitHub-managed scheduled service**: Dependabot evaluates the configured `github-actions` ecosystem weekly on Monday at 06:00 Europe/Paris according to [`.github/dependabot.yml`](../../.github/dependabot.yml).
 
 ## Artifacts and reports
 
@@ -91,19 +108,20 @@ CMake presets include additional configurations not always run in required CI (f
 
 ## Permissions and security expectations
 
-- Default expectation: least privilege (`permissions: contents: read`) for build/test workflows.
-- Exception: `OpenSSF Scorecard` uses scoped extra permissions (`security-events: write`, `id-token: write`, `actions: read`) required for SARIF publication and OIDC-based behavior.
-- `actions/checkout` uses `persist-credentials: false` in scorecard workflow.
+- Baseline expectation for repository workflows: top-level `permissions: contents: read`.
+- Exception: `OpenSSF Scorecard` declares top-level `permissions: read-all`, then narrows the executing job to `contents: read`, `actions: read`, `security-events: write`, and `id-token: write` so the workflow can read workflow metadata, mint an OIDC token, and upload SARIF to GitHub Security.
+- `actions/checkout` uses `persist-credentials: false` in the `OpenSSF Scorecard` and `Repository visualization` workflows.
 - Third-party actions must be pinned to immutable full commit SHAs.
 
 ## Action pinning policy
 
-All third-party actions in active workflows are pinned to full 40-character commit SHAs (for example `actions/checkout`, `actions/upload-artifact`, `ossf/scorecard-action`, `github/codeql-action/upload-sarif`, `msys2/setup-msys2`). Floating tags (`@vX`, `@main`) are not acceptable for CI governance.
+All third-party actions in active workflows are pinned to full 40-character commit SHAs (for example `actions/checkout`, `actions/upload-artifact`, `ossf/scorecard-action`, `github/codeql-action/upload-sarif`, `githubocto/repo-visualizer`, `msys2/setup-msys2`). Floating tags (`@vX`, `@main`) are not acceptable for CI governance.
 
 ## Timeout and concurrency policy
 
 - Every workflow job declares `timeout-minutes` to prevent runaway jobs.
-- Most workflows define `concurrency` with `cancel-in-progress: true` so superseded branch runs are cancelled.
+- Most branch-scoped workflows define `concurrency` with `cancel-in-progress: true` so superseded branch runs are cancelled.
+- `Repository visualization` uses workflow-level concurrency with `cancel-in-progress: false`, preserving at most one scheduled/manual generation run at a time instead of cancelling an in-flight artifact build.
 - `OpenSSF Scorecard` currently has no explicit `concurrency` block and relies on workflow scheduling frequency and timeout.
 
 ## Skipped and unsupported job behavior
@@ -120,5 +138,5 @@ All third-party actions in active workflows are pinned to full 40-character comm
   1. run the exact `cmake --workflow --preset ... --fresh` command from this document;
   2. compare compiler/generator/environment summaries in logs;
   3. verify runner OS and tool versions;
-  4. confirm required check names still match branch protection settings.
+  4. confirm required check names still match the live ruleset configuration.
 - Use the manual `AddressSanitizer matrix` workflow for targeted cross-platform incident reproduction.
