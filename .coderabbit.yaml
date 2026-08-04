@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+
+# Keep organization and repository UI settings as the baseline, while making
+# repository-specific overrides visible and reviewable in version control.
+inheritance: true
+
+reviews:
+  auto_review:
+    enabled: true
+    drafts: true
