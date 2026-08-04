@@ -378,8 +378,6 @@ else()
             --gcov-tool
             "${MC_LAB_CORE_GCOV}"
             --branch-coverage
-            --rc
-            geninfo_no_exception_branch=1
         RESULT_VARIABLE
             mc_lab_core_lcov_capture_result
         ERROR_VARIABLE
