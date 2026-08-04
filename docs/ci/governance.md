@@ -8,7 +8,7 @@ Validated on **2026-08-04**.
 
 ## Workflow inventory
 
-The repository currently tracks **10** GitHub Actions workflow files under `.github/workflows/`.
+The repository currently tracks **11** GitHub Actions workflow files under `.github/workflows/`.
 These are distinct from GitHub-managed services such as Dependabot, which influence CI governance but are not tracked workflow YAML files.
 
 ### Tracked repository workflows
@@ -133,7 +133,7 @@ Version tags appear as comments to assist human readability and Dependabot updat
 
 | Control | Evidence | Status |
 | --- | --- | --- |
-| All external Actions pinned to immutable commit SHAs | Every external action reference across the 10 tracked workflow files is pinned to a full 40-character SHA with a version comment. | Validated |
+| All external Actions pinned to immutable commit SHAs | Every external action reference across the 11 tracked workflow files is pinned to a full 40-character SHA with a version comment. | Validated |
 | No floating tag or branch references | No tracked workflow references an Action by a mutable tag (`@v4`, `@main`, etc.) without an accompanying SHA. | Validated |
 
 ### Dependabot maintenance
@@ -164,7 +164,7 @@ All jobs carry an explicit `timeout-minutes` value, preventing runaway jobs from
 
 | Control | Evidence | Status |
 | --- | --- | --- |
-| All jobs have explicit `timeout-minutes` | Every job across all 10 tracked workflow files declares `timeout-minutes`. | Validated |
+| All jobs have explicit `timeout-minutes` | Every job across all 11 tracked workflow files declares `timeout-minutes`. | Validated |
 
 ### Concurrency — cancellation of obsolete runs where appropriate
 
