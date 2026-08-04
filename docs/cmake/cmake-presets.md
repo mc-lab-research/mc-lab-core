@@ -29,8 +29,8 @@ The sources of truth are:
   visibility guards for configure, build, and test presets.
 - `cmake/presets/compilers.json` contains logical compiler selectors resolved
   by the active host or vendor development environment.
-- `cmake/presets/generators.json` separates Ninja from the optional Visual
-  Studio 2026 multi-configuration backend.
+- `cmake/presets/generators.json` separates Ninja from the year-qualified
+  Visual Studio 2022 and 2026 multi-configuration backends.
 - `cmake/presets/platforms.json` contains the Debug and Release platform matrix.
 - `cmake/presets/profiles.json` contains the hidden development layer and the
   host-independent release compatibility workflow.
@@ -98,11 +98,12 @@ AppleClang is the portable macOS default. Non-Apple LLVM and GNU GCC
 installations commonly use package-manager-specific, versioned paths and belong
 in an uncommitted `CMakeUserPresets.json`.
 
-The explicit compiler matrix uses Ninja. Windows also provides one
-`windows-visualstudio` configure preset backed by the multi-configuration
-Visual Studio 2026 generator. The `windows-visualstudio-debug` and
-`windows-visualstudio-release` build and test presets select their
-configuration inside the shared `build/windows-visualstudio` tree.
+The explicit compiler matrix uses Ninja. Windows also provides
+`windows-visualstudio-2022` and `windows-visualstudio-2026` configure presets,
+each backed by its matching multi-configuration generator. The year-qualified
+Debug and Release build and test presets select their configuration inside
+`build/windows-visualstudio-2022` or `build/windows-visualstudio-2026`.
+There are no unqualified `windows-visualstudio` compatibility aliases.
 
 The shared Visual Studio configuration enables the warnings-as-errors policy
 only for `Release`. CMake generator expressions therefore add `/WX` to Release
@@ -117,7 +118,7 @@ emulating x64 from ARM hardware is intentionally outside the declared Windows
 preset contract.
 
 The standalone
-`cmake/tests/windows_architecture_contract_tests.cmake` regression script keeps
+`cmake/tests/windows_architecture_test.cmake` regression script keeps
 six focused host, target, and Visual Studio platform cases. It requires neither
 `project()` nor a compiler and is intended for the build-infrastructure CI,
 alongside preset-graph validation.
@@ -173,7 +174,7 @@ exact configure, build, or test preset that it uses:
 | Workflow pattern | Configure | Build or analysis | Test | Build directory |
 | --- | --- | --- | --- | --- |
 | `<platform>-commit-gate` | `<platform>-release` | `format-check`, then `<platform>-release` | `<platform>-release` | `build/<platform>-release` |
-| `windows-visualstudio-commit-gate` | `windows-visualstudio` | `format-check`, then `windows-visualstudio-release` | `windows-visualstudio-release` | `build/windows-visualstudio` |
+| `windows-visualstudio-<year>-commit-gate` | `windows-visualstudio-<year>` | `format-check`, then `windows-visualstudio-<year>-release` | `windows-visualstudio-<year>-release` | `build/windows-visualstudio-<year>` |
 | `<platform>-tidy` | `<platform>-debug` | `static-analysis` | — | `build/<platform>-debug` |
 | `<platform>-asan` | `<platform>-asan` | instrumented default build | `<platform>-asan` | `build/<platform>-asan` |
 | `<platform>-coverage` | `<platform>-coverage` | build, reset, report, check | `<platform>-coverage` | `build/<platform>-coverage` |
@@ -212,18 +213,21 @@ ctest --preset linux-clang-debug
 Configure, build, and test one Visual Studio configuration:
 
 ```sh
-cmake --preset windows-visualstudio
-cmake --build --preset windows-visualstudio-debug
-ctest --preset windows-visualstudio-debug
+cmake --preset windows-visualstudio-2022
+cmake --build --preset windows-visualstudio-2022-debug
+ctest --preset windows-visualstudio-2022-debug
 ```
 
 The same configured tree can then build and test Release without another
 configure step:
 
 ```sh
-cmake --build --preset windows-visualstudio-release
-ctest --preset windows-visualstudio-release
+cmake --build --preset windows-visualstudio-2022-release
+ctest --preset windows-visualstudio-2022-release
 ```
+
+Replace `2022` with `2026` throughout when using Visual Studio 2026. The 2026
+generator requires CMake 4.2 or newer.
 
 Open a Visual Studio developer environment and run a blocking commit gate:
 
@@ -264,9 +268,10 @@ cmake --workflow --preset macos-appleclang-coverage
   `./launch-dev-shell.ps1 msvc`.
 - clang-cl presets require the Microsoft C++ toolchain and Windows SDK, with
   clang-cl supplied by Visual Studio or an LLVM installation.
-- The `windows-visualstudio-*` presets require Visual Studio 2026 and CMake
-  4.2 or newer. They select the native x64 host toolset without requiring
-  Ninja.
+- The `windows-visualstudio-2022-*` presets require Visual Studio 2022 and
+  CMake 3.25 or newer. The `windows-visualstudio-2026-*` presets require Visual
+  Studio 2026 and CMake 4.2 or newer. Both select the native x64 host toolset
+  without requiring Ninja.
 - `windows-ucrt64-gcc-*` presets require
   `./launch-dev-shell.ps1 ucrt64` and the MSYS2 UCRT64 GCC toolchain.
 - `windows-clang64-*` presets require

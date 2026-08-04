@@ -25,14 +25,20 @@ jobs:
             runner: ubuntu-24.04
             timeout_minutes: 20
             preset: linux-gcc-release
+            build_directory: build/linux-gcc-release
+            validate_install: true
           - name: macOS AppleClang / Release
             runner: macos-15
             timeout_minutes: 20
             preset: macos-appleclang-release
+            build_directory: build/macos-appleclang-release
+            validate_install: false
           - name: Windows MSVC / Release
             runner: windows-2022
             timeout_minutes: 30
             preset: windows-visualstudio-2022-release
+            build_directory: build/windows-visualstudio-2022
+            validate_install: true
 
     steps:
       - name: Check out the repository
@@ -45,3 +51,15 @@ jobs:
 
       - name: Configure, build, and test
         run: cmake --workflow --preset "${{ matrix.preset }}" --fresh
+
+      - name: Install and validate the installed CLI
+        if: matrix.validate_install
+        shell: pwsh
+        run: |
+          $installPrefix = Join-Path '${{ runner.temp }}' 'mc-lab-install-${{ github.run_id }}-${{ strategy.job-index }}'
+          if (Test-Path -LiteralPath $installPrefix) {
+            throw "Installation prefix already exists: $installPrefix"
+          }
+          cmake --install '${{ matrix.build_directory }}' --config Release --prefix $installPrefix
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cmake "-DMC_LAB_CORE_INSTALL_PREFIX=$installPrefix" '-DMC_LAB_CORE_EXPECTED_VERSION=0.1.0' -P cmake/scripts/validate_installed_cli.cmake

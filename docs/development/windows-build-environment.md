@@ -64,11 +64,14 @@ preset family. It describes repository configuration, not CI validation status.
 | MSYS2 CLANG64 | `windows-clang64-debug` | Ninja | x64 / x64 | MinGW-w64 / UCRT / libc++ |
 | Visual Studio Developer PowerShell | `windows-msvc-debug` | Ninja | x64 / x64 | Microsoft ABI / UCRT |
 | Visual Studio Developer PowerShell | `windows-clangcl-debug` | Ninja | x64 / x64 | Microsoft ABI / UCRT |
-| Ordinary Windows terminal | `windows-visualstudio` | Visual Studio | x64 / x64 | Microsoft ABI / UCRT |
+| Ordinary Windows terminal | `windows-visualstudio-2022` | Visual Studio 2022 | x64 / x64 | Microsoft ABI / UCRT |
+| Ordinary Windows terminal | `windows-visualstudio-2026` | Visual Studio 2026 | x64 / x64 | Microsoft ABI / UCRT |
 
-The Visual Studio generator discovers and initializes its own toolset. The
-Ninja-based MSVC and clang-cl presets intentionally require an activated
-Developer PowerShell.
+Choose the year-qualified Visual Studio preset matching the installed IDE.
+Visual Studio 2022 presets require CMake 3.25 or newer; Visual Studio 2026
+presets require CMake 4.2 or newer. Each generator discovers and initializes
+its own toolset. The Ninja-based MSVC and clang-cl presets intentionally
+require an activated Developer PowerShell.
 
 ## Architecture contract
 
@@ -106,7 +109,7 @@ CI coverage.
 The contract has a standalone regression suite:
 
 ```sh
-cmake -P cmake/tests/windows_architecture_contract_tests.cmake
+cmake -P cmake/tests/windows_architecture_test.cmake
 ```
 
 Its six focused cases cover a native AMD64 host, the portable `x86_64` target
@@ -137,9 +140,9 @@ test conditions require both `VCINSTALLDIR` and `VSCMD_VER` for Ninja-based
 Microsoft toolchains, or the
 exact `MSYSTEM` value `UCRT64` or `CLANG64` for MSYS2.
 
-`windows-visualstudio` and its build and test presets remain visible in every
-Windows environment because the Visual Studio generator performs its own
-toolset discovery.
+`windows-visualstudio-2022`, `windows-visualstudio-2026`, and their build and
+test presets remain visible in every Windows environment because the Visual
+Studio generators perform their own toolset discovery.
 
 CMake workflow presets do not support `condition` in schema version 6. Workflow
 names therefore remain globally visible, but invoking one outside its required
@@ -188,19 +191,23 @@ ctest --preset windows-ucrt64-gcc-debug
 
 Replace the preset with the one corresponding to the active environment.
 
-Visual Studio uses one multi-configuration configure preset:
+Visual Studio uses a year-qualified multi-configuration configure preset. For
+Visual Studio 2022:
 
 ```sh
-cmake --preset windows-visualstudio
-cmake --build --preset windows-visualstudio-debug
-ctest --preset windows-visualstudio-debug
-cmake --build --preset windows-visualstudio-release
-ctest --preset windows-visualstudio-release
+cmake --preset windows-visualstudio-2022
+cmake --build --preset windows-visualstudio-2022-debug
+ctest --preset windows-visualstudio-2022-debug
+cmake --build --preset windows-visualstudio-2022-release
+ctest --preset windows-visualstudio-2022-release
 ```
 
-Both configurations share `build/windows-visualstudio`. Release enables `/WX`
-for first-party targets; Debug reports the same warnings without making them
-fatal.
+Use the corresponding `windows-visualstudio-2026`,
+`windows-visualstudio-2026-debug`, and `windows-visualstudio-2026-release`
+names for Visual Studio 2026. There is no unqualified compatibility alias.
+Debug and Release for each year share that year's
+`build/windows-visualstudio-<year>` tree. Release enables `/WX` for first-party
+targets; Debug reports the same warnings without making them fatal.
 
 The Release commit gate uses the same environment:
 

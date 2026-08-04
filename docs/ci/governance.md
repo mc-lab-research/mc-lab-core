@@ -1,7 +1,7 @@
 # CI governance baseline
 
 This document records the CI governance baseline reviewed for **mcLab** and the evidence used to validate each control.
-It covers workflow inventory and classification, trigger conditions, governance controls, and the required check names used to configure the main branch ruleset.
+It covers workflow inventory and classification, trigger conditions, governance controls, and the required check names used to configure the `master` branch ruleset.
 
 Validated on **2026-08-03**.
 
@@ -26,7 +26,7 @@ Seven run on every pull request and push to `master`; one triggers on every push
 
 | Classification | Meaning |
 | --- | --- |
-| **Required** | The check is configured as a required status check in the main branch ruleset. A pull request cannot be merged to `master` until this check passes. |
+| **Required** | The check is configured as a required status check in the `master` branch ruleset. A pull request cannot be merged to `master` until this check passes. |
 | **Optional** | The workflow runs on every pull request but is not a required status check. Failure is visible but does not block merge. |
 | **Advisory** | The workflow provides additional confidence or on-demand validation but is not part of the pull request critical path. |
 
@@ -50,7 +50,7 @@ Seven run on every pull request and push to `master`; one triggers on every push
 
 ## Check names and ruleset alignment
 
-The following check names are emitted by GitHub Actions and must match exactly the names configured as required status checks in the main branch ruleset.
+The following check names are emitted by GitHub Actions and must match exactly the names configured as required status checks in the `master` branch ruleset.
 GitHub Actions derives check names from job-level `name:` fields.
 
 ### Required checks (must pass before merge to `master`)

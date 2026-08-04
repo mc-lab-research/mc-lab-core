@@ -76,11 +76,12 @@ The authoritative settings are
 `cmake/modules/coverage.cmake`. The policy gate also rejects any normalized
 report containing a source outside the configured first-party paths.
 
-## Initial baseline
+## Accepted baseline
 
-The initial baseline was established by this quality-evidence change, based on
-`master` at commit `835e4fd`, with the `windows-clangcl-coverage` workflow and
-LLVM 22.1.8:
+The accepted baseline is `master` commit
+`f8961dc2b0c8445fb3a50ba5f0ff46b902928fe1`. It was measured on 2026-08-03
+with the `windows-clangcl-coverage` workflow and LLVM 22.1.8, using the same
+normalized LCOV report and policy gate used by CI:
 
 | Metric | Covered | Total | Baseline |
 | --- | ---: | ---: | ---: |
@@ -88,22 +89,51 @@ LLVM 22.1.8:
 | Branches | 10 | 10 | 100.00% |
 | Functions | 3 | 3 | 100.00% |
 
-The platform-independent LCOV report is canonical. Minor backend differences
-may occur as compilers evolve, so the enforced policy uses stable whole-number
-floors rather than exact snapshot equality.
+The platform-independent LCOV representation makes metric names, source paths,
+and report locations toolchain-neutral. Minor backend differences may occur as
+compilers evolve, so the enforced policy uses stable whole-number floors rather
+than exact snapshot equality. Linux GCC is the canonical CI baseline job; the
+accepted values above record the reviewed evidence for the named commit and do
+not make the Windows toolchain a second policy authority.
 
 ## Regression policy
 
-Every pull request must meet all repository-wide minimums:
+The hard repository-wide minimums are:
 
-- line coverage: 80%;
-- branch coverage: 70%;
-- function coverage: 80%.
+- line coverage: 90%;
+- branch coverage: 90%;
+- function coverage: 90%.
 
-Falling below any minimum fails the `Coverage` workflow. New production
-behavior should normally arrive with tests, and changes that intentionally
-reduce coverage must explain why and update both the policy and this document
-in the same review.
+Falling below any minimum fails the `Coverage` workflow and is not an
+acceptable regression. The observed baseline is evidence, not an additional
+100% hard gate: source growth can legitimately add uncovered defensive or
+platform-specific paths while the repository remains at or above the 90%
+floors.
 
-Thresholds are ratcheted upward deliberately after sustained coverage gains.
-They must not be lowered merely to make a failing pull request pass.
+A decline from the accepted baseline is intentional only when its pull request:
+
+- identifies the newly uncovered behavior and why exercising it is currently
+  impractical or disproportionate;
+- links the generated canonical Linux GCC summary or artifact;
+- adds the strongest practical alternative test evidence; and
+- receives explicit approval from a repository maintainer responsible for the
+  affected production area and coverage configuration.
+
+After such a change merges, this section must be updated in a dedicated or
+clearly identified follow-up to name the new commit, covered/total counts, and
+percentages. Normal source growth therefore evolves the baseline through
+reviewed evidence rather than silently redefining it. Improvements do not
+automatically raise hard floors; thresholds are ratcheted upward only in a
+separately approved policy change after the higher level has proved stable.
+They must never be lowered merely to make a failing pull request pass.
+
+Changing first-party source paths, exclusion expressions, generated-code
+classification, report normalization, or metric calculation changes the
+measurement boundary. Such a change requires explicit maintainer approval,
+before/after reports, and a rationale in both the pull request and this
+document. It must not be bundled as an unexplained fix for a regression.
+
+Coverage percentages are a reachability signal, not evidence that assertions
+are meaningful, edge cases are complete, or product behavior is correct.
+Reviewers must consider test intent, assertions, negative cases, and relevant
+integration evidence independently of the percentages.
