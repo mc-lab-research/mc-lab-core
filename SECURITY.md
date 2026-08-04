@@ -12,7 +12,8 @@ Older versions, forks, and modified distributions are not maintained for securit
 
 Do not open a public issue or pull request for a suspected vulnerability.
 
-Use GitHub's **Private Vulnerability Reporting** feature from the repository's **Security** tab.
+Use GitHub's **[Private Vulnerability Reporting](https://github.com/mc-lab-research/mc-lab-core/security/advisories/new)** feature.
+Alternatively, open the repository **Security** tab and choose **Report a vulnerability**.
 
 Please include:
 
