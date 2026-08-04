@@ -25,7 +25,7 @@ mcLab CI separates:
 | AddressSanitizer | sanitizer | `pull_request`, `push` (`master`), `workflow_dispatch` | **Required** (canonical) | Ubuntu 24.04 | GCC AddressSanitizer | `cmake --workflow --preset linux-gcc-asan --fresh` | none |
 | Static analysis | quality | `pull_request`, `push` (`master`), `workflow_dispatch` | **Required** (Linux canonical), **Optional** (macOS, Windows jobs) | Ubuntu 24.04, macOS 15, Windows 2022 | clang-tidy (Clang/AppleClang/clang-cl) | `cmake --workflow --preset linux-clang-tidy --fresh`, `cmake --workflow --preset macos-appleclang-tidy --fresh`, `cmake --workflow --preset windows-clangcl-tidy --fresh` | none |
 | Coverage | coverage | `pull_request`, `push` (`master`), `workflow_dispatch` | **Advisory** (Linux GCC canonical threshold job) | Ubuntu 24.04, macOS 15, Windows 2022 | GCC/lcov, LLVM coverage tools, clang-cl | `cmake --workflow --preset linux-gcc-coverage --fresh`, `cmake --workflow --preset linux-clang-coverage --fresh`, `cmake --workflow --preset macos-appleclang-coverage --fresh`, `cmake --workflow --preset windows-clangcl-coverage --fresh` | `coverage-*` artifacts (coverage reports, 14-day retention) |
-| Native builds | build/test, portability | `pull_request`, `push` (all branches), `workflow_dispatch` | **Advisory** | Ubuntu 24.04, macOS 15, Windows 2022 | GCC, Clang, AppleClang, Visual Studio 2022 | `cmake --workflow --preset linux-gcc-debug --fresh`, `linux-gcc-release`, `linux-clang-debug`, `linux-clang-release`, `macos-appleclang-debug`, `macos-appleclang-release`, `windows-visualstudio-2022-debug`, `windows-visualstudio-2022-release` | none |
+| Native builds | build/test, compiler diversity | `pull_request`, `push` (all branches), `workflow_dispatch` | **Advisory** (Linux Clang only) | Ubuntu 24.04 | Clang + Ninja | `cmake --workflow --preset linux-clang-debug --fresh`, `cmake --workflow --preset linux-clang-release --fresh` | none |
 | AddressSanitizer matrix | sanitizer, portability | `workflow_dispatch` (manual target input) | **Manual** (exhaustive matrix) | Ubuntu 24.04, macOS 15, Windows 2022, Windows 2025-vs2026 | GCC, Clang, AppleClang, MSVC, Visual Studio 2022/2026, clang-cl, MSYS2 CLANG64 | `cmake --workflow --preset linux-gcc-asan --fresh`, `linux-clang-asan`, `macos-appleclang-asan`, `windows-msvc-asan`, `windows-visualstudio-2022-asan`, `windows-visualstudio-2026-asan`, `windows-clangcl-asan`, `windows-clang64-asan` | none |
 | OpenSSF Scorecard | security governance | `push` (`master`), `schedule`, `workflow_dispatch` | **Advisory** | Ubuntu 24.04 | OpenSSF Scorecard action | no direct CMake equivalent (GitHub-hosted security workflow) | SARIF uploaded to GitHub Security dashboard |
 
@@ -61,6 +61,8 @@ Automatically validated on pull requests:
 ### Manual exhaustive matrices
 
 - `AddressSanitizer matrix` is intentionally manual and supports targeted or full exhaustive ASan coverage.
+
+The advisory `Native builds` workflow retains the Linux Clang Debug/Release pair for compiler diversity. Linux GCC, macOS AppleClang, and Windows MSVC Debug/Release are validated by their dedicated required workflows and are intentionally not duplicated in this advisory workflow.
 
 ### Configured but not continuously validated presets
 

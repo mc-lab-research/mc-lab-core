@@ -22,14 +22,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: Ubuntu 24.04 / GCC / Debug
-            runner: ubuntu-24.04
-            preset: linux-gcc-debug
-            compiler: g++
-          - name: Ubuntu 24.04 / GCC / Release
-            runner: ubuntu-24.04
-            preset: linux-gcc-release
-            compiler: g++
           - name: Ubuntu 24.04 / Clang / Debug
             runner: ubuntu-24.04
             preset: linux-clang-debug
@@ -56,30 +48,6 @@ jobs:
           cmake --version
           ninja --version
           "${{ matrix.compiler }}" --version
-
-      - name: Configure, build, and test
-        run: cmake --workflow --preset "${{ matrix.preset }}" --fresh
-
-  build-and-test-windows-visualstudio:
-    name: ${{ matrix.name }}
-    runs-on: windows-2022
-    timeout-minutes: 30
-
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - name: Windows 2022 / Visual Studio 2022 / Debug
-            preset: windows-visualstudio-2022-debug
-          - name: Windows 2022 / Visual Studio 2022 / Release
-            preset: windows-visualstudio-2022-release
-
-    steps:
-      - name: Check out the repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
-      - name: Report build tools
-        run: cmake --version
 
       - name: Configure, build, and test
         run: cmake --workflow --preset "${{ matrix.preset }}" --fresh
