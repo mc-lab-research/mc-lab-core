@@ -44,6 +44,7 @@ requests.
 | Release portability | build/test, release portability | `pull_request`, `workflow_dispatch` | **Required** | Ubuntu 24.04, macOS 15, Windows 2022 | GCC, AppleClang, Visual Studio 2022 / MSVC | `cmake --workflow --preset linux-gcc-release --fresh`, `cmake --workflow --preset macos-appleclang-release --fresh`, `cmake --workflow --preset windows-visualstudio-2022-release --fresh` | none |
 | Native builds | build/test, compiler diversity | `push` (all branches), `workflow_dispatch` | **Advisory** (Linux Clang only) | Ubuntu 24.04 | Clang + Ninja | `cmake --workflow --preset linux-clang-debug --fresh`, `cmake --workflow --preset linux-clang-release --fresh` | none |
 | AddressSanitizer matrix | sanitizer, portability | `workflow_dispatch` (manual target input) | **Manual** (exhaustive matrix) | Ubuntu 24.04, macOS 15, Windows 2022, Windows 2025-vs2026 | GCC, Clang, AppleClang, MSVC, Visual Studio 2022/2026, clang-cl, MSYS2 CLANG64 | `cmake --workflow --preset linux-gcc-asan --fresh`, `linux-clang-asan`, `macos-appleclang-asan`, `windows-msvc-asan`, `windows-visualstudio-2022-asan`, `windows-visualstudio-2026-asan`, `windows-clangcl-asan`, `windows-clang64-asan` | none |
+| Repository visualization | repository documentation | weekly schedule, `workflow_dispatch` | **Advisory** | Ubuntu 24.04 | Repo Visualizer | no direct local equivalent (GitHub-hosted workflow) | `repository-visualization` artifact (SVG, 14-day retention) |
 | OpenSSF Scorecard | security governance | `push` (`master`), `schedule`, `workflow_dispatch` | **Advisory** | Ubuntu 24.04 | OpenSSF Scorecard action | no direct CMake equivalent (GitHub-hosted security workflow) | SARIF uploaded to GitHub Security dashboard |
 
 ## Validation categories
@@ -92,11 +93,13 @@ CMake presets include additional configurations not always run in required CI (f
 - **Automatic (`push` to `master`)**: post-merge validation and governance/security workflows.
 - **Automatic (`push` all branches)**: broader `Native builds` matrix feedback.
 - **Manual (`workflow_dispatch`)**: maintainers can run any enabled workflow on demand.
-- **Scheduled**: `OpenSSF Scorecard` runs weekly.
+- **Scheduled**: `OpenSSF Scorecard` and `Repository visualization` run weekly.
 
 ## Artifacts and reports
 
 - `Coverage` uploads per-platform coverage directories as artifacts (`coverage-*`).
+- The canonical Linux/GCC LCOV report is uploaded to Codacy only after a successful push to `master`, using the `CODACY_PROJECT_TOKEN` repository secret.
+- `Repository visualization` uploads `repository-visualization`, an SVG artifact that is not committed to the repository.
 - `OpenSSF Scorecard` uploads SARIF to GitHub Security.
 - Other workflows are pass/fail validations without retained artifacts.
 

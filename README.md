@@ -6,8 +6,13 @@
 [![Linux GCC](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/linux-gcc.yml/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/linux-gcc.yml)
 [![macOS AppleClang](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/macos-appleclang.yml/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/macos-appleclang.yml)
 [![Quality Gate](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/quality-gate.yml/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/quality-gate.yml)
+[![CodeQL](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/codeql.yml/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/codeql.yml)
 [![Coverage](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/coverage.yml/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/coverage.yml)
-[![CodeQL](https://github.com/mc-lab-research/mc-lab-core/workflows/CodeQL/badge.svg)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/323700157)
+[![OpenSSF Scorecard](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/scorecard.yml/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/scorecard.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/46c1e2f0645f417c954e885bed9e445c)](https://app.codacy.com/gh/mc-lab-research/mc-lab-core/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/46c1e2f0645f417c954e885bed9e445c)](https://app.codacy.com/gh/mc-lab-research/mc-lab-core/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![CodeFactor](https://www.codefactor.io/repository/github/mc-lab-research/mc-lab-core/badge)](https://www.codefactor.io/repository/github/mc-lab-research/mc-lab-core)
 
 mcLab explores software foundations for defining, executing, and analyzing formal semantics.
 
