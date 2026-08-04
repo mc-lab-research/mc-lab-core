@@ -67,6 +67,5 @@ set_tests_properties(
     PROPERTIES
         LABELS "cli;negative"
         TIMEOUT 10
-        WILL_FAIL TRUE
         PASS_REGULAR_EXPRESSION "mc-lab: unsupported command line"
 )
