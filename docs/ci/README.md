@@ -14,18 +14,35 @@ mcLab CI separates:
 - **Manual exhaustive matrices**: on-demand workflows for broader platform/toolchain validation.
 - **Configured but not continuously validated presets**: available CMake presets that are not part of always-on CI.
 
+## Pull-request and push execution
+
+The CI matrix intentionally separates fast compiler-diversity feedback from
+cross-platform release-portability validation:
+
+| Event | Workflow | Configurations |
+| --- | --- | --- |
+| `push` (all branches) | Native builds | Linux Clang Debug and Release |
+| `pull_request` | Release portability | Linux GCC Release, macOS AppleClang Release, Windows MSVC Release |
+| `push` (`master`) | Dedicated platform workflows | Linux GCC, macOS AppleClang, and Windows MSVC Debug and Release |
+
+`workflow_dispatch` remains available for each of these workflows. The
+dedicated platform workflows are post-merge and manual exhaustive validation;
+the Release portability workflow is the cross-platform Release check for pull
+requests.
+
 ## Workflow inventory
 
 | Workflow | Concern | Trigger | Status | Platform | Toolchain | Local reproduction | Artifacts |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | Quality Gate | quality | `pull_request`, `push` (`master`), `workflow_dispatch` | **Required** | Ubuntu 24.04 | GCC + Ninja | `cmake --workflow --preset linux-gcc-commit-gate --fresh` | none |
-| Linux GCC | build/test | `pull_request`, `push` (`master`), `workflow_dispatch` | **Required** | Ubuntu 24.04 | GCC + Ninja | `cmake --workflow --preset linux-gcc-debug --fresh` and `cmake --workflow --preset linux-gcc-release --fresh` | none |
-| macOS AppleClang | build/test, portability | `pull_request`, `push` (`master`), `workflow_dispatch` | **Required** | macOS 15 | AppleClang + Ninja | `cmake --workflow --preset macos-appleclang-debug --fresh` and `cmake --workflow --preset macos-appleclang-release --fresh` | none |
-| Windows MSVC | build/test, portability | `pull_request`, `push` (`master`), `workflow_dispatch` | **Required** | Windows 2022 | Visual Studio 2022 / MSVC | `cmake --workflow --preset windows-visualstudio-2022-debug --fresh` and `cmake --workflow --preset windows-visualstudio-2022-release --fresh` | none |
+| Linux GCC | build/test | `push` (`master`), `workflow_dispatch` | **Post-merge validation** | Ubuntu 24.04 | GCC + Ninja | `cmake --workflow --preset linux-gcc-debug --fresh` and `cmake --workflow --preset linux-gcc-release --fresh` | none |
+| macOS AppleClang | build/test, portability | `push` (`master`), `workflow_dispatch` | **Post-merge validation** | macOS 15 | AppleClang + Ninja | `cmake --workflow --preset macos-appleclang-debug --fresh` and `cmake --workflow --preset macos-appleclang-release --fresh` | none |
+| Windows MSVC | build/test, portability | `push` (`master`), `workflow_dispatch` | **Post-merge validation** | Windows 2022 | Visual Studio 2022 / MSVC | `cmake --workflow --preset windows-visualstudio-2022-debug --fresh` and `cmake --workflow --preset windows-visualstudio-2022-release --fresh` | none |
 | AddressSanitizer | sanitizer | `pull_request`, `push` (`master`), `workflow_dispatch` | **Required** (canonical) | Ubuntu 24.04 | GCC AddressSanitizer | `cmake --workflow --preset linux-gcc-asan --fresh` | none |
 | Static analysis | quality | `pull_request`, `push` (`master`), `workflow_dispatch` | **Required** (Linux canonical), **Optional** (macOS, Windows jobs) | Ubuntu 24.04, macOS 15, Windows 2022 | clang-tidy (Clang/AppleClang/clang-cl) | `cmake --workflow --preset linux-clang-tidy --fresh`, `cmake --workflow --preset macos-appleclang-tidy --fresh`, `cmake --workflow --preset windows-clangcl-tidy --fresh` | none |
 | Coverage | coverage | `pull_request`, `push` (`master`), `workflow_dispatch` | **Advisory** (Linux GCC canonical threshold job) | Ubuntu 24.04, macOS 15, Windows 2022 | GCC/lcov, LLVM coverage tools, clang-cl | `cmake --workflow --preset linux-gcc-coverage --fresh`, `cmake --workflow --preset linux-clang-coverage --fresh`, `cmake --workflow --preset macos-appleclang-coverage --fresh`, `cmake --workflow --preset windows-clangcl-coverage --fresh` | `coverage-*` artifacts (coverage reports, 14-day retention) |
-| Native builds | build/test, compiler diversity | `pull_request`, `push` (all branches), `workflow_dispatch` | **Advisory** (Linux Clang only) | Ubuntu 24.04 | Clang + Ninja | `cmake --workflow --preset linux-clang-debug --fresh`, `cmake --workflow --preset linux-clang-release --fresh` | none |
+| Release portability | build/test, release portability | `pull_request`, `workflow_dispatch` | **Required** | Ubuntu 24.04, macOS 15, Windows 2022 | GCC, AppleClang, Visual Studio 2022 / MSVC | `cmake --workflow --preset linux-gcc-release --fresh`, `cmake --workflow --preset macos-appleclang-release --fresh`, `cmake --workflow --preset windows-visualstudio-2022-release --fresh` | none |
+| Native builds | build/test, compiler diversity | `push` (all branches), `workflow_dispatch` | **Advisory** (Linux Clang only) | Ubuntu 24.04 | Clang + Ninja | `cmake --workflow --preset linux-clang-debug --fresh`, `cmake --workflow --preset linux-clang-release --fresh` | none |
 | AddressSanitizer matrix | sanitizer, portability | `workflow_dispatch` (manual target input) | **Manual** (exhaustive matrix) | Ubuntu 24.04, macOS 15, Windows 2022, Windows 2025-vs2026 | GCC, Clang, AppleClang, MSVC, Visual Studio 2022/2026, clang-cl, MSYS2 CLANG64 | `cmake --workflow --preset linux-gcc-asan --fresh`, `linux-clang-asan`, `macos-appleclang-asan`, `windows-msvc-asan`, `windows-visualstudio-2022-asan`, `windows-visualstudio-2026-asan`, `windows-clangcl-asan`, `windows-clang64-asan` | none |
 | OpenSSF Scorecard | security governance | `push` (`master`), `schedule`, `workflow_dispatch` | **Advisory** | Ubuntu 24.04 | OpenSSF Scorecard action | no direct CMake equivalent (GitHub-hosted security workflow) | SARIF uploaded to GitHub Security dashboard |
 
@@ -36,13 +53,10 @@ mcLab CI separates:
 Expected required checks for merge to `master`:
 
 - `Linux GCC Commit Gate`
-- `Linux GCC / Debug`
 - `Linux GCC / Release`
 - `Linux / GCC / AddressSanitizer (canonical)`
-- `macOS AppleClang / Debug`
 - `macOS AppleClang / Release`
 - `Linux / Clang / Static analysis (canonical)`
-- `Windows MSVC / Debug`
 - `Windows MSVC / Release`
 
 These names come from job `name:` fields and must stay aligned with branch protection/ruleset configuration.
@@ -51,18 +65,16 @@ These names come from job `name:` fields and must stay aligned with branch prote
 
 Automatically validated on pull requests:
 
-- Linux GCC Debug/Release
-- macOS AppleClang Debug/Release
-- Windows MSVC Debug/Release
+- Release portability: Linux GCC Release, macOS AppleClang Release, and Windows MSVC Release
 - Linux GCC AddressSanitizer
 - Linux Clang static analysis (canonical)
-- Additional optional/advisory jobs in static analysis, coverage, and native-builds
+- Additional optional/advisory jobs in static analysis and coverage
 
 ### Manual exhaustive matrices
 
 - `AddressSanitizer matrix` is intentionally manual and supports targeted or full exhaustive ASan coverage.
 
-The advisory `Native builds` workflow retains the Linux Clang Debug/Release pair for compiler diversity. Linux GCC, macOS AppleClang, and Windows MSVC Debug/Release are validated by their dedicated required workflows and are intentionally not duplicated in this advisory workflow.
+The advisory `Native builds` workflow retains the Linux Clang Debug/Release pair for compiler diversity on every branch push. The `Release portability` workflow validates Linux GCC, macOS AppleClang, and Windows MSVC Release builds on pull requests. The dedicated platform workflows retain Debug/Release validation after merge to `master` and for manual runs.
 
 ### Configured but not continuously validated presets
 

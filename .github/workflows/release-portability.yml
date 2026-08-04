@@ -1,31 +1,37 @@
-name: Windows MSVC
+name: Release portability
 
 on:
-  push:
-    branches:
-      - master
+  pull_request:
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: windows-msvc-${{ github.workflow }}-${{ github.ref }}
+  group: release-portability-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  windows-msvc:
+  build-and-test:
     name: ${{ matrix.name }}
-    runs-on: windows-2022
-    timeout-minutes: 30
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: ${{ matrix.timeout_minutes }}
 
     strategy:
       fail-fast: false
       matrix:
         include:
-          - name: Windows MSVC / Debug
-            preset: windows-visualstudio-2022-debug
+          - name: Linux GCC / Release
+            runner: ubuntu-24.04
+            timeout_minutes: 20
+            preset: linux-gcc-release
+          - name: macOS AppleClang / Release
+            runner: macos-15
+            timeout_minutes: 20
+            preset: macos-appleclang-release
           - name: Windows MSVC / Release
+            runner: windows-2022
+            timeout_minutes: 30
             preset: windows-visualstudio-2022-release
 
     steps:

@@ -1,7 +1,6 @@
 name: Native builds
 
 on:
-  pull_request:
   push:
   workflow_dispatch:
 
@@ -29,14 +28,6 @@ jobs:
           - name: Ubuntu 24.04 / Clang / Release
             runner: ubuntu-24.04
             preset: linux-clang-release
-            compiler: clang++
-          - name: macOS 15 / AppleClang / Debug
-            runner: macos-15
-            preset: macos-appleclang-debug
-            compiler: clang++
-          - name: macOS 15 / AppleClang / Release
-            runner: macos-15
-            preset: macos-appleclang-release
             compiler: clang++
 
     steps:
