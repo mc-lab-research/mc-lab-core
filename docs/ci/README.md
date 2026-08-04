@@ -27,6 +27,7 @@ mcLab CI separates:
 | Coverage | coverage | `pull_request`, `push` (`master`), `workflow_dispatch` | **Advisory** (Linux GCC canonical threshold job) | Ubuntu 24.04, macOS 15, Windows 2022 | GCC/lcov, LLVM coverage tools, clang-cl | `cmake --workflow --preset linux-gcc-coverage --fresh`, `cmake --workflow --preset linux-clang-coverage --fresh`, `cmake --workflow --preset macos-appleclang-coverage --fresh`, `cmake --workflow --preset windows-clangcl-coverage --fresh` | `coverage-*` artifacts (coverage reports, 14-day retention); canonical Linux/GCC LCOV uploaded to Codacy on pushes to `master` |
 | Native builds | build/test, portability | `pull_request`, `push` (all branches), `workflow_dispatch` | **Advisory** | Ubuntu 24.04, macOS 15, Windows 2022 | GCC, Clang, AppleClang, Visual Studio 2022 | `cmake --workflow --preset linux-gcc-debug --fresh`, `linux-gcc-release`, `linux-clang-debug`, `linux-clang-release`, `macos-appleclang-debug`, `macos-appleclang-release`, `windows-visualstudio-2022-debug`, `windows-visualstudio-2022-release` | none |
 | AddressSanitizer matrix | sanitizer, portability | `workflow_dispatch` (manual target input) | **Manual** (exhaustive matrix) | Ubuntu 24.04, macOS 15, Windows 2022, Windows 2025-vs2026 | GCC, Clang, AppleClang, MSVC, Visual Studio 2022/2026, clang-cl, MSYS2 CLANG64 | `cmake --workflow --preset linux-gcc-asan --fresh`, `linux-clang-asan`, `macos-appleclang-asan`, `windows-msvc-asan`, `windows-visualstudio-2022-asan`, `windows-visualstudio-2026-asan`, `windows-clangcl-asan`, `windows-clang64-asan` | none |
+| Repository visualization | repository documentation | weekly schedule, `workflow_dispatch` | **Advisory** | Ubuntu 24.04 | Repo Visualizer | no direct local equivalent (GitHub-hosted workflow) | `repository-visualization` artifact (SVG, 14-day retention) |
 | OpenSSF Scorecard | security governance | `push` (`master`), `schedule`, `workflow_dispatch` | **Advisory** | Ubuntu 24.04 | OpenSSF Scorecard action | no direct CMake equivalent (GitHub-hosted security workflow) | SARIF uploaded to GitHub Security dashboard |
 
 ## Validation categories
@@ -78,12 +79,13 @@ CMake presets include additional configurations not always run in required CI (f
 - **Automatic (`push` to `master`)**: post-merge validation and governance/security workflows.
 - **Automatic (`push` all branches)**: broader `Native builds` matrix feedback.
 - **Manual (`workflow_dispatch`)**: maintainers can run any enabled workflow on demand.
-- **Scheduled**: `OpenSSF Scorecard` runs weekly.
+- **Scheduled**: `OpenSSF Scorecard` and `Repository visualization` run weekly.
 
 ## Artifacts and reports
 
 - `Coverage` uploads per-platform coverage directories as artifacts (`coverage-*`).
 - The canonical Linux/GCC LCOV report is uploaded to Codacy only after a successful push to `master`, using the `CODACY_PROJECT_TOKEN` repository secret.
+- `Repository visualization` uploads `repository-visualization`, an SVG artifact that is not committed to the repository.
 - `OpenSSF Scorecard` uploads SARIF to GitHub Security.
 - Other workflows are pass/fail validations without retained artifacts.
 
