@@ -8,6 +8,7 @@
 [![Quality Gate](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/quality-gate.yml/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/quality-gate.yml)
 [![Coverage](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/coverage.yml/badge.svg?branch=master)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/coverage.yml)
 [![CodeQL](https://github.com/mc-lab-research/mc-lab-core/workflows/CodeQL/badge.svg)](https://github.com/mc-lab-research/mc-lab-core/actions/workflows/323700157)
+[![CodeFactor](https://www.codefactor.io/repository/github/mc-lab-research/mc-lab-core/badge)](https://www.codefactor.io/repository/github/mc-lab-research/mc-lab-core)
 
 mcLab explores software foundations for defining, executing, and analyzing formal semantics.
 
