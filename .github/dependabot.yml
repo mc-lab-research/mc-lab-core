@@ -1,4 +1,3 @@
-```yaml
 # Dependabot configuration for mc-lab-core.
 #
 # This file enables automated dependency update pull requests.
@@ -49,4 +48,3 @@ updates:
     # Limit the number of simultaneously open Dependabot pull requests.
     # Additional updates remain pending until an existing PR is closed or merged.
     open-pull-requests-limit: 5
-```

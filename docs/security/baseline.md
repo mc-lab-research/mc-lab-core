@@ -31,9 +31,9 @@ Validated on **2026-07-30**.
 
 | Control | Evidence | Status |
 | --- | --- | --- |
-| OpenSSF Scorecard executed | No published Scorecard result or repository workflow was found during this review. | Follow-up required |
-| Scorecard findings reviewed | Blocked until a Scorecard run is available. | Follow-up required |
-| Follow-up issues created where appropriate | This review identifies Scorecard publication and repository-level security setting confirmations as required follow-up work. | Follow-up required |
+| OpenSSF Scorecard executed | `.github/workflows/scorecard.yml` is present and has been corrected (broken SHA typo fixed in ossf/scorecard-action pin). Awaiting successful run and SARIF publication to close the loop. See [`docs/engineering/reviews/v0.1.0-platform-validation.md`](../engineering/reviews/v0.1.0-platform-validation.md). | Awaiting run confirmation |
+| Scorecard findings reviewed | Blocked until a successful Scorecard run publishes SARIF to GitHub code scanning. | Follow-up required |
+| Follow-up issues created where appropriate | mc-lab-research/mc-lab-core#51 tracks Scorecard workflow restoration and material findings. | In progress |
 
 ## Security posture
 
