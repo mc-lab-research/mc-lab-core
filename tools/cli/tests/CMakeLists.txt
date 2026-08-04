@@ -48,10 +48,25 @@ set_tests_properties(
 )
 
 set_tests_properties(
+    mc_lab_core.cli.no_arguments
+    mc_lab_core.cli.help
+    mc_lab_core.cli.short_help
+    PROPERTIES
+        PASS_REGULAR_EXPRESSION "Usage: mc-lab \\[option\\]"
+)
+
+set_tests_properties(
+    mc_lab_core.cli.version
+    PROPERTIES
+        PASS_REGULAR_EXPRESSION "MC-LAB-CORE CLI 0\\.1\\.0"
+)
+
+set_tests_properties(
     mc_lab_core.cli.unsupported_option
     mc_lab_core.cli.extra_arguments
     PROPERTIES
         LABELS "cli;negative"
         TIMEOUT 10
         WILL_FAIL TRUE
+        PASS_REGULAR_EXPRESSION "mc-lab: unsupported command line"
 )

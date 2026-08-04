@@ -68,7 +68,15 @@ Reports exclude:
 - test sources;
 - third-party, external, vendor, and dependency sources;
 - CMake-generated files and compiler support files;
-- system headers and installed SDK or toolchain sources.
+- system headers and installed SDK or toolchain sources; and
+- GCC exception-only branch arcs identified by the compiler.
+
+The GCC report excludes only compiler-marked exception arcs. For example, C
+library output calls can acquire an exception edge in GCOV even though no
+product exception path exists to exercise. Ordinary decision branches remain
+in the report and must be covered by tests. The CLI tests assert help, version,
+and invalid-invocation output in addition to their exit status so that the
+measured paths have behavioral evidence.
 
 The authoritative settings are
 `MC_LAB_CORE_COVERAGE_SOURCE_PATHS` and
