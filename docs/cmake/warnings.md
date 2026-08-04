@@ -209,7 +209,8 @@ affected:
 
 ```sh
 cmake --workflow --preset windows-msvc-commit-gate
-cmake --workflow --preset windows-visualstudio-commit-gate
+cmake --workflow --preset windows-visualstudio-2022-commit-gate
+cmake --workflow --preset windows-visualstudio-2026-commit-gate
 cmake --workflow --preset windows-ucrt64-gcc-commit-gate
 ```
 

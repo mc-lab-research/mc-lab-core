@@ -1,7 +1,7 @@
 # CI governance baseline
 
 This document records the CI governance baseline reviewed for **mcLab** and the evidence used to validate each control.
-It covers the tracked workflow inventory, related GitHub-managed automation, trigger conditions, governance controls, and the required check names intended for the main branch ruleset.
+It covers the tracked workflow inventory, related GitHub-managed automation, trigger conditions, governance controls, and the required check names intended for the `master` branch ruleset.
 
 Reviewed commit: `10c2b42`.
 Validated on **2026-08-04**.
@@ -38,7 +38,7 @@ These are distinct from GitHub-managed services such as Dependabot, which influe
 
 | Classification | Meaning |
 | --- | --- |
-| **Required** | The check is intended to be configured as a required status check in the main branch ruleset. A pull request cannot be merged to `master` until this check passes. |
+| **Required** | The check is intended to be configured as a required status check in the `master` branch ruleset. A pull request cannot be merged to `master` until this check passes. |
 | **Post-merge validation** | The workflow is intentionally excluded from the pull-request path and instead validates `master` pushes and manual runs. |
 | **Optional** | The workflow runs on every pull request but is not a required status check. Failure is visible but does not block merge. |
 | **Advisory** | The workflow provides additional confidence or scheduled governance validation but is not part of the pull request critical path. |

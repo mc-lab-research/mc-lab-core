@@ -4,7 +4,8 @@
 
 namespace {
 void print_version(std::FILE* output) {
-  std::fputs("MC-LAB-CORE CLI " MC_LAB_CORE_VERSION "\n", output);
+  std::fputs("MC-LAB-CORE CLI " MC_LAB_CORE_VERSION "\n",
+             output);  // LCOV_EXCL_EXCEPTION_BR_LINE
 }
 
 void print_help(std::FILE* output) {
@@ -30,12 +31,12 @@ int main(int argc, char* argv[]) {
 
     if (argument == "-h" || argument == "--help") {
 
-      print_help(stdout);
+      print_help(stdout);  // LCOV_EXCL_EXCEPTION_BR_LINE
       return EXIT_SUCCESS;
     }
 
     if (argument == "--version") {
-      print_version(stdout);
+      print_version(stdout);  // LCOV_EXCL_EXCEPTION_BR_LINE
       return EXIT_SUCCESS;
     }
   }

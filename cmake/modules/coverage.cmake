@@ -34,21 +34,21 @@ include_guard(GLOBAL)
 
 set(
     MC_LAB_CORE_COVERAGE_LINE_THRESHOLD
-    "80"
+    "90"
     CACHE STRING
     "Minimum first-party line coverage percentage"
 )
 
 set(
     MC_LAB_CORE_COVERAGE_BRANCH_THRESHOLD
-    "70"
+    "90"
     CACHE STRING
     "Minimum first-party branch coverage percentage"
 )
 
 set(
     MC_LAB_CORE_COVERAGE_FUNCTION_THRESHOLD
-    "80"
+    "90"
     CACHE STRING
     "Minimum first-party function coverage percentage"
 )

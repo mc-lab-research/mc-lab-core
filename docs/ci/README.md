@@ -45,7 +45,7 @@ requests.
 | AddressSanitizer | sanitizer | `pull_request`, `push` (`master`), `workflow_dispatch` | **Required** (canonical) | Ubuntu 24.04 | GCC AddressSanitizer | `cmake --workflow --preset linux-gcc-asan --fresh` | none |
 | Static analysis | quality | `pull_request`, `push` (`master`), `workflow_dispatch` | **Required** (Linux canonical), **Optional** (macOS, Windows jobs) | Ubuntu 24.04, macOS 15, Windows 2022 | clang-tidy (Clang/AppleClang/clang-cl) | `cmake --workflow --preset linux-clang-tidy --fresh`, `cmake --workflow --preset macos-appleclang-tidy --fresh`, `cmake --workflow --preset windows-clangcl-tidy --fresh` | none |
 | Coverage | coverage | `pull_request`, `push` (`master`), `workflow_dispatch` | **Advisory** (Linux GCC canonical threshold job) | Ubuntu 24.04, macOS 15, Windows 2022 | GCC/lcov, LLVM coverage tools, clang-cl | `cmake --workflow --preset linux-gcc-coverage --fresh`, `cmake --workflow --preset linux-clang-coverage --fresh`, `cmake --workflow --preset macos-appleclang-coverage --fresh`, `cmake --workflow --preset windows-clangcl-coverage --fresh` | `coverage-*` artifacts (coverage reports, 14-day retention) |
-| Release portability | build/test, release portability | `pull_request`, `workflow_dispatch` | **Required** | Ubuntu 24.04, macOS 15, Windows 2022 | GCC, AppleClang, Visual Studio 2022 / MSVC | `cmake --workflow --preset linux-gcc-release --fresh`, `cmake --workflow --preset macos-appleclang-release --fresh`, `cmake --workflow --preset windows-visualstudio-2022-release --fresh` | none |
+| Release portability | build/test, installation, release portability | `pull_request`, `workflow_dispatch` | **Required** | Ubuntu 24.04, macOS 15, Windows 2022 | GCC, AppleClang, Visual Studio 2022 / MSVC | `cmake --workflow --preset linux-gcc-release --fresh`, `cmake --workflow --preset macos-appleclang-release --fresh`, `cmake --workflow --preset windows-visualstudio-2022-release --fresh` | none |
 | Native builds | build/test, compiler diversity | `push` (all branches), `workflow_dispatch` | **Advisory** (Linux Clang only) | Ubuntu 24.04 | Clang + Ninja | `cmake --workflow --preset linux-clang-debug --fresh`, `cmake --workflow --preset linux-clang-release --fresh` | none |
 | AddressSanitizer matrix | sanitizer, portability | `workflow_dispatch` (manual target input) | **Manual** (exhaustive matrix) | Ubuntu 24.04, macOS 15, Windows 2022, Windows 2025-vs2026 | GCC, Clang, AppleClang, MSVC, Visual Studio 2022/2026, clang-cl, MSYS2 CLANG64 | `cmake --workflow --preset linux-gcc-asan --fresh`, `linux-clang-asan`, `macos-appleclang-asan`, `windows-msvc-asan`, `windows-visualstudio-2022-asan`, `windows-visualstudio-2026-asan`, `windows-clangcl-asan`, `windows-clang64-asan` | none |
 | Repository visualization | repository documentation | weekly schedule, `workflow_dispatch` | **Advisory** | Ubuntu 24.04 | Repo Visualizer | no direct local equivalent (GitHub-hosted workflow) | `repository-visualization` artifact (SVG, 14-day retention) |
@@ -80,6 +80,7 @@ Automatically validated on pull requests:
 - Linux GCC AddressSanitizer
 - Linux Clang static analysis (canonical)
 - Additional optional/advisory jobs in static analysis and coverage
+
 Automatically validated outside pull requests:
 
 - Native builds on every branch push
@@ -91,6 +92,43 @@ Automatically validated outside pull requests:
 - `AddressSanitizer matrix` is intentionally manual and supports targeted or full exhaustive ASan coverage.
 
 The advisory `Native builds` workflow retains the Linux Clang Debug/Release pair for compiler diversity on every branch push. The `Release portability` workflow validates Linux GCC, macOS AppleClang, and Windows MSVC Release builds on pull requests. The dedicated platform workflows retain Debug/Release validation after merge to `master` and for manual runs.
+
+### Installed CLI contract
+
+The v0.1.0 installed product is the `mc-lab` command-line executable. The
+Release portability workflow installs the canonical Linux/GCC and
+Windows/Visual Studio 2022 Release builds into fresh runner-temporary prefixes.
+It then invokes the installed executable from the prefix, outside the build
+tree, and verifies that:
+
+- `--help` succeeds and reports the expected usage;
+- `--version` succeeds and reports exactly `MC-LAB-CORE CLI 0.1.0`;
+- an unsupported option fails; and
+- the expected `bin/mc-lab` or `bin/mc-lab.exe` artifact exists.
+
+Reproduce the validation locally after running the corresponding Release
+workflow. Use an absolute, previously unused prefix:
+
+```powershell
+$installPrefix = Join-Path $PWD 'build/install-validation'
+cmake --install build/windows-visualstudio-2022 --config Release --prefix $installPrefix
+cmake "-DMC_LAB_CORE_INSTALL_PREFIX=$installPrefix" `
+  '-DMC_LAB_CORE_EXPECTED_VERSION=0.1.0' `
+  -P cmake/scripts/validate_installed_cli.cmake
+```
+
+```sh
+install_prefix="$PWD/build/install-validation"
+cmake --install build/linux-gcc-release --config Release --prefix "$install_prefix"
+cmake -DMC_LAB_CORE_INSTALL_PREFIX="$install_prefix" \
+  -DMC_LAB_CORE_EXPECTED_VERSION=0.1.0 \
+  -P cmake/scripts/validate_installed_cli.cmake
+```
+
+The validator deliberately models only the current CLI contract. When mcLab
+exports an installed CMake package or library, add a separate consumer project
+and invoke it from this same isolated-install stage; do not make that future
+contract depend on the repository build tree.
 
 ### Configured but not continuously validated presets
 

@@ -4,7 +4,7 @@ Security issues in **mc-lab-core** should be reported privately.
 
 ## Supported Versions
 
-Only the latest release and the current `main` branch are supported.
+Only the latest release and the current default branch, `master`, are supported.
 
 Older versions, forks, and modified distributions are not maintained for security fixes.
 
