@@ -50,6 +50,15 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
+      - name: Upload canonical coverage to Codacy
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && !cancelled() && hashFiles('build/linux-gcc-coverage/coverage/coverage.info') != '' }}
+        env:
+          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+        run: >-
+          bash <(curl --fail --silent --show-error --location
+          https://coverage.codacy.com/get.sh) report
+          -r build/linux-gcc-coverage/coverage/coverage.info
+
   linux-clang:
     name: Linux / Clang / Coverage
     runs-on: ubuntu-24.04
