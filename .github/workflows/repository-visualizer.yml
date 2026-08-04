@@ -1,0 +1,42 @@
+name: Repository visualization
+
+on:
+  schedule:
+    - cron: '0 3 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: repository-visualization-${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    name: Generate repository visualization
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Generate repository structure diagram
+        uses: githubocto/repo-visualizer@a999615bdab757559bf94bda1fe6eef232765f85 # v0.9.1
+        with:
+          output_file: artifacts/repository-structure.svg
+          excluded_paths: .git,build,out,coverage,third_party
+          excluded_globs: '**/*.png;**/*.jpg;**/*.jpeg;**/*.gif;**/*.svg'
+          max_depth: 4
+          should_push: false
+
+      - name: Publish repository visualization
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: repository-visualization
+          path: artifacts/repository-structure.svg
+          if-no-files-found: error
+          retention-days: 14
