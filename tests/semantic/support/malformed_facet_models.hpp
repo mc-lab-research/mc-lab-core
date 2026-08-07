@@ -134,6 +134,51 @@ atomic_propositions(const adl_only_propositions&, const int&) noexcept {
     return std::array{std::string_view{"free"}};
 }
 
+/** No member provides access to accepting states. */
+struct missing_accepting_states {};
+
+/** The member exists, but its result is not an input range. */
+struct non_range_accepting_states {
+    [[nodiscard]] constexpr auto accepting_states() const noexcept -> int { return 0; }
+};
+
+/**
+ * `short` converts to `int`, but it is not the domain's exact state type.
+ */
+struct incompatible_accepting_states {
+    [[nodiscard]] constexpr auto accepting_states() const noexcept -> std::array<short, 1> {
+        return {0};
+    }
+};
+
+/**
+ * A fully labelled relation with initial states but no accepting states,
+ * isolating the accepting-state role within a would-be finite automaton.
+ */
+struct missing_accepting_relation {
+    std::array<int, 1> initial{0};
+    std::array<missing_label_transition, 1> outgoing{{{0}}};
+
+    [[nodiscard]] constexpr auto initial_states() const noexcept -> std::span<const int> {
+        return initial;
+    }
+
+    [[nodiscard]] constexpr auto outgoing_transitions(const int&) const noexcept
+        -> std::span<const missing_label_transition> {
+        return outgoing;
+    }
+
+    [[nodiscard]] constexpr auto
+    target(const missing_label_transition& edge) const noexcept -> int {
+        return edge.destination;
+    }
+
+    [[nodiscard]] constexpr auto
+    transition_label(const missing_label_transition&) const noexcept -> std::string_view {
+        return "advance";
+    }
+};
+
 }  // namespace mc_lab::tests::semantic::malformed
 
 #endif  // MC_LAB_TESTS_SEMANTIC_SUPPORT_MALFORMED_FACET_MODELS_HPP

@@ -22,10 +22,16 @@ struct explicit_system {
     std::array<int, 2> initial{0, 1};
     std::array<transition, 2> outgoing{{{1, "advance"}, {0, "reset"}}};
     std::array<std::string_view, 1> propositions{"ready"};
+    std::array<int, 1> accepting{1};
 
     /** Returns a borrowed view of the stored initial-state set. */
     [[nodiscard]] constexpr auto initial_states() const noexcept -> std::span<const int> {
         return initial;
+    }
+
+    /** Returns a borrowed view of the stored accepting-state set. */
+    [[nodiscard]] constexpr auto accepting_states() const noexcept -> std::span<const int> {
+        return accepting;
     }
 
     /** Exposes stored witnesses by reference without allocating or copying. */
@@ -55,6 +61,8 @@ struct explicit_system {
 /** Generated unlabelled model whose iterator yields transition values. */
 struct lazy_system {
     [[nodiscard]] constexpr auto initial_states() const noexcept { return std::array{0}; }
+
+    [[nodiscard]] constexpr auto accepting_states() const noexcept { return std::array{1}; }
 
     [[nodiscard]] constexpr auto outgoing_transitions(const int& source) const noexcept {
         return std::views::iota(source + 1, source + 2);

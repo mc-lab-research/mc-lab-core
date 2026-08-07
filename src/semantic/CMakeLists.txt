@@ -37,18 +37,23 @@ target_sources(
         BASE_DIRS
             "${PROJECT_SOURCE_DIR}/include"
         FILES
+            "${PROJECT_SOURCE_DIR}/include/mc_lab/semantic/behavior/buchi_run.hpp"
             "${PROJECT_SOURCE_DIR}/include/mc_lab/semantic/behavior/execution.hpp"
             "${PROJECT_SOURCE_DIR}/include/mc_lab/semantic/behavior/execution_range.hpp"
             "${PROJECT_SOURCE_DIR}/include/mc_lab/semantic/behavior/kripke_path.hpp"
+            "${PROJECT_SOURCE_DIR}/include/mc_lab/semantic/detail/accepting_states_cpo.hpp"
             "${PROJECT_SOURCE_DIR}/include/mc_lab/semantic/detail/atomic_propositions_cpo.hpp"
             "${PROJECT_SOURCE_DIR}/include/mc_lab/semantic/detail/initial_states_cpo.hpp"
             "${PROJECT_SOURCE_DIR}/include/mc_lab/semantic/detail/transition_label_cpo.hpp"
             "${PROJECT_SOURCE_DIR}/include/mc_lab/semantic/detail/transition_relation_cpos.hpp"
+            "${PROJECT_SOURCE_DIR}/include/mc_lab/semantic/facet/accepting_state_set.hpp"
             "${PROJECT_SOURCE_DIR}/include/mc_lab/semantic/facet/atomic_proposition_labelling.hpp"
             "${PROJECT_SOURCE_DIR}/include/mc_lab/semantic/facet/initial_state_set.hpp"
             "${PROJECT_SOURCE_DIR}/include/mc_lab/semantic/facet/labelled_transition_relation.hpp"
             "${PROJECT_SOURCE_DIR}/include/mc_lab/semantic/facet/transition_labelling.hpp"
             "${PROJECT_SOURCE_DIR}/include/mc_lab/semantic/facet/transition_relation.hpp"
+            "${PROJECT_SOURCE_DIR}/include/mc_lab/semantic/system/buchi_automaton.hpp"
+            "${PROJECT_SOURCE_DIR}/include/mc_lab/semantic/system/finite_automaton.hpp"
             "${PROJECT_SOURCE_DIR}/include/mc_lab/semantic/system/kripke_structure.hpp"
             "${PROJECT_SOURCE_DIR}/include/mc_lab/semantic/system/transition_system.hpp"
 )

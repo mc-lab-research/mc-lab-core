@@ -1,5 +1,8 @@
+#include <mc_lab/semantic/behavior/buchi_run.hpp>
 #include <mc_lab/semantic/behavior/execution.hpp>
 #include <mc_lab/semantic/behavior/kripke_path.hpp>
+#include <mc_lab/semantic/system/buchi_automaton.hpp>
+#include <mc_lab/semantic/system/finite_automaton.hpp>
 #include <mc_lab/semantic/system/kripke_structure.hpp>
 #include <mc_lab/semantic/system/transition_system.hpp>
 
@@ -9,6 +12,7 @@
 #include <array>
 #include <concepts>
 #include <ranges>
+#include <string_view>
 
 namespace sem = mc_lab::semantic;
 namespace models = mc_lab::tests::semantic::models;
@@ -40,6 +44,37 @@ static_assert(sem::KripkeStructure<const models::explicit_system&>);
 static_assert(!sem::KripkeStructure<models::lazy_system>);
 static_assert(!sem::KripkeStructure<models::potentially_throwing_system>);
 static_assert(!sem::KripkeStructure<malformed::missing_initial_states>);
+
+// -----------------------------------------------------------------------------
+// Finite-automaton recognition: accepting states join initial states and a
+// labelled relation over the same state domain.
+// -----------------------------------------------------------------------------
+
+static_assert(sem::FiniteAutomaton<models::explicit_system>);
+static_assert(sem::FiniteAutomaton<const models::explicit_system&>);
+static_assert(std::same_as<sem::symbol_t<models::explicit_system>, std::string_view>);
+
+// The generated system has accepting states but no transition labelling.
+static_assert(!sem::FiniteAutomaton<models::lazy_system>);
+static_assert(!sem::FiniteAutomaton<models::potentially_throwing_system>);
+
+// Initial states and a labelled relation alone omit the accepting-state role.
+static_assert(!sem::FiniteAutomaton<malformed::missing_accepting_relation>);
+
+// -----------------------------------------------------------------------------
+// Buchi-automaton recognition: structurally identical to FiniteAutomaton, but
+// a distinct concept since each formalism states its own acceptance laws.
+// -----------------------------------------------------------------------------
+
+static_assert(sem::BuchiAutomaton<models::explicit_system>);
+static_assert(sem::BuchiAutomaton<const models::explicit_system&>);
+
+// The generated system has accepting states but no transition labelling.
+static_assert(!sem::BuchiAutomaton<models::lazy_system>);
+static_assert(!sem::BuchiAutomaton<models::potentially_throwing_system>);
+
+// Initial states and a labelled relation alone omit the accepting-state role.
+static_assert(!sem::BuchiAutomaton<malformed::missing_accepting_relation>);
 
 // -----------------------------------------------------------------------------
 // Execution carriers: finite and infinite ranges use the same state domain.
@@ -82,5 +117,18 @@ static_assert(!sem::KripkePathRange<models::lazy_system, infinite_execution>);
 // This checks carrier compatibility only. A finite value is a path fragment,
 // not a complete Kripke path under the documented semantic requirements.
 static_assert(sem::KripkePathRange<models::explicit_system, finite_execution>);
+
+// -----------------------------------------------------------------------------
+// Buchi behavioral carriers: runs and initial executions share a state type.
+// -----------------------------------------------------------------------------
+
+static_assert(sem::BuchiRunRange<models::explicit_system, infinite_execution>);
+static_assert(sem::BuchiExecutionRange<models::explicit_system, infinite_execution>);
+static_assert(!sem::BuchiRunRange<models::explicit_system, wrong_state_execution>);
+static_assert(!sem::BuchiRunRange<models::lazy_system, infinite_execution>);
+
+// This checks carrier compatibility only. A finite value is a run fragment,
+// not a complete Buchi run under the documented semantic requirements.
+static_assert(sem::BuchiRunRange<models::explicit_system, finite_execution>);
 
 int main() { return 0; }

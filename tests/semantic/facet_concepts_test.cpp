@@ -1,3 +1,4 @@
+#include <mc_lab/semantic/facet/accepting_state_set.hpp>
 #include <mc_lab/semantic/facet/atomic_proposition_labelling.hpp>
 #include <mc_lab/semantic/facet/initial_state_set.hpp>
 #include <mc_lab/semantic/facet/labelled_transition_relation.hpp>
@@ -28,9 +29,15 @@ static_assert(sem::TransitionRelation<models::explicit_system, int>);
 static_assert(sem::TransitionRelation<const models::explicit_system&, const int&>);
 static_assert(sem::LabelledTransitionRelation<models::explicit_system, int>);
 static_assert(sem::AtomicPropositionLabelling<models::explicit_system, int>);
+static_assert(sem::AcceptingStateSet<models::explicit_system, int>);
+static_assert(sem::AcceptingStateSet<const models::explicit_system&, int>);
 
 static_assert(std::same_as<sem::state_t<models::explicit_system>, int>);
 static_assert(std::same_as<sem::initial_state_reference_t<models::explicit_system>, const int&>);
+static_assert(
+    std::same_as<sem::accepting_state_range_t<models::explicit_system>, std::span<const int>>);
+static_assert(
+    std::same_as<sem::accepting_state_reference_t<models::explicit_system>, const int&>);
 static_assert(
     std::same_as<sem::transition_value_for_t<models::explicit_system, int>, models::transition>);
 static_assert(std::same_as<sem::transition_reference_for_t<models::explicit_system, int>,
@@ -48,6 +55,7 @@ static_assert(
 // -----------------------------------------------------------------------------
 
 static_assert(sem::InitialStateSet<models::lazy_system>);
+static_assert(sem::AcceptingStateSet<models::lazy_system, int>);
 static_assert(sem::TransitionRelation<models::lazy_system, int>);
 static_assert(!sem::LabelledTransitionRelation<models::lazy_system, int>);
 static_assert(std::same_as<sem::transition_value_for_t<models::lazy_system, int>, int>);
@@ -78,11 +86,16 @@ static_assert(!sem::TransitionLabelling<malformed::adl_only_label,
 static_assert(!sem::AtomicPropositionLabelling<malformed::non_range_propositions, int>);
 static_assert(!sem::AtomicPropositionLabelling<malformed::adl_only_propositions, int>);
 
+static_assert(!sem::AcceptingStateSet<malformed::missing_accepting_states, int>);
+static_assert(!sem::AcceptingStateSet<malformed::non_range_accepting_states, int>);
+static_assert(!sem::AcceptingStateSet<malformed::incompatible_accepting_states, int>);
+
 // -----------------------------------------------------------------------------
 // CPO behavior: dispatch preserves result categories and exception contracts.
 // -----------------------------------------------------------------------------
 
 static_assert(std::is_empty_v<std::remove_cvref_t<decltype(sem::initial_states)>>);
+static_assert(std::is_empty_v<std::remove_cvref_t<decltype(sem::accepting_states)>>);
 static_assert(std::is_empty_v<std::remove_cvref_t<decltype(sem::outgoing_transitions)>>);
 static_assert(std::is_empty_v<std::remove_cvref_t<decltype(sem::target)>>);
 static_assert(std::is_empty_v<std::remove_cvref_t<decltype(sem::transition_label)>>);
@@ -91,6 +104,10 @@ static_assert(std::is_empty_v<std::remove_cvref_t<decltype(sem::atomic_propositi
 static_assert(noexcept(sem::initial_states(std::declval<const models::explicit_system&>())));
 static_assert(
     !noexcept(sem::initial_states(std::declval<const models::potentially_throwing_system&>())));
+static_assert(noexcept(sem::accepting_states(std::declval<const models::explicit_system&>())));
+static_assert(
+    std::same_as<decltype(sem::accepting_states(std::declval<const models::explicit_system&>())),
+                 std::span<const int>>);
 static_assert(noexcept(sem::outgoing_transitions(std::declval<const models::explicit_system&>(),
                                                  std::declval<const int&>())));
 static_assert(noexcept(sem::target(std::declval<const models::explicit_system&>(),
@@ -148,6 +165,12 @@ int main() {
     decltype(auto) propositions = sem::atomic_propositions(stored, source);
     if (propositions.size() != 1 || propositions.front() != "ready") {
         std::fputs("atomic proposition labelling returned unexpected values\n", stderr);
+        return EXIT_FAILURE;
+    }
+
+    decltype(auto) accepting = sem::accepting_states(stored);
+    if (accepting.size() != 1 || accepting.front() != 1) {
+        std::fputs("accepting_states CPO returned unexpected states\n", stderr);
         return EXIT_FAILURE;
     }
 
