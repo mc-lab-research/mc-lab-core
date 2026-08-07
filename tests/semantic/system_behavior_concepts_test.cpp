@@ -46,20 +46,20 @@ static_assert(!sem::KripkeStructure<models::potentially_throwing_system>);
 static_assert(!sem::KripkeStructure<malformed::missing_initial_states>);
 
 // -----------------------------------------------------------------------------
-// Finite-automaton recognition: accepting states join initial states and a
-// labelled relation over the same state domain.
+// Finite-automaton recognition: atomic structural facets are joined to an
+// associated final-state acceptance condition.
 // -----------------------------------------------------------------------------
 
 static_assert(sem::FiniteAutomaton<models::explicit_system>);
 static_assert(sem::FiniteAutomaton<const models::explicit_system&>);
 static_assert(std::same_as<sem::symbol_t<models::explicit_system>, std::string_view>);
 
-// The generated system has accepting states but no transition labelling.
+// The generated system has an acceptance condition but no transition labelling.
 static_assert(!sem::FiniteAutomaton<models::lazy_system>);
 static_assert(!sem::FiniteAutomaton<models::potentially_throwing_system>);
 
-// Initial states and a labelled relation alone omit the accepting-state role.
-static_assert(!sem::FiniteAutomaton<malformed::missing_accepting_relation>);
+// Initial states and labelled transitions alone omit acceptance association.
+static_assert(!sem::FiniteAutomaton<malformed::missing_acceptance_relation>);
 
 // -----------------------------------------------------------------------------
 // Buchi-automaton recognition: structurally identical to FiniteAutomaton, but
@@ -69,12 +69,12 @@ static_assert(!sem::FiniteAutomaton<malformed::missing_accepting_relation>);
 static_assert(sem::BuchiAutomaton<models::explicit_system>);
 static_assert(sem::BuchiAutomaton<const models::explicit_system&>);
 
-// The generated system has accepting states but no transition labelling.
+// The generated system has an acceptance condition but no transition labelling.
 static_assert(!sem::BuchiAutomaton<models::lazy_system>);
 static_assert(!sem::BuchiAutomaton<models::potentially_throwing_system>);
 
-// Initial states and a labelled relation alone omit the accepting-state role.
-static_assert(!sem::BuchiAutomaton<malformed::missing_accepting_relation>);
+// Initial states and labelled transitions alone omit acceptance association.
+static_assert(!sem::BuchiAutomaton<malformed::missing_acceptance_relation>);
 
 // -----------------------------------------------------------------------------
 // Execution carriers: finite and infinite ranges use the same state domain.

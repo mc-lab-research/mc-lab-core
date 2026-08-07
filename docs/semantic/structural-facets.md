@@ -14,7 +14,6 @@ directory organizes headers; it is not part of that namespace.
 #include <mc_lab/semantic/facet/initial_state_set.hpp>
 #include <mc_lab/semantic/facet/transition_relation.hpp>
 #include <mc_lab/semantic/facet/transition_labelling.hpp>
-#include <mc_lab/semantic/facet/labelled_transition_relation.hpp>
 #include <mc_lab/semantic/facet/atomic_proposition_labelling.hpp>
 ```
 
@@ -232,9 +231,16 @@ Semantic law:
 
 - the result denotes exactly the formal label carried by the witness.
 
-## `LabelledTransitionRelation<System, State>`
+## Facets remain atomic
 
-This composed facet is exactly:
+SemTL deliberately defines no `LabelledTransitionRelation` composite. There is
+one transition relation; labels, weights, costs, probabilities, durations, and
+other observations may independently describe its witnesses. Creating one
+relation concept per combination would privilege labels and cause a
+combinatorial family of weak shortcuts.
+
+An algorithm or recognized system that needs labelled transitions states the
+two atomic requirements directly:
 
 ```cpp
 TransitionRelation<System, State>
@@ -243,9 +249,10 @@ TransitionRelation<System, State>
            transition_reference_for_t<System, State>>
 ```
 
-It remains a facet, not a system. It requires neither initial states nor a
-recognized formalism. Labelling is checked with the transition range's actual
-iteration type.
+The same rule applies when future facets observe weights or probabilities.
+Cross-facet laws, such as normalization of outgoing probabilities, belong to
+the recognized system and its conformance contract rather than to a composite
+relation facet.
 
 ## `AtomicPropositionLabelling<System, State>`
 

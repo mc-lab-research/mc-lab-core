@@ -26,8 +26,14 @@ SemTL recognizes this composition with:
 template <class System>
 concept FiniteAutomaton =
     InitialStateSet<System>
-    && LabelledTransitionRelation<System, state_t<System>>
-    && AcceptingStateSet<System, state_t<System>>;
+    && TransitionRelation<System, state_t<System>>
+    && TransitionLabelling<
+        System,
+        transition_reference_for_t<System, state_t<System>>>
+    && HasAcceptanceCondition<System>
+    && FinalStateAcceptanceCondition<
+        acceptance_condition_t<System>,
+        state_t<System>>;
 ```
 
 | Mathematical component | SemTL contract |
@@ -35,33 +41,47 @@ concept FiniteAutomaton =
 | state domain `Q` | `state_t<System>` plus the documented valid-state laws |
 | alphabet `Sigma` | `symbol_t<System>`, an alias over `transition_label_for_t` |
 | initial set `Q0` | `InitialStateSet<System>` |
-| relation `delta` | `LabelledTransitionRelation<System, state_t<System>>` |
-| accepting set `F` | `AcceptingStateSet<System, state_t<System>>` |
+| relation `delta` | `TransitionRelation<System, state_t<System>>` |
+| symbols on `delta` | `TransitionLabelling<System, transition_reference_for_t<...>>` |
+| acceptance association | `HasAcceptanceCondition<System>` |
+| final-state interpretation | `FinalStateAcceptanceCondition<acceptance_condition_t<System>, state_t<System>>` |
 
 Like `KripkeStructure`, `FiniteAutomaton` composes its facets directly rather
 than requiring `TransitionSystem` as a prerequisite. Reusing another system
 concept would suggest specialization of that formalism and inheritance of its
 laws; `FiniteAutomaton` instead states its own.
 
-## `AcceptingStateSet<System, State>`
+## Acceptance association and final-state condition
 
-`F`, like `Q0`, is a subset of the state domain. SemTL therefore gives it a
-facet shaped like `InitialStateSet`, exposed through the public CPO:
+Acceptance is not a structural facet of the automaton. The system associates
+an independent condition object through:
 
 ```cpp
-mc_lab::semantic::accepting_states(system)
+mc_lab::semantic::acceptance_condition(system)
 ```
 
-The result must model `std::ranges::input_range`, and its normalized value
-type must be exactly `State`. Unlike `InitialStateSet`, the state type is an
-explicit concept argument, for the same reason `TransitionRelation` takes one:
-it keeps the facet independent from `InitialStateSet<System>` and lets a
-recognized system, such as `FiniteAutomaton`, check both against the same
-normalized domain, `state_t<System>`.
+`acceptance_condition_t<System>` is the normalized type of that object. For a
+finite automaton, it must model:
+
+```cpp
+FinalStateAcceptanceCondition<acceptance_condition_t<System>, state_t<System>>
+```
+
+The current final-state condition is represented by an
+`AcceptingStateSet<Condition, State>`, whose range is obtained with:
+
+```cpp
+mc_lab::semantic::accepting_states(condition)
+```
+
+This accepting set belongs to the condition, not to the system. The
+distinction permits future conditions such as parity, Rabin, or Streett to
+associate richer objects without pretending that every acceptance semantics
+is founded on one set of states.
 
 Semantic laws:
 
-- the range denotes exactly the formal accepting-state set `F`;
+- the condition's range denotes exactly the formal accepting-state set `F`;
 - every element denotes a valid state;
 - order has no semantic meaning;
 - duplicate occurrences do not change the represented set.

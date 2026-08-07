@@ -1,9 +1,11 @@
 #ifndef MC_LAB_SEMANTIC_SYSTEM_BUCHI_AUTOMATON_HPP
 #define MC_LAB_SEMANTIC_SYSTEM_BUCHI_AUTOMATON_HPP
 
-#include <mc_lab/semantic/facet/accepting_state_set.hpp>
+#include <mc_lab/semantic/acceptance/acceptance_condition.hpp>
+#include <mc_lab/semantic/acceptance/buchi_acceptance.hpp>
 #include <mc_lab/semantic/facet/initial_state_set.hpp>
-#include <mc_lab/semantic/facet/labelled_transition_relation.hpp>
+#include <mc_lab/semantic/facet/transition_labelling.hpp>
+#include <mc_lab/semantic/facet/transition_relation.hpp>
 
 /**
  * @file
@@ -19,24 +21,33 @@ namespace mc_lab::semantic {
 
 namespace detail {
 
-// The dependency order makes the state domain available before the labelled
-// relation and accepting-state facets are formed. This is composition of
-// contracts, not system inheritance.
+// The staged concepts keep dependent aliases behind the contracts that make
+// them well-formed. Each requirement remains an atomic public contract.
+template <class System>
+concept BuchiAutomatonTransitionStructure =
+    InitialStateSet<System> && TransitionRelation<System, state_t<System>>
+    && TransitionLabelling<System, transition_reference_for_t<System, state_t<System>>>;
+
+template <class System>
+concept BuchiAutomatonAcceptance = HasAcceptanceCondition<System>
+    && BuchiAcceptanceCondition<acceptance_condition_t<System>, state_t<System>>;
+
 template <class System>
 concept BuchiAutomatonComponents =
-    InitialStateSet<System> && LabelledTransitionRelation<System, state_t<System>>
-    && AcceptingStateSet<System, state_t<System>>;
+    BuchiAutomatonTransitionStructure<System> && BuchiAutomatonAcceptance<System>;
 
 }  // namespace detail
 
 /**
- * A labelled transition system recognized as a Buchi automaton.
+ * A system recognized directly as a Buchi automaton.
  *
  * Compile-time contract:
- * - identical to `FiniteAutomaton`: `InitialStateSet<System>` exposes `Q0`
- *   and determines `Q`; `LabelledTransitionRelation<System, state_t<System>>`
- *   exposes `delta` on `Q`, labelled by `Sigma` (`symbol_t<System>`);
- *   `AcceptingStateSet<System, state_t<System>>` exposes `F`.
+ * - identical in shape to `FiniteAutomaton`: `InitialStateSet<System>` exposes
+ *   `Q0` and determines `Q`; `TransitionRelation` exposes the local image of
+ *   `delta`; `TransitionLabelling` exposes `Sigma`; and
+ *   `HasAcceptanceCondition` associates a condition object;
+ * - `BuchiAcceptanceCondition<acceptance_condition_t<System>,
+ *   state_t<System>>` gives that object recurrence semantics over `Q`.
  *
  * Semantic laws, not enforceable by the compiler: the same structural laws as
  * `FiniteAutomaton` (valid states, sound and complete `Q0`/`delta`/`F`), plus

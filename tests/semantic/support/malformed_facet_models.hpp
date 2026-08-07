@@ -134,7 +134,22 @@ atomic_propositions(const adl_only_propositions&, const int&) noexcept {
     return std::array{std::string_view{"free"}};
 }
 
-/** No member provides access to accepting states. */
+/** No member provides access to an acceptance condition. */
+struct missing_acceptance_condition {};
+
+/** An acceptance association must denote an object. */
+struct void_acceptance_condition {
+    constexpr void acceptance_condition() const noexcept {}
+};
+
+/** A free association must not satisfy the member-only protocol. */
+struct adl_only_acceptance_condition {};
+
+[[nodiscard]] constexpr auto acceptance_condition(const adl_only_acceptance_condition&) noexcept {
+    return missing_acceptance_condition{};
+}
+
+/** No member provides access to accepting states on the condition object. */
 struct missing_accepting_states {};
 
 /** The member exists, but its result is not an input range. */
@@ -152,10 +167,10 @@ struct incompatible_accepting_states {
 };
 
 /**
- * A fully labelled relation with initial states but no accepting states,
- * isolating the accepting-state role within a would-be finite automaton.
+ * A fully labelled relation with initial states but no acceptance association,
+ * isolating that role within a would-be automaton.
  */
-struct missing_accepting_relation {
+struct missing_acceptance_relation {
     std::array<int, 1> initial{0};
     std::array<missing_label_transition, 1> outgoing{{{0}}};
 
@@ -163,8 +178,8 @@ struct missing_accepting_relation {
         return initial;
     }
 
-    [[nodiscard]] constexpr auto outgoing_transitions(const int&) const noexcept
-        -> std::span<const missing_label_transition> {
+    [[nodiscard]] constexpr auto
+    outgoing_transitions(const int&) const noexcept -> std::span<const missing_label_transition> {
         return outgoing;
     }
 

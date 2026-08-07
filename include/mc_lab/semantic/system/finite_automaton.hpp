@@ -1,9 +1,11 @@
 #ifndef MC_LAB_SEMANTIC_SYSTEM_FINITE_AUTOMATON_HPP
 #define MC_LAB_SEMANTIC_SYSTEM_FINITE_AUTOMATON_HPP
 
-#include <mc_lab/semantic/facet/accepting_state_set.hpp>
+#include <mc_lab/semantic/acceptance/acceptance_condition.hpp>
+#include <mc_lab/semantic/acceptance/final_state_acceptance.hpp>
 #include <mc_lab/semantic/facet/initial_state_set.hpp>
-#include <mc_lab/semantic/facet/labelled_transition_relation.hpp>
+#include <mc_lab/semantic/facet/transition_labelling.hpp>
+#include <mc_lab/semantic/facet/transition_relation.hpp>
 
 /**
  * @file
@@ -17,22 +19,29 @@
  * - `Q0` is a subset of `Q` containing its initial states;
  * - `F` is a subset of `Q` containing its accepting states.
  *
- * SemTL obtains `Q` from `InitialStateSet<System>`, `delta` from
- * `LabelledTransitionRelation<System, state_t<System>>` (whose structural
- * label type is aliased below as `symbol_t`), and `F` from
- * `AcceptingStateSet<System, state_t<System>>`.
+ * SemTL obtains `Q` from `InitialStateSet<System>`, the local image of `delta`
+ * from `TransitionRelation<System, state_t<System>>`, and its labels from the
+ * independent `TransitionLabelling` facet. Acceptance is associated through
+ * `acceptance_condition(system)` and interpreted as final-state acceptance.
  */
 namespace mc_lab::semantic {
 
 namespace detail {
 
-// The dependency order makes the state domain available before the labelled
-// relation and accepting-state facets are formed. This is composition of
-// contracts, not system inheritance.
+// The staged concepts keep dependent aliases behind the contracts that make
+// them well-formed. Each requirement remains an atomic public contract.
+template <class System>
+concept FiniteAutomatonTransitionStructure =
+    InitialStateSet<System> && TransitionRelation<System, state_t<System>>
+    && TransitionLabelling<System, transition_reference_for_t<System, state_t<System>>>;
+
+template <class System>
+concept FiniteAutomatonAcceptance = HasAcceptanceCondition<System>
+    && FinalStateAcceptanceCondition<acceptance_condition_t<System>, state_t<System>>;
+
 template <class System>
 concept FiniteAutomatonComponents =
-    InitialStateSet<System> && LabelledTransitionRelation<System, state_t<System>>
-    && AcceptingStateSet<System, state_t<System>>;
+    FiniteAutomatonTransitionStructure<System> && FiniteAutomatonAcceptance<System>;
 
 }  // namespace detail
 
@@ -49,20 +58,24 @@ using symbol_t =
     transition_label_for_t<System, transition_reference_for_t<System, state_t<System>>>;
 
 /**
- * A labelled transition system recognized as a finite automaton.
+ * A system recognized directly as a finite automaton.
  *
  * Compile-time contract:
  * - `InitialStateSet<System>` exposes `Q0` and determines `Q`;
- * - `LabelledTransitionRelation<System, state_t<System>>` exposes `delta` on
- *   `Q`, with transitions labelled by `Sigma` (`symbol_t<System>`);
- * - `AcceptingStateSet<System, state_t<System>>` exposes `F` on the same
- *   normalized state domain.
+ * - `TransitionRelation<System, state_t<System>>` exposes the local image of
+ *   `delta` on `Q`;
+ * - `TransitionLabelling` assigns each transition its symbol in `Sigma`;
+ * - `HasAcceptanceCondition<System>` associates an independent condition
+ *   object with the system;
+ * - `FinalStateAcceptanceCondition<acceptance_condition_t<System>,
+ *   state_t<System>>` interprets that object over the same state domain.
  *
  * Semantic laws, not enforceable by the compiler:
  * - every initial and accepting value denotes an element of `Q`;
  * - every transition source, target, and label denote elements of `Q`, `Q`,
  *   and `Sigma` respectively;
- * - the initial and accepting ranges represent exactly `Q0` and `F`;
+ * - the initial range and acceptance condition represent exactly `Q0` and
+ *   final-state acceptance by `F`;
  * - local transition queries are sound and complete for `delta`.
  *
  * Language, as a documented behavioral definition rather than an algorithm: a

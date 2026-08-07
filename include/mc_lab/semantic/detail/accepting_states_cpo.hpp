@@ -12,11 +12,13 @@ namespace mc_lab::semantic::detail {
  * policy.
  */
 struct accepting_states_fn {
-    template <class System>
-    requires requires(System&& system) { std::forward<System>(system).accepting_states(); }
-    [[nodiscard]] constexpr decltype(auto) operator()(System&& system) const
-        noexcept(noexcept(std::forward<System>(system).accepting_states())) {
-        return std::forward<System>(system).accepting_states();
+    template <class Condition>
+    requires requires(Condition&& condition) {
+        std::forward<Condition>(condition).accepting_states();
+    }
+    [[nodiscard]] constexpr decltype(auto) operator()(Condition&& condition) const
+        noexcept(noexcept(std::forward<Condition>(condition).accepting_states())) {
+        return std::forward<Condition>(condition).accepting_states();
     }
 };
 

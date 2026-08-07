@@ -22,15 +22,21 @@ structural composition under a distinct name:
 template <class System>
 concept BuchiAutomaton =
     InitialStateSet<System>
-    && LabelledTransitionRelation<System, state_t<System>>
-    && AcceptingStateSet<System, state_t<System>>;
+    && TransitionRelation<System, state_t<System>>
+    && TransitionLabelling<
+        System,
+        transition_reference_for_t<System, state_t<System>>>
+    && HasAcceptanceCondition<System>
+    && BuchiAcceptanceCondition<
+        acceptance_condition_t<System>,
+        state_t<System>>;
 ```
 
 `BuchiAutomaton` does not refine `FiniteAutomaton`. The two concepts compose
-the same facets directly, and each states its own laws, so that a future
-increment can add structural requirements to one without forcing them onto
-the other. This mirrors why `KripkeStructure` does not refine
-`TransitionSystem` even though both are built from `InitialStateSet` and
+the same atomic structural facets directly, then interpret their associated
+conditions under different laws. A future increment can add requirements to
+one without forcing them onto the other. This mirrors why `KripkeStructure`
+does not refine `TransitionSystem` even though both use `InitialStateSet` and
 `TransitionRelation`.
 
 ## Runs
@@ -69,6 +75,19 @@ attached to `BuchiExecutionRange`. Neither infinitude, adjacency to `delta`,
 nor initiality in `Q0` is enforceable from the range type alone.
 
 ## Acceptance
+
+The system exposes its condition through:
+
+```cpp
+acceptance_condition(system)
+```
+
+For this formalism, the returned object models
+`BuchiAcceptanceCondition<Condition, State>`. Its current representation is an
+`AcceptingStateSet<Condition, State>` observed through
+`accepting_states(condition)`. The set belongs to the condition object, not to
+the system's structural facets. More expressive acceptance formalisms may use
+different condition structures.
 
 Write `inf(run)` for the set of states that occur infinitely often in a run:
 
