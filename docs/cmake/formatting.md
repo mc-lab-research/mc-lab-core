@@ -136,10 +136,15 @@ The repository `.clang-format` file is the single source of truth. The CMake
 module and runner do not reproduce style options. They select the exact policy
 file and disable fallback styles.
 
-The committed policy targets clang-format 22.1, C++20, four-space indentation,
-a 100-column limit, and LF line endings. Public includes below
-`mc_lab_core/` form the first include category, ahead of local quoted headers
-and standard-library or external headers.
+The committed policy is based explicitly on LLVM formatting and targets
+clang-format 22.1, C++20, four-space block and continuation indentation, a
+100-column limit, and LF line endings. Public includes below `mc_lab/` form
+the first include category, ahead of local quoted headers and standard-library
+or external headers. Public mcLab headers use angle brackets:
+
+```cpp
+#include <mc_lab/semantic/facet/transition_relation.hpp>
+```
 
 The same policy can be consumed by:
 

@@ -1,6 +1,16 @@
+# ==============================================================================
+# Language and baseline
+# ==============================================================================
+BasedOnStyle: LLVM
+Language: Cpp
+Standard: c++20
+
 # Put non-assignment operators at the beginning of continuation lines.
 BreakBeforeBinaryOperators: NonAssignment
 BreakBeforeTernaryOperators: true
+# Use a stable continuation indent instead of aligning operands beneath names
+# whose length may change.
+AlignOperands: DontAlign
 # Keep string contents unchanged. Long strings may exceed the column limit when
 # splitting them would reduce clarity or alter their representation.
 BreakStringLiterals: false
@@ -17,6 +27,9 @@ BreakInheritanceList: BeforeColon
 # ==============================================================================
 # Templates, concepts, and requires expressions
 # ==============================================================================
+# Keep template declarations visually separated from the declaration they govern.
+BreakBeforeConceptDeclarations: Always
+BreakTemplateDeclarations: Yes
 # Requires clauses form an explicit part of a declaration's contract.
 RequiresClausePosition: OwnLine
 IndentRequiresClause: false
@@ -45,11 +58,7 @@ SortIncludes: CaseSensitive
 #   2. local quoted headers;
 #   3. standard-library and external headers.
 IncludeCategories:
-  - Regex: '^<mc_lab_core/'
-    Priority: 1
-    SortPriority: 1
-    CaseSensitive: true
-  - Regex: '^"mc_lab_core/'
+  - Regex: '^<mc_lab/'
     Priority: 1
     SortPriority: 1
     CaseSensitive: true
@@ -88,3 +97,28 @@ SpacesBeforeTrailingComments: 2
 # Preserve intentional logical grouping chosen by the author. clang-format
 # normalizes spacing inside those groups but does not invent new architecture.
 SeparateDefinitionBlocks: Leave
+# ==============================================================================
+# Line breaking
+# ==============================================================================
+
+ColumnLimit: 100
+IndentWidth: 4
+ContinuationIndentWidth: 4
+TabWidth: 4
+UseTab: Never
+LineEnding: LF
+
+# Once a call or declaration must wrap, keep each argument or parameter
+# structurally visible rather than packing several onto continuation lines.
+BinPackArguments: false
+BinPackParameters: OnePerLine
+
+# A parenthesized noexcept contract may start on its own continuation line.
+AllowBreakBeforeNoexceptSpecifier: OnlyWithParen
+
+# Avoid fragmenting qualified names such as
+# mc_lab::semantic::detail::member_lookup.
+PenaltyBreakScopeResolution: 1000
+
+# Long declarations may place their return type on a dedicated line.
+PenaltyReturnTypeOnItsOwnLine: 0
