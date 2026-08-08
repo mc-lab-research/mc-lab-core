@@ -1,22 +1,26 @@
-# Buchi automata, runs, and infinite-word acceptance
+# Buchi automata and infinite-word acceptance
 
-This document defines the fourth recognized SemTL system, `BuchiAutomaton`,
-and connects its C++ contracts to the mathematical notion of infinite-word
-acceptance.
+This document defines the `BuchiAutomaton` structural formalism and records its
+mathematical run and acceptance semantics without imposing a concrete
+execution representation.
 
 ## Structure
 
-A Buchi automaton is defined the same way as a finite automaton: a tuple
+A Buchi automaton is a tuple:
 
 ```text
 A = (Q, Sigma, delta, Q0, F)
 ```
 
-with the same components as [finite-automaton.md](finite-automaton.md):
-states `Q`, alphabet `Sigma`, transition relation `delta` contained in
-`Q x Sigma x Q`, initial states `Q0 subseteq Q`, and accepting states
-`F subseteq Q`. Only the language differs, so SemTL recognizes the same
-structural composition under a distinct name:
+where:
+
+- `Q` is the state domain;
+- `Sigma` is the alphabet;
+- `delta` is contained in `Q x Sigma x Q`;
+- `Q0` is the set of initial states;
+- `F` is the accepting-state set represented by the associated condition.
+
+SemTL recognizes this formalism with:
 
 ```cpp
 template <class System>
@@ -32,47 +36,45 @@ concept BuchiAutomaton =
         state_t<System>>;
 ```
 
-`BuchiAutomaton` does not refine `FiniteAutomaton`. The two concepts compose
-the same atomic structural facets directly, then interpret their associated
-conditions under different laws. A future increment can add requirements to
-one without forcing them onto the other. This mirrors why `KripkeStructure`
-does not refine `TransitionSystem` even though both use `InitialStateSet` and
-`TransitionRelation`.
+`BuchiAutomaton` composes its atomic structural facets directly. It does not
+refine `FiniteAutomaton`, `TransitionSystem`, or another system concept. Its
+acceptance interpretation and laws are its own even where structural
+requirements coincide.
 
-## Runs
+## Runs and transition evidence
 
-A run of `A` on an infinite word `sigma_0 sigma_1 ...` is an infinite state
-sequence:
+A run on the infinite word `sigma_0 sigma_1 ...` contains states and the
+successive labelled transition choices:
 
 ```text
-q_0 q_1 ...
+q0 --sigma_0--> q1 --sigma_1--> q2 ...
 ```
 
-such that:
+such that `q0` belongs to `Q0` and:
 
 ```text
-q_0 is in Q0
-(q_i, sigma_i, q_(i+1)) is in delta, for every i >= 0
+(q_i, sigma_i, q_(i+1)) is in delta for every i >= 0
 ```
 
-This is the same shape as a Kripke path, but built over the labelled relation
-`delta` rather than an unlabelled, total `R`: each step is justified by one
-symbol of the word being read, and `delta` need not be total.
+A state sequence alone is not a complete representation of a run. For:
 
-SemTL gives run carriers a distinct public name:
-
-```cpp
-template <class System, class Run>
-concept BuchiRunRange = BuchiAutomaton<System> && ExecutionRange<Run, state_t<System>>;
-
-template <class System, class Execution>
-concept BuchiExecutionRange = BuchiRunRange<System, Execution>;
+```text
+q0 --a--> q1
+q0 --b--> q1
 ```
 
-As with `KripkePathRange`/`KripkeExecutionRange`, the two concepts share one
-syntactic range requirement; their difference is the semantic initiality law
-attached to `BuchiExecutionRange`. Neither infinitude, adjacency to `delta`,
-nor initiality in `Q0` is enforceable from the range type alone.
+the projection `q0, q1` loses the symbol that was read. A future concrete
+execution representation must therefore preserve the relevant transition
+evidence. The current v0.1 candidate is a single range whose observations
+alternate `State` and `Transition`, represented using
+`std::variant<State, Transition>`.
+
+That representation is intentionally not part of the structural semantic API
+yet. Run construction, selection, persistence, filtering, masking, and
+validation belong to later algorithms and views. Labels, costs, weights, and
+probabilities will be projected from retained transition witnesses through
+their structural facets rather than duplicated into execution-specific
+facets.
 
 ## Acceptance
 
@@ -82,63 +84,42 @@ The system exposes its condition through:
 acceptance_condition(system)
 ```
 
-For this formalism, the returned object models
-`BuchiAcceptanceCondition<Condition, State>`. Its current representation is an
-`AcceptingStateSet<Condition, State>` observed through
-`accepting_states(condition)`. The set belongs to the condition object, not to
-the system's structural facets. More expressive acceptance formalisms may use
-different condition structures.
+For this formalism, the returned object models:
 
-Write `inf(run)` for the set of states that occur infinitely often in a run:
-
-```text
-inf(run) = { q in Q | q = run(i) for infinitely many i }
+```cpp
+BuchiAcceptanceCondition<Condition, State>
 ```
 
-`A` accepts the word `sigma_0 sigma_1 ...` exactly when it has a run `run` on
-that word such that:
+Its current representation is an `AcceptingStateSet<Condition, State>`
+observed through `accepting_states(condition)`. More expressive acceptance
+formalisms may use different condition structures.
+
+Writing `inf(run)` for the set of states that occur infinitely often, a run is
+accepting exactly when:
 
 ```text
 inf(run) intersect F != {}
 ```
 
-that is, the run visits at least one accepting state infinitely often. The
-language of `A` is the set of all infinite words it accepts:
+The language of `A` is the set of infinite words for which an accepting run
+exists. This is a behavioral law, not an enumeration operation required from
+every representation.
 
-```text
-[[A]] = { sigma_0 sigma_1 ... | such a run exists }
-```
+## Structural guarantees and semantic laws
 
-Unlike finite-automaton acceptance, which asks about the last state of a
-finite execution, Buchi acceptance is a recurrence property of an entire
-infinite run and cannot be reduced to a predicate on a single state. It is
-recorded here as a semantic law, not as a computational capability.
-`BuchiAutomaton` defines no `inf(run)`, `accepts(system, word)`, or
-`language(system)` CPO in this increment, for the same reason
-[finite-automaton.md](finite-automaton.md) defines none of its acceptance
-operations: computing `inf(run)` in general requires consuming an infinite
-range, which is a separate algorithmic capability (e.g. cycle detection on a
-finite state space), not a structural requirement every model must satisfy.
-
-## What the compiler can and cannot establish
-
-The concepts establish:
-
-- availability and type compatibility of the structural facets, identical to
-  `FiniteAutomaton`;
-- range-shaped access to run and execution states, identical in shape to
-  `KripkePathRange`/`KripkeExecutionRange`.
+The C++ concept establishes availability and type compatibility of initial
+states, labelled transition witnesses, and the associated Buchi condition over
+one state domain.
 
 The following remain semantic laws:
 
-- validity of each initial, accepting, source, and target state value;
+- validity of initial, accepting, source, and target states;
 - soundness and completeness of `delta`, `Q0`, and `F`;
-- infinitude of a complete run;
-- membership of a run's first state in `Q0`;
-- correctness of `inf(run)` for a specific run;
-- existence of an accepting run for any specific infinite word, and
-  membership of a word in `[[A]]`.
+- infinitude and adjacency of a complete run;
+- preservation of the symbols read by its transition evidence;
+- correctness of `inf(run)`;
+- existence of an accepting run for a particular infinite word.
 
-These laws belong to documentation and future conformance and computational
-utilities. They do not justify adding state, transition, or language
-enumeration to the system concept.
+Those laws belong to documentation and future conformance and algorithmic
+utilities. They do not justify adding execution or language enumeration to the
+system concept.

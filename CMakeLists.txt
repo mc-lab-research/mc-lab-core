@@ -247,9 +247,17 @@ add_subdirectory(
     src/semantic
 )
 
+add_subdirectory(
+    src/algorithm
+)
+
 if(PROJECT_IS_TOP_LEVEL AND BUILD_TESTING)
     add_subdirectory(
         tests/semantic
+    )
+
+    add_subdirectory(
+        tests/algorithm
     )
 endif()
 

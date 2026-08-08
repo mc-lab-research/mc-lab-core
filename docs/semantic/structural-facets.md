@@ -12,6 +12,7 @@ directory organizes headers; it is not part of that namespace.
 
 ```cpp
 #include <mc_lab/semantic/facet/initial_state_set.hpp>
+#include <mc_lab/semantic/facet/post.hpp>
 #include <mc_lab/semantic/facet/transition_relation.hpp>
 #include <mc_lab/semantic/facet/transition_labelling.hpp>
 #include <mc_lab/semantic/facet/atomic_proposition_labelling.hpp>
@@ -34,6 +35,7 @@ For v0.1, each CPO has exactly one dispatch route: a model member operation.
 | Public CPO call | Member selected by the v0.1 implementation |
 |---|---|
 | `initial_states(system)` | `system.initial_states()` |
+| `post(system, state)` | `system.post(state)` |
 | `outgoing_transitions(system, state)` | `system.outgoing_transitions(state)` |
 | `target(system, transition)` | `system.target(transition)` |
 | `transition_label(system, transition)` | `system.transition_label(transition)` |
@@ -58,6 +60,7 @@ current structural operations has the following shape:
 ```cpp
 struct model {
     auto initial_states() const;
+    auto post(const state& source) const;
     auto outgoing_transitions(const state& source) const;
     auto target(const transition& witness) const;
     auto transition_label(const transition& witness) const;
@@ -124,6 +127,46 @@ Semantic laws:
 This facet neither exposes nor implies enumeration of the complete state
 space.
 
+## `Post<System, State>`
+
+Public operation:
+
+```cpp
+mc_lab::semantic::post(system, state)
+```
+
+`Post` exposes direct state-oriented evolution:
+
+```text
+State -> Range<State>
+```
+
+The explicit `State` argument keeps the facet independent from
+`InitialStateSet<System>`. The result must be an `std::ranges::input_range`
+whose normalized value type is exactly `State`. It may be empty, owning,
+borrowed, lazy, generated, or single-pass.
+
+Associated types:
+
+```cpp
+post_range_for_t<System, State>
+post_reference_for_t<System, State>
+```
+
+Semantic laws for a query from `source`:
+
+- every value denotes a valid successor state of `source`;
+- the range is sound and complete for the represented successor set;
+- order has no semantic meaning;
+- duplicate occurrences do not change the represented set.
+
+`Post` supports zero, one, or many successors and implies neither determinism
+nor global state-space enumeration. It creates no transition witness.
+
+`Post` and `TransitionRelation` are independent atomic facets. A model may
+expose either or both. When both exist, their successor sets obey a documented
+coherence law; see [post.md](post.md).
+
 ## `TransitionRelation<System, State>`
 
 Public operations:
@@ -135,8 +178,8 @@ mc_lab::semantic::target(system, witness)
 
 The explicit `State` concept argument keeps the relation independent from
 `InitialStateSet<System>`. An algorithm that already has a state can inspect
-its local image without requiring initial-state access or global state-space
-enumeration.
+local transition witnesses without requiring initial-state access or global
+state-space enumeration.
 
 `outgoing_transitions` returns an `std::ranges::input_range` of local transition
 witnesses. A witness describes one occurrence in the relation; it is not the

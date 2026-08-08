@@ -1,9 +1,9 @@
 # Transition systems and behavioral semantics
 
-This document defines the first recognized SemTL system and connects its C++
-contracts to the mathematical notions of paths, executions, and behaviors.
+This document defines the minimal transition-system formalism while keeping
+its mathematical behaviors separate from concrete execution representations.
 
-## Transition-system structure
+## Structure
 
 A transition system is a tuple:
 
@@ -14,7 +14,7 @@ TS = (S, trans, I)
 where:
 
 - `S` is a set of states;
-- `trans` is a binary transition relation contained in `S × S`;
+- `trans` is a binary relation contained in `S x S`;
 - `I` is a subset of `S` containing the initial states.
 
 SemTL recognizes this formalism with:
@@ -26,37 +26,27 @@ concept TransitionSystem =
     && TransitionRelation<System, state_t<System>>;
 ```
 
-The mapping is:
-
 | Mathematical component | SemTL contract |
 |---|---|
 | state domain `S` | `state_t<System>` plus the documented valid-state laws |
 | initial set `I` | `InitialStateSet<System>` |
 | relation `trans` | `TransitionRelation<System, state_t<System>>` |
 
-The C++ state type is a carrier for the semantic state domain. It does not imply
-that every bit pattern or constructible value denotes a valid state, and it
-does not enumerate `S`.
+The C++ state type carries the semantic state domain. It neither implies that
+every representable C++ value is valid nor enumerates `S`.
 
-Consequently, `TransitionSystem` does not require:
-
-- transition or state labels;
-- acceptance semantics;
-- finiteness;
-- deterministic transitions;
-- global state-space enumeration;
-- predecessor or index access.
-
-Those roles belong to other facets, acceptance conditions, system formalisms,
-or computational capabilities.
+`TransitionSystem` deliberately requires no labels, acceptance condition,
+finiteness, determinism, global state-space enumeration, predecessor query, or
+indexing. Those roles belong to other facets, acceptance conditions,
+formalisms, or computational capabilities.
 
 ## Paths
 
-For a state `s` in `S`, `paths(TS, s)` is the set of all non-empty,
-potentially infinite sequences:
+For `s` in `S`, `paths(TS, s)` is the set of all non-empty, potentially
+infinite sequences:
 
 ```text
-π = s0 s1 ...
+pi = s0 s1 ...
 ```
 
 such that:
@@ -67,75 +57,42 @@ si trans s(i+1) for every adjacent pair
 ```
 
 A path may terminate after finitely many states or continue indefinitely. The
-basic definition does not require a maximal path: a finite prefix that obeys
-the relation is still a path.
+basic definition does not require maximality: a finite prefix that obeys the
+relation is still a path.
 
 ## Executions and behaviors
 
 An execution, also called a behavior, is a path whose first state is initial.
-The behavioral semantics of `TS` is:
+The behavioral semantics of `TS` is the union of `paths(TS, s0)` over all
+`s0` in `I`.
 
-```text
-⟦TS⟧ = ⋃ paths(TS, s0), for every s0 in I
-```
-
-Equivalently, a sequence belongs to `⟦TS⟧` exactly when:
+Equivalently, a sequence belongs to the semantics exactly when:
 
 1. it is non-empty;
 2. its first state belongs to `I`;
 3. every consecutive state pair belongs to `trans`.
 
-## C++ execution carriers
+These are mathematical definitions and laws of the recognized formalism. They
+do not require the structural C++ concept to construct or enumerate behaviors.
 
-`ExecutionRange<Execution, State>` describes a range-shaped carrier for a
-potentially finite or infinite state sequence:
+## Representation and algorithm boundary
 
-```cpp
-template <class Execution, class State>
-concept ExecutionRange =
-    std::ranges::input_range<Execution>
-    && std::same_as<
-        std::remove_cvref_t<execution_state_t<Execution>>,
-        std::remove_cvref_t<State>>;
-```
+SemTL currently publishes no structural `ExecutionRange` concept and no
+`execution(system)` or `executions(system)` CPO.
 
-`TransitionSystemExecutionRange<System, Execution>` connects that carrier to
-the state domain of a transition system:
+A range is one possible access mechanism for a concrete behavior, but its
+observations depend on the formalism and the algorithm. A state-oriented
+evolution may be completely represented by a range of states. A
+transition-rich execution may retain alternating state and transition
+observations so labels, costs, probabilities, or other transition evidence can
+later be projected without duplicating them into execution-specific facets.
 
-```cpp
-template <class System, class Execution>
-concept TransitionSystemExecutionRange =
-    TransitionSystem<System>
-    && ExecutionRange<Execution, state_t<System>>;
-```
+The v0.1 candidate for such a heterogeneous observation range is
+`std::variant<State, Transition>`. It is a deferred representation decision,
+not part of the structural semantic API in this increment.
 
-These concepts validate only type-level compatibility. They do not prove that
-a particular range value belongs to `⟦TS⟧`. Non-emptiness, initiality, and
-transition adjacency are semantic laws over values.
-
-This distinction is the same one used by structural facets: C++ concepts check
-available expressions and type relationships, while documentation and future
-conformance utilities address semantic laws.
-
-## Finite and infinite representations
-
-A finite container can carry a finite execution:
-
-```cpp
-std::array<int, 3> finite{0, 1, 2};
-```
-
-A lazy range with an unreachable sentinel can carry an infinite execution:
-
-```cpp
-auto infinite = std::views::iota(0);
-```
-
-Both can satisfy `ExecutionRange<..., int>`. Whether their values form valid
-executions depends on the associated transition system.
-
-No `executions(system)` CPO is defined. Requiring such an operation would turn
-the mathematical power set of behaviors into an enumeration obligation, which
-is impossible or undesirable for many infinite, lazy, symbolic, or composed
-systems. Exploration and conformance algorithms may provide computational
-access separately when a representation offers sufficient capabilities.
+Construction, selection, validation, filtering, and projection of concrete
+executions belong to later algorithms and views. Requiring all systems to
+enumerate their executions would turn a mathematical power set into an
+impossible or undesirable computational obligation for many infinite, lazy,
+symbolic, nondeterministic, or composed systems.

@@ -19,8 +19,9 @@
  * @endcode
  *
  * This keeps the relation independent from `InitialStateSet`; algorithms that
- * already possess a state can query successors without requiring a system to
- * expose initial states or a globally enumerable state space.
+ * already possess a state can inspect local transition witnesses without
+ * requiring a system to expose initial states or a globally enumerable state
+ * space.
  *
  * In SemTL v0.1, a model supplies member operations:
  *

@@ -37,6 +37,40 @@ set_tests_properties(
 )
 
 add_executable(
+    mc_lab_core_semantic_post_tests
+    post_concepts_test.cpp
+)
+
+target_link_libraries(
+    mc_lab_core_semantic_post_tests
+    PRIVATE
+        MC_LAB_CORE::Semantic
+)
+
+set_target_properties(
+    mc_lab_core_semantic_post_tests
+    PROPERTIES
+        FOLDER "tests/semantic"
+)
+
+mc_lab_core_enable_warnings(mc_lab_core_semantic_post_tests)
+mc_lab_core_enable_sanitizers(mc_lab_core_semantic_post_tests)
+mc_lab_core_enable_coverage(mc_lab_core_semantic_post_tests)
+mc_lab_core_register_static_analysis_target(mc_lab_core_semantic_post_tests)
+
+add_test(
+    NAME mc_lab_core.semantic.post_concepts
+    COMMAND mc_lab_core_semantic_post_tests
+)
+
+set_tests_properties(
+    mc_lab_core.semantic.post_concepts
+    PROPERTIES
+        LABELS "semantic;concepts;facet;post"
+        TIMEOUT 10
+)
+
+add_executable(
     mc_lab_core_semantic_acceptance_tests
     acceptance_concepts_test.cpp
 )
@@ -71,36 +105,36 @@ set_tests_properties(
 )
 
 add_executable(
-    mc_lab_core_semantic_system_behavior_tests
-    system_behavior_concepts_test.cpp
+    mc_lab_core_semantic_system_tests
+    system_concepts_test.cpp
 )
 
 target_link_libraries(
-    mc_lab_core_semantic_system_behavior_tests
+    mc_lab_core_semantic_system_tests
     PRIVATE
         MC_LAB_CORE::Semantic
 )
 
 set_target_properties(
-    mc_lab_core_semantic_system_behavior_tests
+    mc_lab_core_semantic_system_tests
     PROPERTIES
         FOLDER "tests/semantic"
 )
 
-mc_lab_core_enable_warnings(mc_lab_core_semantic_system_behavior_tests)
-mc_lab_core_enable_sanitizers(mc_lab_core_semantic_system_behavior_tests)
-mc_lab_core_enable_coverage(mc_lab_core_semantic_system_behavior_tests)
-mc_lab_core_register_static_analysis_target(mc_lab_core_semantic_system_behavior_tests)
+mc_lab_core_enable_warnings(mc_lab_core_semantic_system_tests)
+mc_lab_core_enable_sanitizers(mc_lab_core_semantic_system_tests)
+mc_lab_core_enable_coverage(mc_lab_core_semantic_system_tests)
+mc_lab_core_register_static_analysis_target(mc_lab_core_semantic_system_tests)
 
 add_test(
-    NAME mc_lab_core.semantic.system_behavior_concepts
-    COMMAND mc_lab_core_semantic_system_behavior_tests
+    NAME mc_lab_core.semantic.system_concepts
+    COMMAND mc_lab_core_semantic_system_tests
 )
 
 set_tests_properties(
-    mc_lab_core.semantic.system_behavior_concepts
+    mc_lab_core.semantic.system_concepts
     PROPERTIES
-        LABELS "semantic;concepts;system;behavior"
+        LABELS "semantic;concepts;system"
         TIMEOUT 10
 )
 
