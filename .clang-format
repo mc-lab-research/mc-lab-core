@@ -6,6 +6,15 @@ BreakBeforeTernaryOperators: true
 BreakStringLiterals: false
 # Preserve visible return types when function names wrap.
 IndentWrappedFunctionNames: false
+# Keep long declarations structurally stable across supported formatter
+# versions when the visible return type needs its own line.
+PenaltyReturnTypeOnItsOwnLine: 1000
+# Keep declaration parameters structurally visible. The boolean spelling is
+# accepted by clang-format 18 and normalizes to `OnePerLine` in newer versions.
+BinPackParameters: false
+# Once a declaration wraps, keep each parameter structurally visible instead
+# of allowing formatter-version-dependent regrouping on the continuation line.
+AllowAllParametersOfDeclarationOnNextLine: false
 # ==============================================================================
 # Constructors and inheritance
 # ==============================================================================
