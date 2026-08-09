@@ -33,8 +33,7 @@ Current public categories are:
 semantic/
 ├── facet/
 ├── acceptance/
-├── system/
-└── view/
+└── system/
 ```
 
 Future structural support may add:
@@ -42,7 +41,8 @@ Future structural support may add:
 ```text
 semantic/
 ├── capability/
-└── conformance/
+├── conformance/
+└── view/
 ```
 
 Their roles are distinct:

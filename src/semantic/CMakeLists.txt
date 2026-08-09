@@ -3,9 +3,9 @@
 # ==============================================================================
 
 # SemTL starts as a header-only structural semantic library. Atomic facets,
-# acceptance conditions, recognized formalisms, and structural views remain
-# zero-overhead contracts. Algorithms and their behavioral result
-# representations stay outside this target.
+# acceptance conditions and recognized formalisms remain zero-overhead
+# contracts. Algorithms and their behavioral result representations stay
+# outside this target.
 add_library(
     mc_lab_core_semantic
     INTERFACE
@@ -57,7 +57,6 @@ target_sources(
             "${PROJECT_SOURCE_DIR}/include/mc_lab/semantic/system/finite_automaton.hpp"
             "${PROJECT_SOURCE_DIR}/include/mc_lab/semantic/system/kripke_structure.hpp"
             "${PROJECT_SOURCE_DIR}/include/mc_lab/semantic/system/transition_system.hpp"
-            "${PROJECT_SOURCE_DIR}/include/mc_lab/semantic/view/synchronous_composition.hpp"
 )
 
 set_target_properties(
