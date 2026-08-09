@@ -371,6 +371,8 @@ else()
         COMMAND
             "${MC_LAB_CORE_LCOV}"
             --capture
+            --branch-coverage
+            --filter branch
             --directory
             "${MC_LAB_CORE_BINARY_DIRECTORY}"
             --output-file
