@@ -59,8 +59,8 @@ struct explicit_system {
   }
 
   /** Returns the neutral label attached to a stored witness. */
-  [[nodiscard]] constexpr auto
-  transition_label(const transition& edge) const noexcept -> std::string_view {
+  [[nodiscard]] constexpr auto transition_label(
+      const transition& edge) const noexcept -> std::string_view {
     return edge.label;
   }
 
@@ -81,8 +81,8 @@ struct lazy_system {
     return accepting_state_condition{};
   }
 
-  [[nodiscard]] constexpr auto
-  outgoing_transitions(const int& source) const noexcept {
+  [[nodiscard]] constexpr auto outgoing_transitions(
+      const int& source) const noexcept {
     return std::views::iota(source + 1, source + 2);
   }
 

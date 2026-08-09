@@ -11,9 +11,10 @@ struct post_fn {
   requires requires(System&& system, State&& state) {
     std::forward<System>(system).post(std::forward<State>(state));
   }
-  [[nodiscard]] constexpr decltype(auto)
-  operator()(System&& system, State&& state) const noexcept(
-      noexcept(std::forward<System>(system).post(std::forward<State>(state)))) {
+  [[nodiscard]] constexpr decltype(auto) operator()(System&& system,
+                                                    State&& state) const
+      noexcept(noexcept(
+          std::forward<System>(system).post(std::forward<State>(state)))) {
     return std::forward<System>(system).post(std::forward<State>(state));
   }
 };

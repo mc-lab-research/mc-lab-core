@@ -32,9 +32,9 @@ struct target_fn {
   requires requires(System&& system, Transition&& transition) {
     std::forward<System>(system).target(std::forward<Transition>(transition));
   }
-  [[nodiscard]] constexpr decltype(auto)
-  operator()(System&& system, Transition&& transition) const
-      noexcept(noexcept(std::forward<System>(system).target(
+  [[nodiscard]] constexpr decltype(auto) operator()(System&& system,
+                                                    Transition&& transition)
+      const noexcept(noexcept(std::forward<System>(system).target(
           std::forward<Transition>(transition)))) {
     return std::forward<System>(system).target(
         std::forward<Transition>(transition));

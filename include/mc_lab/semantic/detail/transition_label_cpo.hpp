@@ -16,9 +16,9 @@ struct transition_label_fn {
     std::forward<System>(system).transition_label(
         std::forward<Transition>(transition));
   }
-  [[nodiscard]] constexpr decltype(auto)
-  operator()(System&& system, Transition&& transition) const
-      noexcept(noexcept(std::forward<System>(system).transition_label(
+  [[nodiscard]] constexpr decltype(auto) operator()(System&& system,
+                                                    Transition&& transition)
+      const noexcept(noexcept(std::forward<System>(system).transition_label(
           std::forward<Transition>(transition)))) {
     return std::forward<System>(system).transition_label(
         std::forward<Transition>(transition));

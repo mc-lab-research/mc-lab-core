@@ -156,7 +156,8 @@ private:
   }
 
   template <std::size_t Index, class Prefix>
-  void append_transitions(const state_type& source, Prefix prefix,
+  void append_transitions(const state_type& source,
+                          Prefix prefix,
                           std::vector<transition_type>& result) const {
     if constexpr (Index == sizeof...(Systems)) {
       result.emplace_back(std::move(prefix));

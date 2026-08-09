@@ -13,8 +13,8 @@ struct missing_initial_states {};
 /** An ADL customization alone is deliberately insufficient in v0.1. */
 struct adl_only_initial_states {};
 
-[[nodiscard]] constexpr auto
-initial_states(const adl_only_initial_states&) noexcept {
+[[nodiscard]] constexpr auto initial_states(
+    const adl_only_initial_states&) noexcept {
   return std::array{0};
 }
 
@@ -60,8 +60,8 @@ struct incompatible_target {
     return std::array{incompatible_target_transition{}};
   }
 
-  [[nodiscard]] constexpr auto
-  target(const incompatible_target_transition&) const noexcept -> short {
+  [[nodiscard]] constexpr auto target(
+      const incompatible_target_transition&) const noexcept -> short {
     return 0;
   }
 };
@@ -75,8 +75,8 @@ struct missing_label {
     return std::array{missing_label_transition{0}};
   }
 
-  [[nodiscard]] constexpr auto
-  target(const missing_label_transition& edge) const noexcept -> int {
+  [[nodiscard]] constexpr auto target(
+      const missing_label_transition& edge) const noexcept -> int {
     return edge.destination;
   }
 };
@@ -88,8 +88,8 @@ struct non_const_outgoing {
     return std::array{missing_label_transition{0}};
   }
 
-  [[nodiscard]] constexpr auto
-  target(const missing_label_transition& edge) const noexcept -> int {
+  [[nodiscard]] constexpr auto target(
+      const missing_label_transition& edge) const noexcept -> int {
     return edge.destination;
   }
 };
@@ -102,8 +102,8 @@ struct incorrectly_qualified_target {
     return std::span<const missing_label_transition>{outgoing};
   }
 
-  [[nodiscard]] constexpr auto
-  target(missing_label_transition&& edge) const noexcept -> int {
+  [[nodiscard]] constexpr auto target(
+      missing_label_transition&& edge) const noexcept -> int {
     return edge.destination;
   }
 };
@@ -121,10 +121,9 @@ struct void_label {
 struct adl_only_label {};
 struct adl_only_label_transition {};
 
-[[nodiscard]] constexpr auto
-transition_label(const adl_only_label&,
-                 const adl_only_label_transition&) noexcept
-    -> std::string_view {
+[[nodiscard]] constexpr auto transition_label(
+    const adl_only_label&,
+    const adl_only_label_transition&) noexcept -> std::string_view {
   return "free";
 }
 
@@ -155,8 +154,8 @@ struct void_acceptance_condition {
 /** A free association must not satisfy the member-only protocol. */
 struct adl_only_acceptance_condition {};
 
-[[nodiscard]] constexpr auto
-acceptance_condition(const adl_only_acceptance_condition&) noexcept {
+[[nodiscard]] constexpr auto acceptance_condition(
+    const adl_only_acceptance_condition&) noexcept {
   return missing_acceptance_condition{};
 }
 
@@ -198,14 +197,13 @@ struct missing_acceptance_relation {
     return outgoing;
   }
 
-  [[nodiscard]] constexpr auto
-  target(const missing_label_transition& edge) const noexcept -> int {
+  [[nodiscard]] constexpr auto target(
+      const missing_label_transition& edge) const noexcept -> int {
     return edge.destination;
   }
 
-  [[nodiscard]] constexpr auto
-  transition_label(const missing_label_transition&) const noexcept
-      -> std::string_view {
+  [[nodiscard]] constexpr auto transition_label(
+      const missing_label_transition&) const noexcept -> std::string_view {
     return "advance";
   }
 };

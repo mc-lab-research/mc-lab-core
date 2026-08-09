@@ -41,19 +41,22 @@ concept CanSynchronousCompose = requires(Systems&&... systems) {
 };
 
 using model = models::explicit_system;
-using composition = decltype(sem::synchronous_compose(
-    std::declval<model&>(), std::declval<model&>(), std::declval<model&>()));
+using composition = decltype(sem::synchronous_compose(std::declval<model&>(),
+                                                      std::declval<model&>(),
+                                                      std::declval<model&>()));
 using product_state = std::tuple<int, int, int>;
 using product_transition =
     std::tuple<models::transition, models::transition, models::transition>;
-using heterogeneous_composition = decltype(sem::synchronous_compose(
-    std::declval<model&>(), std::declval<models::lazy_system&>(),
-    std::declval<model&>()));
+using heterogeneous_composition =
+    decltype(sem::synchronous_compose(std::declval<model&>(),
+                                      std::declval<models::lazy_system&>(),
+                                      std::declval<model&>()));
 
 static_assert(CanSynchronousCompose<model&, model&, model&>);
 static_assert(CanSynchronousCompose<const model&, const model&, const model&>);
 static_assert(!CanSynchronousCompose<model, model&, model&>);
-static_assert(CanSynchronousCompose<models::lazy_system&, models::lazy_system&,
+static_assert(CanSynchronousCompose<models::lazy_system&,
+                                    models::lazy_system&,
                                     models::lazy_system&>);
 
 static_assert(std::same_as<typename composition::state_type, product_state>);

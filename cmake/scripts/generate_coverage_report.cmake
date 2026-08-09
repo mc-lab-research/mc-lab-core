@@ -425,6 +425,12 @@ else()
             --output-file
             "${mc_lab_core_coverage_info}"
             --branch-coverage
+            # A valid production root may contain only header-only targets and
+            # therefore have no GCOV record in a particular configuration.
+            # LCOV 2.x reports each such unmatched extraction pattern as an
+            # `unused` error even when other configured roots match normally.
+            --ignore-errors
+            unused
         RESULT_VARIABLE
             mc_lab_core_lcov_extract_result
         ERROR_VARIABLE

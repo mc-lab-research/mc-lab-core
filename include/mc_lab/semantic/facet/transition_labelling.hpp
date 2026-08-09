@@ -33,10 +33,11 @@ inline constexpr detail::transition_label_fn transition_label{};
 namespace detail {
 
 template <class System, class Transition>
-concept TransitionLabelCallable = requires(
-    const std::remove_cvref_t<System>& system, Transition&& transition) {
-  transition_label(system, std::forward<Transition>(transition));
-};
+concept TransitionLabelCallable =
+    requires(const std::remove_cvref_t<System>& system,
+             Transition&& transition) {
+      transition_label(system, std::forward<Transition>(transition));
+    };
 
 template <class System, class Transition>
 requires TransitionLabelCallable<System, Transition>

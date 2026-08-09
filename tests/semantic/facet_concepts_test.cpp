@@ -59,8 +59,9 @@ static_assert(sem::TransitionRelation<models::lazy_system, int>);
 static_assert(!sem::TransitionLabelling<models::lazy_system, int>);
 static_assert(
     std::same_as<sem::transition_value_for_t<models::lazy_system, int>, int>);
-static_assert(std::same_as<
-              sem::transition_reference_for_t<models::lazy_system, int>, int>);
+static_assert(
+    std::same_as<sem::transition_reference_for_t<models::lazy_system, int>,
+                 int>);
 static_assert(
     std::same_as<sem::target_result_t<models::lazy_system, int>, int>);
 
@@ -83,8 +84,9 @@ static_assert(sem::TransitionRelation<malformed::missing_label, int>);
 static_assert(
     !sem::TransitionLabelling<malformed::missing_label,
                               const malformed::missing_label_transition&>);
-static_assert(!sem::TransitionLabelling<
-              malformed::void_label, const malformed::void_label_transition&>);
+static_assert(
+    !sem::TransitionLabelling<malformed::void_label,
+                              const malformed::void_label_transition&>);
 static_assert(
     !sem::TransitionLabelling<malformed::adl_only_label,
                               const malformed::adl_only_label_transition&>);
