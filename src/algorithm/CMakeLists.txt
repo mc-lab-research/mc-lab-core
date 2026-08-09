@@ -28,6 +28,12 @@ target_sources(
             "${PROJECT_SOURCE_DIR}/include"
         FILES
             "${PROJECT_SOURCE_DIR}/include/mc_lab/algorithm/exploration/breadth_first_reachable_states.hpp"
+            "${PROJECT_SOURCE_DIR}/include/mc_lab/algorithm/exploration/explore_states.hpp"
+            "${PROJECT_SOURCE_DIR}/include/mc_lab/algorithm/exploration/explore_transition_relation.hpp"
+            "${PROJECT_SOURCE_DIR}/include/mc_lab/algorithm/exploration/fifo_frontier.hpp"
+            "${PROJECT_SOURCE_DIR}/include/mc_lab/algorithm/exploration/frontier.hpp"
+            "${PROJECT_SOURCE_DIR}/include/mc_lab/algorithm/exploration/linear_visited_registry.hpp"
+            "${PROJECT_SOURCE_DIR}/include/mc_lab/algorithm/exploration/visited_registry.hpp"
 )
 
 set_target_properties(

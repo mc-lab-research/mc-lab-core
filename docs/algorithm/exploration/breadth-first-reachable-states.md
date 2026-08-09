@@ -8,6 +8,14 @@ SemTL architectural boundary:
 semantic structure -> exploration algorithm -> owned result representation
 ```
 
+It is a thin, concrete assembly of the reusable pieces documented in
+[generic-exploration.md](generic-exploration.md): the `explore_states`/
+`explore_transition_relation` kernels, the `fifo_frontier` and
+`linear_visited_registry` policies, and a no-op observer. This document
+covers what is specific to this one convenience API; the callback order,
+policy protocols, lifetime rules, and complexity of the underlying pieces
+are specified once, in that other document, not repeated here.
+
 Include it with:
 
 ```cpp
@@ -107,22 +115,23 @@ R = I union successors(R)
 
 ## Computational requirements
 
-`state_t<System>` must be copy-constructible and equality-comparable.
-
-Copy construction is required because the returned vector owns its states.
-The algorithm also copies the state currently being expanded before appending
-new states: a `std::vector` reallocation must not invalidate a source observed
-by a lazy `post` or outgoing-transition range.
+`state_t<System>` must be copy-constructible and equality-comparable. Both
+requirements come from the concrete policies this algorithm fixes —
+`fifo_frontier` and `linear_visited_registry` — not from the generic kernels
+themselves, which impose nothing beyond what the policy they are actually
+given requires. See each policy's own documentation, and
+[generic-exploration.md](generic-exploration.md), for exactly why.
 
 Equality defines computational state identity. If two values denote the same
 formal state, they must compare equal for exploration to collapse them.
 
-The v0.1 implementation uses a linear search in the discovered vector. For
-`I` enumerated initial values, `V` reachable states, and `E` enumerated local
-successor occurrences, this intentionally simple registry may require
-`O((I + E) * V)` equality comparisons in the worst case. Hashing, indexing,
-symbolic registries, and caller-supplied discovery policies remain future
-algorithmic capabilities.
+`linear_visited_registry`'s linear-scan complexity, and why its recorded
+order already is breadth-first discovery order (so this algorithm reads its
+result back from the registry instead of accumulating a second copy), are
+documented in [generic-exploration.md](generic-exploration.md). Hashing,
+indexing, symbolic registries, and caller-supplied discovery policies remain
+future algorithmic capabilities, available by driving `explore_states`/
+`explore_transition_relation` directly with a different `VisitedRegistry`.
 
 ## Termination
 
@@ -139,9 +148,12 @@ structural facets.
 ## Transition evidence
 
 When exploration uses `TransitionRelation`, transition witnesses are
-intentionally discarded after their targets are observed. That is correct for
-a result containing only reachable states.
+intentionally discarded after their targets are observed: the no-op observer
+this algorithm passes to `explore_transition_relation` records nothing. That
+is correct for a result containing only reachable states.
 
 Future algorithms producing paths, executions, traces, or counterexamples
-must retain transition evidence. They may therefore require
-`TransitionRelation` even when `Post` is also available.
+must retain transition evidence. They may therefore drive
+`explore_transition_relation` directly, with an observer that keeps what it
+is given, even on a system where `Post` is also available — see
+[generic-exploration.md](generic-exploration.md)'s closing section.
