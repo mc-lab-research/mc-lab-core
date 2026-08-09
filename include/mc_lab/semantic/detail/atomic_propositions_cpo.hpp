@@ -23,8 +23,6 @@ struct atomic_propositions_fn {
   }
 };
 
-int* p;
-
 }  // namespace mc_lab::semantic::detail
 
 #endif  // MC_LAB_SEMANTIC_DETAIL_ATOMIC_PROPOSITIONS_CPO_HPP

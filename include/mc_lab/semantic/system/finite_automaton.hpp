@@ -56,7 +56,7 @@ concept FiniteAutomatonComponents = FiniteAutomatonTransitionStructure<System>
  * no separate customization mechanism, only a name.
  */
 template <class System>
-requires detail::FiniteAutomatonComponents<System>
+requires detail::FiniteAutomatonTransitionStructure<System>
 using symbol_t =
     transition_label_for_t<System,
                            transition_reference_for_t<System, state_t<System>>>;

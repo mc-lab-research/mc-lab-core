@@ -105,8 +105,16 @@ introducing a second customization mechanism.
 
 ## Language
 
-A word over `Sigma` is a finite sequence `sigma_0 ... sigma_k`. `A` accepts
-the word exactly when there exists an execution:
+A word over `Sigma` is a finite sequence, possibly empty. The empty word
+`epsilon` contains no symbol and therefore induces no transition. It is
+accepted exactly when an initial state is already accepting:
+
+```text
+epsilon is in [[A]] exactly when Q0 intersect F is non-empty
+```
+
+For a non-empty word `sigma_0 ... sigma_k`, `A` accepts the word exactly when
+there exists an execution:
 
 ```text
 q_0 q_1 ... q_(k+1)
@@ -120,10 +128,13 @@ q_0 is in Q0
 q_(k+1) is in F
 ```
 
-The language of `A` is the set of all words it accepts:
+The language of `A` contains the empty word under the rule above, together
+with every accepted non-empty word:
 
 ```text
-[[A]] = { sigma_0 ... sigma_k | such an execution exists }
+[[A]] = { epsilon | Q0 intersect F is non-empty }
+        union
+        { sigma_0 ... sigma_k | k >= 0 and such an execution exists }
 ```
 
 This definition is recorded here as a semantic law, not as a computational

@@ -101,11 +101,11 @@ Examples include selecting a transition, unfolding successors, exploring a
 reachable graph, validating a realized path, finding an accepting run, or
 constructing a counterexample.
 
-The first implemented exploration algorithm is
-`breadth_first_reachable_states`. It consumes `InitialStateSet` with either
-`Post` or `TransitionRelation`; it does not require a recognized-system
-concept. Its owned `std::vector` result and equality-based discovery registry
-are algorithmic representation choices, not new semantic structure.
+Exploration algorithms are outside this structural increment. Future
+algorithms may consume `InitialStateSet` with either `Post` or
+`TransitionRelation` without requiring a recognized-system concept. Their
+result containers and discovery registries are algorithmic representation
+choices, not new semantic structure.
 
 The same system may feed several algorithms and therefore produce several
 kinds of result. A `TransitionSystem` does not intrinsically contain a selected

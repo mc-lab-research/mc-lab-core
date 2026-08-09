@@ -55,6 +55,9 @@ static_assert(!sem::FiniteAutomaton<models::potentially_throwing_system>);
 
 // Initial states and labelled transitions alone omit acceptance association.
 static_assert(!sem::FiniteAutomaton<malformed::missing_acceptance_relation>);
+static_assert(
+    std::same_as<sem::symbol_t<malformed::missing_acceptance_relation>,
+                 std::string_view>);
 
 // -----------------------------------------------------------------------------
 // Buchi-automaton recognition: structurally identical to FiniteAutomaton, but
@@ -63,6 +66,8 @@ static_assert(!sem::FiniteAutomaton<malformed::missing_acceptance_relation>);
 
 static_assert(sem::BuchiAutomaton<models::explicit_system>);
 static_assert(sem::BuchiAutomaton<const models::explicit_system&>);
+static_assert(std::same_as<sem::symbol_t<const models::explicit_system&>,
+                           std::string_view>);
 
 // The generated system has an acceptance condition but no transition labelling.
 static_assert(!sem::BuchiAutomaton<models::lazy_system>);
