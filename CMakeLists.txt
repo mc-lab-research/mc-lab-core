@@ -243,6 +243,16 @@ endif()
 # Product Architecture
 # ==============================================================================
 
+add_subdirectory(
+    src/semantic
+)
+
+if(PROJECT_IS_TOP_LEVEL AND BUILD_TESTING)
+    add_subdirectory(
+        tests/semantic
+    )
+endif()
+
 if(MC_LAB_CORE_BUILD_CLI)
     add_subdirectory(
         tools/cli
