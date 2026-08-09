@@ -111,10 +111,13 @@ public:
       const Systems&... systems) noexcept
       : systems_{std::addressof(systems)...} {}
 
+  // The branch exclusions below suppress only GCC-generated exception arcs
+  // around allocation and tuple construction. Loop branches remain measured.
+
   /** Returns a stable local materialization of the Cartesian initial set. */
   [[nodiscard]] auto initial_states() const -> std::vector<state_type> {
     std::vector<state_type> result;
-    append_initial_states<0>(std::tuple<>{}, result);
+    append_initial_states<0>(std::tuple<>{}, result);  // LCOV_EXCL_BR_LINE
     return result;
   }
 
@@ -122,7 +125,7 @@ public:
   [[nodiscard]] auto outgoing_transitions(const state_type& source) const
       -> std::vector<transition_type> {
     std::vector<transition_type> result;
-    append_transitions<0>(source, std::tuple<>{}, result);
+    append_transitions<0>(source, std::tuple<>{}, result);  // LCOV_EXCL_BR_LINE
     return result;
   }
 
@@ -148,7 +151,7 @@ private:
       using component_state_type = std::tuple_element_t<Index, state_type>;
 
       for (auto&& state : states) {
-        append_initial_states<Index + 1>(
+        append_initial_states<Index + 1>(  // LCOV_EXCL_BR_LINE
             std::tuple_cat(prefix, std::tuple<component_state_type>{state}),
             result);
       }
@@ -168,7 +171,7 @@ private:
           std::tuple_element_t<Index, transition_type>;
 
       for (auto&& transition : transitions) {
-        append_transitions<Index + 1>(
+        append_transitions<Index + 1>(  // LCOV_EXCL_BR_LINE
             source,
             std::tuple_cat(prefix,
                            std::tuple<component_transition_type>{transition}),
