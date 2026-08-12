@@ -9,11 +9,23 @@ last_review: 2026-08-12
 This file is the programme-level source of truth for research work in progress,
 the queued question backlog, and claims mcLab may currently make about SemTL.
 
+## Operating posture
+
+**Strategic thesis:** mcLab aims to establish a generic Modern C++
+computational substrate for executable semantic structures.
+
+**Operating model:** Lean Research OS - high scientific discipline with
+low-to-moderate operational overhead. Process is added only when it prevents a
+demonstrated research failure or material coordination cost.
+
+**Current decision:** No M02 or ARC-001 architectural outcome is authorized.
+ARC-001 remains in pre-freeze calibration.
+
 ## Active
 
 | Case | Tier | Question | Phase | Evidence target |
 | --- | --- | --- | --- | --- |
-| [ARC-001](cases/ARC-001.md) | R2 | Can a transition-system capability remain independent of explicit versus lazy transition materialization? | Experiment design; not frozen | Controlled |
+| [ARC-001](cases/ARC-001.md) | R2 | Can one single-pass local labelled-transition consumer remain source-unchanged when the same finite labelled transition relation is exposed through stored stable witnesses and generated ephemeral witnesses? | Pre-freeze calibration; controlled execution not started. | Controlled |
 
 ## Supporting
 
@@ -96,7 +108,7 @@ cmake --workflow --preset windows-clangcl-tidy --fresh
 cmake --workflow --preset windows-clangcl-coverage --fresh
 ```
 
-## Current architectural evidence gaps
+## Known limitations and open uncertainties
 
 - No controlled single-pass transition-materialization experiment with a
   frozen unchanged consumer.
@@ -109,17 +121,23 @@ cmake --workflow --preset windows-clangcl-coverage --fresh
 - No law experiment demonstrating reusable computational leverage.
 - No accumulated evidence capable of determining C++20/23/26 language
   adequacy for SemTL as a whole.
+- No operational evidence yet demonstrates that a fuller Research OS, separate
+  registries, or additional GitHub metadata would improve decisions.
 
 ## Last review
 
 **Date:** 2026-08-12
 
-**What changed:** Reviewed and adopted the README, v0.2 protocol, research
-state, ARC-001, Research Case template, and ADR structure as one Git-native
-governance baseline. Classified the existing stored and generated transition
-fixtures as exploratory evidence rather than retrospective controlled proof.
-Recorded EV-2026-08-12-01 as engineering validation without treating it as an
-ARC-001 result or architectural freeze.
+**What changed:** Adopted the Lean Research OS posture and revised the
+operational protocol to v0.4. Retained GPT Work as Research Programme and
+Process Minimality Authority, Codex as Design Authority, Claude as Developer /
+Experimentator, and an independent Challenger as an attacker of inference.
+Preserved the lightweight Git freeze and First Failure Preservation Rule while
+removing or deferring process that lacks demonstrated value. Reduced the ARC
+template and GitHub operating model, tightened the ARC-001 decision question,
+and kept the case in pre-freeze calibration. Existing implementation evidence
+remains Exploratory; EV-2026-08-12-01 remains engineering validation rather
+than an ARC-001 result.
 
 **Cases closed:** None.
 

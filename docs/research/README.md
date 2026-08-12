@@ -1,7 +1,8 @@
 # SemTL architectural research
 
-This directory contains the Git-native research-governance system used to
-operate SemTL as architectural R&D.
+This directory contains the Git-native **Lean Research OS** used to operate
+SemTL as architectural R&D. It preserves falsification and evidence discipline
+without turning the research model into a large administration system.
 
 The governing question is whether mcLab can establish a principled Modern C++
 generic-programming architecture for executable semantic structures, within a
@@ -18,23 +19,30 @@ clearly demonstrated domain and at acceptable architectural and language cost.
 - [Research Case template](templates/research-case.md) is the copyable starting
   point for later R2 and R3 investigations.
 
-## Authoritative living documents
+## Minimum persistent artifact set
 
-The research system intentionally has only three authoritative living document
-types:
+The research system intentionally has only a small authoritative chain:
 
-1. `state.md` for programme-level WIP, backlog, and claims;
-2. one `cases/ARC-###.md` file for each R2 or R3 investigation;
-3. an evidence-aware ADR only when an experiment changes governing
-   architecture.
+1. the Strategic Baseline and [`protocol.md`](protocol.md);
+2. [`state.md`](state.md) for compact programme state, backlog, evidence, and
+   Claims;
+3. one `cases/ARC-###.md` file for each significant R2 or R3 investigation;
+4. experiments, PRs, tests, diagnostics, and commits as evidence;
+5. an evidence-aware ADR only when an experiment establishes or changes
+   governing architecture.
 
-Models, materializations, consumers, laws, language notes, hold-outs, and
-evidence remain conceptually distinct. They normally live inside the Research
-Case that investigates them rather than in separately synchronized registries.
+Questions, hypotheses, properties, models, materializations, consumers, laws,
+language notes, hold-outs, freezes, and evidence remain conceptually distinct.
+They normally live inside `state.md` or the ARC that investigates them rather
+than in separately synchronized registries.
 
-Derived views such as a Genericity Matrix, property evidence map, subject
-catalog, or language summary may be generated from case metadata when useful.
-They are not independent sources of truth.
+Derived views such as a Genericity Matrix may be assembled from the ARC when
+useful. They are not independent sources of truth, quantitative coverage
+scores, or reasons to maximize tested cells.
+
+GitHub is an operational interface for where work is. `state.md` and the ARC
+remain authoritative for what is known. Do not duplicate epistemic state across
+Project fields, labels, milestones, and documents without a demonstrated need.
 
 ## Repository relationship
 

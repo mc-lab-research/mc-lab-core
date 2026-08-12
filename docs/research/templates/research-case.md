@@ -3,14 +3,7 @@ id: ARC-###
 title: Replace with a discriminating architectural question
 tier: R2
 lifecycle: OPEN
-planned_evidence: CONTROLLED
-achieved_evidence: NONE
-properties: []
-formalisms: []
-materializations: []
-consumers: []
-claims: []
-decisions: []
+evidence: UNTESTED
 freeze: NOT-FROZEN
 owner: unassigned
 challenger: unassigned
@@ -18,176 +11,137 @@ challenger: unassigned
 
 # ARC-### - Title
 
-## Why this case exists
+Use only the sections that materially protect evidence, clarify responsibility,
+or enable the decision. Keep case-specific technical detail here rather than
+creating parallel registries or administrative objects.
+
+## Question and decision
 
 **Question:**
 
+**Why it matters:**
+
 **Decision enabled:**
 
-**Strategic relevance:**
+**Scope and exclusions:**
 
-**Scope:**
-
-**Out of scope:**
-
-**Affected properties:**
+**Properties under investigation:** Name only the applicable P1-P11 properties
+and state their operational meaning in this case.
 
 ## Competing hypotheses
 
 ### H-A - Name
 
-**Statement:**
-
-**Mechanism:**
-
-**Expected supporting observation:**
-
-**Expected contradicting observation:**
+**Statement and mechanism:**
 
 ### H-B - Name
 
-**Statement:**
+**Statement and mechanism:**
 
-**Mechanism:**
+Add another hypothesis only when it changes the discriminator or decision.
 
-**Expected supporting observation:**
+## Experimental design
 
-**Expected contradicting observation:**
+**Subjects and materializations:**
 
-## Experimental subjects
+**Consumer and semantic purpose:**
 
-For each subject record its type, experimental role, relevant semantic and
-representation characteristics, assumption tested, and provenance.
+**Minimum requirements:**
 
-### SUBJECT-###
+**Explicit non-requirements:**
 
-**Type:** MODEL / MATERIALIZATION / CONSUMER / COMPARATOR / LAW
-
-**Experimental role:** DEVELOPMENT / CALIBRATION / ADVERSARIAL /
-FORMALISM-HOLDOUT / MATERIALIZATION-HOLDOUT / EXTERNALLY-GROUNDED /
-INDEPENDENT-REPLICATION
-
-**Characteristics:**
-
-**Assumption tested:**
-
-**Expected applicability and non-applicability:**
-
-## Controlled experiment
-
-**Frozen contracts:**
-
-**Freeze reference:**
-
-**Permitted adaptations:**
-
-**Independent variable:**
-
-**Controlled variables:**
-
-**Observed variables:**
-
-**Expected supporting result:**
-
-**Expected contradicting result:**
-
-**Inconclusive conditions:**
+**Technical discriminator:**
 
 **Semantic-integrity guardrails:**
 
 **Architectural-complexity guardrails:**
 
+### Expected observations
+
+**Supports H-A when:**
+
+**Supports H-B when:**
+
+**Inconclusive when:**
+
+## Lightweight freeze
+
+The freeze lives here and uses Git as its immutable reference.
+
+**Freeze commit:** PENDING.
+
+**Frozen consumer:**
+
+**Frozen oracle:**
+
+**Frozen requirements:**
+
+**Explicit non-requirements:**
+
+**Permitted adaptations:**
+
+**Prohibited adaptations:**
+
+**Status:** NOT-FROZEN.
+
+**GPT Work adjudication:** PENDING.
+
+**Project Principal approval:** PENDING.
+
+## Experiment and evidence
+
 **Procedure:**
 
-**Evidence locations:**
+**Evidence and reproduction locations:**
 
-## Results
+### First Failure Preservation Rule
+
+When the controlled discriminator first fails, preserve the original frozen
+configuration, source revisions, command, environment, exact diagnostic or
+semantic mismatch, raw output, smallest faithful reproduction, and observation
+before repair or redesign.
 
 ### Observation
 
 PENDING.
 
-### Unexpected observations
+### First discriminating failure
 
 PENDING.
 
-### Evidence and reproduction
+### Counterevidence and unexpected observations
 
 PENDING.
 
-### Threats to validity
+## Challenge and interpretation
 
-PENDING.
+**Challenger:** Assign according to research significance. Independent
+challenge is mandatory for R3 and for an R2 result that could materially affect
+an architectural Claim.
 
-## Interpretation and challenge
+**Could another explanation produce the result?**
+
+**Was the experiment discriminating and the hold-out genuinely adversarial?**
+
+**Were semantics preserved, the consumer unchanged, and hidden
+canonicalization absent?**
 
 **Interpretation:**
 
 **Credible alternative interpretation:**
 
-**Challenge performed:**
+## Claim impact and decision
 
-**Counterevidence:**
+**Affected Claim and demonstrated domain:**
 
-**Evidence posture achieved:** Exploratory / Controlled / Challenged
+**What remains unproven:**
 
-## Optional adversarial hold-out
+**Claim strengthened, narrowed, contradicted, or unchanged:**
 
-Use this section for R3 and for an R2 case that needs a formal hold-out.
+**Architectural action:** KEEP / NARROW / MOVE / MERGE / SPECIALIZE / DELETE /
+REDESIGN / INCONCLUSIVE
 
-**Hypothesis and assumption under attack:**
-
-**Why the hold-out is discriminating:**
-
-**Frozen contracts and expected failure modes:**
-
-**Permitted and contradicting adaptations:**
-
-**Semantic information that must survive:**
-
-**Result and H0-H5 modification classes:**
-
-**Semantic loss:**
-
-**Conclusion:**
-
-## Optional language note
-
-**Semantic requirement and desired abstraction:**
-
-**C++20 expression and observed friction:**
-
-**Compiler, diagnostics, lifetime, compile-time, and runtime consequences:**
-
-**Simpler alternative architecture:**
-
-**Later-standard alternative, maturity, benefit, and risk:**
-
-**Architectural consequence and next experiment:**
-
-## Claim impact
-
-**Claims strengthened:**
-
-**Claims weakened or challenged:**
-
-**Claims narrowed:**
-
-**Claims contradicted:**
-
-**Authorized wording:**
-
-## Decision
-
-**Architectural action:** ADD / KEEP / NARROW / MOVE / MERGE / SPECIALIZE /
-DELETE / REDESIGN / NO CHANGE
-
-**Reason:**
-
-**Genericity leverage:** HIGH / POSITIVE / MARGINAL / NEGATIVE / UNRESOLVED
-
-**Architectural cost:**
-
-**ADR required:**
+**ADR required:** Only when evidence establishes or changes governing
+architecture.
 
 **Next question:**
