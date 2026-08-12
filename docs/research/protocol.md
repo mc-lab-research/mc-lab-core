@@ -1,4 +1,4 @@
-# SemTL Architectural Research Protocol v0.4 Lean
+# SemTL Architectural Research Protocol v0.5 Lean
 
 This protocol governs SemTL architectural research during M02. It preserves
 falsification, evidence, and claim discipline with the smallest practical
@@ -28,9 +28,9 @@ approval checkpoints.
 
 ### Protocol Minimality
 
-GPT Work is the Research Process Minimality Authority. Every persistent process
-element must prevent a concrete failure or coordination cost by doing at least
-one of the following:
+The Project Principal is the human Research Process Minimality Authority, with
+GPT Work available as an advisor. Every persistent process element must prevent
+a concrete failure or coordination cost by doing at least one of the following:
 
 - preserving evidence or reproducibility;
 - preventing retrospective experiment modification;
@@ -87,31 +87,63 @@ The following rules are constitutional:
 
 ## Authority and handoffs
 
+### Human accountability principle
+
+Research governance is human-owned and AI-advised. Every Research Case,
+controlled experiment, freeze, evidence assessment, Claim change, ADR, and
+strategic decision has a named human owner or approver.
+
+AI systems may support research by proposing questions, alternatives,
+discriminators, implementations, challenge prompts, interpretations, and draft
+records. They cannot be the owner, accountable or responsible party, approver,
+adjudicator, experiment authority, or independent Challenger. AI output remains
+advisory until a named human reviews and accepts it. If the required human role
+is unassigned, the affected work cannot pass its governance checkpoint.
+
 ### Project Principal
 
-The Project Principal retains constitutional authority over purpose, major
-risk, protocol adoption, strategic veto, termination, experiment freezes,
-accepted Claim wording, governing ADRs, and M02 decisions.
+The Project Principal is human and retains constitutional authority over
+purpose, the Research Question and Hypothesis portfolio, major risk, protocol
+adoption, strategic veto, termination, Research Case activation, experiment
+freezes, accepted Claim wording, governing ADRs, and M02 decisions. The
+Project Principal appoints a named Human ARC Owner, Human Experiment Owner, and
+Independent Human Challenger when those roles are required.
 
-### GPT Work: Research Programme Authority
+### Human ARC Owner and Human Experiment Owner
 
-GPT Work owns the Research Question and Hypothesis portfolio. It determines:
+The Human ARC Owner is accountable for the Research Case. The owner determines,
+subject to Project Principal approval where required:
 
-- what SemTL needs to learn;
-- which hypotheses matter strategically;
-- what evidence would change a decision;
-- which Research Case becomes active;
-- how evidence and Challenger findings are adjudicated;
-- and which bounded Claim update or strategic recommendation follows.
+- what the case must learn and why it matters;
+- which hypotheses and evidence could change the decision;
+- whether the proposed design and discriminator answer the question;
+- whether evidence and challenge have been assessed without exceeding the
+  observed domain;
+- and which bounded Claim update or recommendation to propose.
 
-GPT Work also challenges whether every protocol element still deserves to
-exist. Other roles may propose questions or hypotheses; a proposal does not
-activate or reprioritize the portfolio.
+The Human Experiment Owner is responsible for controlled execution, frozen
+contract compliance, evidence preservation, and stopping before unauthorized
+repair. One person may hold both human roles when independence is not required
+between them. Neither role may be assigned to an AI system.
 
-### Codex: Design Authority
+### GPT Work: Research Operations Advisor
 
-Codex instantiates an active research question as technical alternatives and a
-discriminating architecture experiment. Codex:
+GPT Work supports the Project Principal and Human ARC Owner by:
+
+- proposing Research Questions, hypotheses, and decision-relevant evidence;
+- identifying strategic implications and credible alternative explanations;
+- challenging whether each protocol element still deserves to exist;
+- drafting evidence syntheses, bounded Claim wording, and recommendations; and
+- checking that observation, interpretation, Claim impact, and decision remain
+  distinct.
+
+GPT Work does not own or activate the portfolio, adjudicate evidence, approve a
+freeze, accept a Claim, close a Research Case, or make a strategic decision.
+
+### Codex: Architecture and Design Advisor
+
+Codex supports the Human ARC Owner by instantiating an active research question
+as technical alternatives and a discriminating architecture experiment. Codex:
 
 - formulates architectural alternatives;
 - identifies technical assumptions;
@@ -121,39 +153,48 @@ discriminating architecture experiment. Codex:
 - identifies the technical discriminator;
 - defines the contracts that must be tested and frozen;
 - inspects whether frozen contracts were respected;
-- interprets architectural consequences for GPT Work adjudication;
+- proposes interpretations of architectural consequences for human review;
 - and drafts ADR proposals when governing architecture may change.
 
-Codex may propose Research Questions and hypotheses. It does not own, activate,
-prioritize, or adjudicate their portfolio.
+Codex may propose Research Questions and hypotheses. It does not own a design
+decision, freeze, experiment, Claim, ADR, issue, or portfolio, and it cannot
+approve or adjudicate them.
 
 ```text
-GPT Work: What must we learn, why does it matter, and what evidence changes the
-          decision?
-Codex:    Which alternatives instantiate that question, what separates them,
-          and which contracts must be tested?
+Humans:   What must we learn, who owns the work, what evidence changes the
+          decision, and what is accepted?
+GPT Work: Which questions, hypotheses, evidence needs, and process changes
+          should the human owners consider?
+Codex:    Which alternatives instantiate the question, what separates them,
+          and which contracts should be tested?
 ```
 
-### Claude: Developer / Experimentator
+### Claude: Implementation and Experiment Support
 
-Claude:
+Claude supports the Human Experiment Owner by:
 
-- implements experimental subjects and frozen consumers;
-- executes controlled experiments;
-- preserves the first discriminating failure;
-- records observations and reproduction evidence;
-- and exposes accidental complexity, hidden assumptions, hidden
+- implementing experimental subjects and frozen consumers;
+- executing controlled experiments under human direction;
+- preserving the first discriminating failure;
+- recording observations and reproduction evidence;
+- and exposing accidental complexity, hidden assumptions, hidden
   materialization, coupling, semantic loss, lifetime friction, diagnostics,
   special cases, and compile-time costs.
 
-Claude does not repair an unexpected result before it is recorded and does not
-change a frozen question, hypothesis, consumer, guardrail, or success condition
-to make an experiment pass.
+Claude is not the developer of record, experiment owner, responsible party, or
+result adjudicator. It does not independently authorize or perform repair after
+an unexpected result, and it does not change a frozen question, hypothesis,
+consumer, guardrail, or success condition to make an experiment pass. Any such
+change requires explicit human direction after the original result is
+preserved.
 
-### Independent Challenger
+### Independent Human Challenger
 
-The Challenger is independent from the uninterrupted Codex-to-Claude chain.
-Its role is to attack the inference, not approve implementation quality.
+The Challenger is a named human who is independent from the uninterrupted
+design-to-implementation path. The role attacks the inference, not
+implementation quality. An AI system may supply challenge questions or analysis
+as advisory material, but an AI-only review does not satisfy this independence
+requirement.
 
 The Challenger asks:
 
@@ -165,13 +206,16 @@ The Challenger asks:
 - Was the hold-out genuinely adversarial?
 - Does the proposed Claim exceed the observed domain?
 
-GPT Work uses Challenger evidence during adjudication.
+The Human ARC Owner assesses Challenger evidence and the Project Principal
+approves any resulting Claim or governing decision. AI advisors may support
+that assessment but do not adjudicate it.
 
 ### Mission Engineering
 
-Mission Engineering turns active research intent into bounded increments and
-execution order. It does not change the question, discriminator, freeze, or
-success conditions.
+Mission Engineering is a human responsibility that turns active research intent
+into bounded increments and execution order. AI systems may advise or assist
+with planning, but they do not own the plan or change the question,
+discriminator, freeze, or success conditions.
 
 ## Minimum persistent artifact set
 
@@ -328,7 +372,7 @@ Explicit non-requirements
 Permitted adaptations
 Prohibited adaptations
 Status
-GPT Work adjudication
+Human ARC Owner assessment
 Project Principal approval
 ```
 
@@ -338,8 +382,9 @@ or coordination failure demonstrates the need.
 
 ### First Failure Preservation Rule
 
-When a controlled discriminator fails, Claude stops before redesign or repair
-and preserves:
+When a controlled discriminator fails, the Human Experiment Owner stops
+controlled execution before redesign or repair. Claude may support preservation
+of:
 
 - the freeze reference and original frozen configuration;
 - consumer and subject revisions;
@@ -353,10 +398,12 @@ repair, workaround, stronger requirement, cache, consumer change, or redesign
 is attempted only after preservation and remains distinguishable from the
 original result.
 
-Preservation does not decide causality. Codex interprets the architectural
-consequence, the Challenger attacks that inference, and GPT Work adjudicates
+Preservation does not decide causality. Codex may propose an architectural
+interpretation, GPT Work may advise on evidence and Claim impact, and the
+Independent Human Challenger attacks the inference. The Human ARC Owner assesses
 whether the result reflects the hypothesis, frozen contract, apparatus,
-compiler, library, or another cause.
+compiler, library, or another cause; the Project Principal approves any Claim
+or governing decision.
 
 ### Stop and record
 
@@ -373,13 +420,13 @@ inconclusion, and the next-question recommendation.
 
 ## Proportional challenge
 
-- **R0:** no independent Challenger.
+- **R0:** no Independent Human Challenger.
 - **R1:** normal technical review is normally sufficient.
-- **R2:** use an independent Challenger when evidence could materially
+- **R2:** use an Independent Human Challenger when evidence could materially
   strengthen, narrow, or contradict an architectural Claim.
-- **R3:** an independent Challenger is mandatory.
+- **R3:** an Independent Human Challenger is mandatory.
 
-ARC-001 retains an independent Challenger because it tests a foundational
+ARC-001 retains an Independent Human Challenger because it tests a foundational
 representation-independence hypothesis.
 
 ## Claims and decisions
@@ -445,7 +492,7 @@ Use only:
 
 - **Status**;
 - **Research Case** (`ARC-001`, `ARC-002`, and so on);
-- **Responsible role** (GPT Work, Codex, Claude, Challenger, Project Principal);
+- **Human owner** (a named human GitHub assignee; never an AI system);
 - **Work type** (Design, Experiment, Evidence, Decision, Engineering
   dependency);
 - **Architectural properties** (P1-P11) when useful.
@@ -478,10 +525,17 @@ Experiment, Challenge, Evidence, and Adjudication.
 When separate ownership, concurrency, or evidence traceability provides real
 value, split ARC-001 into at most these initial operational units:
 
-1. **Design & Calibration** - Codex and Claude;
-2. **Controlled Experiment** - Claude;
-3. **Challenge & Evidence Review** - Challenger and Codex;
-4. **Adjudication** - GPT Work, with Project Principal approval where required.
+1. **Design & Calibration** - Human ARC Owner, advised by Codex and supported
+   by Claude;
+2. **Controlled Experiment** - Human Experiment Owner, supported by Claude;
+3. **Challenge & Evidence Review** - Independent Human Challenger, with Codex
+   and GPT Work available as advisors;
+4. **Adjudication** - Human ARC Owner assessment, with Project Principal
+   approval where required.
+
+Every issue and PR has a named human assignee. AI support may be acknowledged in
+the issue or PR body, but it is not represented as ownership and does not create
+a separate authority field.
 
 This is a default, not a mandatory issue count.
 

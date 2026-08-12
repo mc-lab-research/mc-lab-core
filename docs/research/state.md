@@ -18,8 +18,15 @@ computational substrate for executable semantic structures.
 low-to-moderate operational overhead. Process is added only when it prevents a
 demonstrated research failure or material coordination cost.
 
+**Governance:** Human-owned and AI-advised. Named humans hold ownership,
+responsibility, approval, challenge, and adjudication. GPT Work, Codex, Claude,
+and other AI systems may advise or support those humans but cannot occupy an
+accountable governance role.
+
 **Current decision:** No M02 or ARC-001 architectural outcome is authorized.
-ARC-001 remains in pre-freeze calibration.
+ARC-001 remains in pre-freeze calibration. Its Human ARC Owner, Human
+Experiment Owner, and Independent Human Challenger are unassigned, so it cannot
+be frozen or enter controlled execution.
 
 ## Active
 
@@ -129,9 +136,10 @@ cmake --workflow --preset windows-clangcl-coverage --fresh
 **Date:** 2026-08-12
 
 **What changed:** Adopted the Lean Research OS posture and revised the
-operational protocol to v0.4. Retained GPT Work as Research Programme and
-Process Minimality Authority, Codex as Design Authority, Claude as Developer /
-Experimentator, and an independent Challenger as an attacker of inference.
+operational protocol to v0.5. Made governance explicitly human-owned and
+AI-advised: the Project Principal, named Human ARC Owner, Human Experiment
+Owner, and Independent Human Challenger hold authority and responsibility;
+GPT Work, Codex, and Claude provide advisory or implementation support only.
 Preserved the lightweight Git freeze and First Failure Preservation Rule while
 removing or deferring process that lacks demonstrated value. Reduced the ARC
 template and GitHub operating model, tightened the ARC-001 decision question,

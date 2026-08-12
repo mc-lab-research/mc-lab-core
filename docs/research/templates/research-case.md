@@ -5,8 +5,9 @@ tier: R2
 lifecycle: OPEN
 evidence: UNTESTED
 freeze: NOT-FROZEN
-owner: unassigned
-challenger: unassigned
+human_owner: unassigned
+human_experiment_owner: unassigned
+human_challenger: unassigned
 ---
 
 # ARC-### - Title
@@ -14,6 +15,24 @@ challenger: unassigned
 Use only the sections that materially protect evidence, clarify responsibility,
 or enable the decision. Keep case-specific technical detail here rather than
 creating parallel registries or administrative objects.
+
+## Human ownership and AI support
+
+**Human ARC Owner:** Name the human accountable for the case. An unassigned
+case cannot be frozen or closed.
+
+**Human Experiment Owner:** Name the human responsible for controlled
+execution, frozen-contract compliance, stopping conditions, and evidence
+preservation. An unassigned experiment cannot enter controlled execution.
+
+**Independent Human Challenger:** Assign according to research significance.
+AI-generated challenge material may assist this person but does not satisfy the
+independence requirement.
+
+**AI advisory support:** Optionally identify material assistance from GPT Work,
+Codex, Claude, or another AI system. This records provenance, never ownership,
+responsibility, approval, or adjudication. Every AI contribution remains a
+proposal until accepted by the applicable named human.
 
 ## Question and decision
 
@@ -84,7 +103,7 @@ The freeze lives here and uses Git as its immutable reference.
 
 **Status:** NOT-FROZEN.
 
-**GPT Work adjudication:** PENDING.
+**Human ARC Owner assessment:** PENDING.
 
 **Project Principal approval:** PENDING.
 
@@ -96,10 +115,11 @@ The freeze lives here and uses Git as its immutable reference.
 
 ### First Failure Preservation Rule
 
-When the controlled discriminator first fails, preserve the original frozen
-configuration, source revisions, command, environment, exact diagnostic or
-semantic mismatch, raw output, smallest faithful reproduction, and observation
-before repair or redesign.
+When the controlled discriminator first fails, the Human Experiment Owner must
+stop controlled execution and preserve the original frozen configuration,
+source revisions, command, environment, exact diagnostic or semantic mismatch,
+raw output, smallest faithful reproduction, and observation before repair or
+redesign. AI support may assist preservation but cannot authorize repair.
 
 ### Observation
 
@@ -115,9 +135,10 @@ PENDING.
 
 ## Challenge and interpretation
 
-**Challenger:** Assign according to research significance. Independent
-challenge is mandatory for R3 and for an R2 result that could materially affect
-an architectural Claim.
+**Independent Human Challenger:** Assign according to research significance.
+Independent human challenge is mandatory for R3 and for an R2 result that could
+materially affect an architectural Claim. An AI-only review does not satisfy
+this requirement.
 
 **Could another explanation produce the result?**
 

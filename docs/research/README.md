@@ -8,6 +8,12 @@ The governing question is whether mcLab can establish a principled Modern C++
 generic-programming architecture for executable semantic structures, within a
 clearly demonstrated domain and at acceptable architectural and language cost.
 
+Governance is **human-owned and AI-advised**. Named humans own Research Cases,
+experiments, freezes, challenges, evidence assessments, Claims, and decisions.
+AI systems may propose, analyze, draft, implement, or execute under human
+direction, but they are never owners, responsible parties, approvers,
+adjudicators, or independent Challengers.
+
 ## Start here
 
 - [Operational protocol](protocol.md) defines how R2 and R3 architectural
