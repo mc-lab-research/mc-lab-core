@@ -3,7 +3,8 @@ id: ARC-###
 title: Replace with a discriminating architectural question
 tier: R2
 lifecycle: OPEN
-evidence: UNTESTED
+evidence_disposition: UNTESTED
+evidence_posture: EXPLORATORY
 freeze: NOT-FROZEN
 human_owner: unassigned
 human_experiment_owner: unassigned

@@ -15,8 +15,10 @@ this decision.
 
 ## Research basis
 
-Link the Research Case or Cases, affected properties, evidence posture, and
-claims relied upon.
+Link the Research Case or Cases, affected properties, evidence disposition and
+posture, and every Claim affected by the decision. Include Claims strengthened,
+narrowed, contradicted, rejected, superseded, or left unchanged, not only those
+relied upon.
 
 ## Alternatives
 

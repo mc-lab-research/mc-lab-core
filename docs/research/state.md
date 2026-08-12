@@ -28,6 +28,11 @@ ARC-001 remains in pre-freeze calibration. Its Human ARC Owner, Human
 Experiment Owner, and Independent Human Challenger are unassigned, so it cannot
 be frozen or enter controlled execution.
 
+**Human governance record:** PENDING. The named Project Principal approval for
+this state review and its Claim wording has not yet been recorded. Until that
+attribution is added, the ledger below preserves the proposed baseline wording
+and evidence bounds but does not constitute governed human authorization.
+
 ## Active
 
 | Case | Tier | Question | Phase | Evidence target |
@@ -68,10 +73,11 @@ These are seed questions, not active workstreams.
 
 ## Claims Ledger
 
-Claims are authorized only within their recorded scope. `Exploratory` evidence
-may motivate a controlled case but does not establish a broad claim.
+Claim wording may be authorized only within its recorded scope and after named
+human approval is recorded. `Exploratory` evidence may motivate a controlled
+case but does not establish a broad claim.
 
-| ID | Authorized claim | Scope and exclusions | Lifecycle | Disposition | Evidence | Confidence | Next challenge |
+| ID | Claim wording | Scope and exclusions | Lifecycle | Disposition | Evidence | Confidence | Next challenge |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | CL-001 | The SemTL transition-relation contract is intended to admit stored and generated transition witnesses, including input ranges whose observations may be references, values, or proxies. | Current C++20 contract and documentation. This is a design statement, not proof that an unchanged consumer works across all such materializations. | ACTIVE | SUPPORTED | Exploratory: [`transition_relation.hpp`](../../include/mc_lab/semantic/facet/transition_relation.hpp), [`structural-facets.md`](../semantic/structural-facets.md), and existing explicit/generated concept tests. | Medium | ARC-001 controlled single-pass experiment |
 | CL-002 | The current C++20 `Post` and `TransitionRelation` contracts are syntactically independent: a model may satisfy either without satisfying the other. | Current finite discrete semantic vocabulary and member-backed v0.1 customization route. Establishes contract separability only; it does not establish useful architectural leverage or coherence when both facets exist. | ACTIVE | SUPPORTED | Exploratory: [`post.hpp`](../../include/mc_lab/semantic/facet/post.hpp), [`transition_relation.hpp`](../../include/mc_lab/semantic/facet/transition_relation.hpp), and positive and negative assertions in [`post_concepts_test.cpp`](../../tests/semantic/post_concepts_test.cpp) and [`facet_concepts_test.cpp`](../../tests/semantic/facet_concepts_test.cpp). | High | A model exposing both facets, followed by a consumer or formalism that pressures the separation |
@@ -83,6 +89,10 @@ may motivate a controlled case but does not establish a broad claim.
 ## Engineering validation record
 
 ### EV-2026-08-12-01 - Governance-baseline code validation
+
+**Human evidence owner / approver:** PENDING; no named human has yet been
+recorded. The compiler and test facts remain reproducible observations, but
+their acceptance into governed research state is pending that attribution.
 
 **Evidence class:** Engineering validation. These observations confirm the
 health of the implementation artifacts within the recorded environment. They
@@ -157,5 +167,12 @@ CL-006. CL-003 and CL-004 remain unauthorized.
 **ADRs changed:** None. Current semantic documentation remains the governing
 architecture until a controlled Research Case changes it.
 
-**Next principal action:** Freeze and execute ARC-001. Do not activate another
-principal case before it closes, is superseded, or is explicitly deferred.
+**Project Principal approval for this review and Claim changes:** PENDING; no
+named human has yet been recorded.
+
+**Next principal action:** Appoint the named Human ARC Owner, Human Experiment
+Owner, and Independent Human Challenger; record the named Project Principal's
+approval of the governed baseline; complete the calibration consumer and
+oracle; then review and approve the ARC-001 freeze before controlled execution.
+Do not execute the controlled discriminator or activate another principal case
+before these gates are satisfied.

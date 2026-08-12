@@ -278,7 +278,8 @@ ARC lifecycle:
 - **CLOSED**;
 - **SUPERSEDED**.
 
-Evidence disposition:
+Evidence disposition records the result direction in the canonical ARC
+frontmatter key `evidence_disposition`:
 
 - **UNTESTED**;
 - **SUPPORTED**;
@@ -286,13 +287,19 @@ Evidence disposition:
 - **CONTRADICTED**;
 - **INCONCLUSIVE**.
 
-Evidence posture:
+Evidence posture records the strength of the evidence in the canonical ARC
+frontmatter key `evidence_posture`:
 
 - **Exploratory:** rationale, feasibility prototype, or development-model
   observation;
 - **Controlled:** frozen discriminating experiment with predeclared outcomes;
 - **Challenged:** adversarial hold-out, external grounding, or independent
   replication.
+
+The two dimensions are not interchangeable. `SUPPORTED` with `EXPLORATORY`
+posture, for example, records a promising but non-controlled observation. ARC
+frontmatter and templates use the two canonical keys above; the ambiguous
+single `evidence` key is not used.
 
 These epistemic states live in `state.md` and the ARC, not in a parallel set of
 GitHub workflow states.
@@ -431,10 +438,11 @@ representation-independence hypothesis.
 
 ## Claims and decisions
 
-The compact Claims section in `state.md` authorizes current wording. Each Claim
-states its demonstrated domain, material exclusions, counterevidence, current
-status, and next discriminator. Keep it compact until interactions across cases
-make reconstruction difficult.
+After named Project Principal approval is recorded, the compact Claims section
+in `state.md` authorizes current wording. Each Claim states its demonstrated
+domain, material exclusions, counterevidence, current status, and next
+discriminator. Keep it compact until interactions across cases make
+reconstruction difficult.
 
 Acceptable:
 
@@ -475,27 +483,52 @@ currently known**.
 
 ### Project statuses
 
-Use approximately seven states:
+Use these eight operational states:
 
 ```text
-BACKLOG -> DESIGN -> FROZEN -> EXPERIMENT -> REVIEW -> DONE
+INBOX -> BACKLOG -> DESIGN -> FROZEN -> EXPERIMENT -> REVIEW -> DONE
 BLOCKED  (temporary operational state for any item that cannot advance)
 ```
 
 `FROZEN` requires the ARC freeze record and Project Principal approval. A
 passing CI run does not imply Controlled evidence, Claim support, or ARC
-closure.
+closure. `DONE` means that the tracked issue or pull request is operationally
+complete; automation may set it when an item is closed or a pull request is
+merged, but that transition never approves evidence, a Claim, an ARC closure,
+or an ADR.
 
 ### Minimum Project fields
 
 Use only:
 
 - **Status**;
-- **Research Case** (`ARC-001`, `ARC-002`, and so on);
-- **Human owner** (a named human GitHub assignee; never an AI system);
-- **Work type** (Design, Experiment, Evidence, Decision, Engineering
-  dependency);
-- **Architectural properties** (P1-P11) when useful.
+- **Research Case ID** (`ARC-001`, `ARC-002`, and so on);
+- **Human owner**, implemented by the native GitHub assignee and never by an AI
+  system;
+- **Work type**, implemented by the native organization Issue Type rather than
+  a duplicate Project field;
+- **Architectural properties** (P1-P11) when useful;
+- **Priority**, **Effort**, and **Complexity**, using the organization Issue
+  fields already attached to the Project.
+
+The native Issue Type mapping is:
+
+- **Initiative** for the principal ARC issue;
+- **Research** for a bounded investigation or question;
+- **Proposal** for an architectural alternative;
+- **Evaluation** for a characterization or comparison;
+- **Validation** for controlled or reproduction evidence;
+- **Decision** for human adjudication;
+- **Specification** for a stabilized normative contract;
+- **Feature**, **Task**, **Bug**, and **Document** for implementation, support,
+  defect, and documentation work.
+
+`Research -> Proposal -> Evaluation -> Validation -> Decision ->
+Specification` is a useful path, not a mandatory issue chain. A negative,
+contradictory, deferred, or inconclusive case may stop earlier once its evidence
+and Claim impact are recorded. Priority, Effort, and Complexity support
+operational planning only; they do not encode significance, evidence strength,
+confidence, approval, or architectural value.
 
 Add an Evidence field only if actual operation demonstrates that it reduces
 coordination cost. Do not mirror the same state through fields, labels,
@@ -533,9 +566,11 @@ value, split ARC-001 into at most these initial operational units:
 4. **Adjudication** - Human ARC Owner assessment, with Project Principal
    approval where required.
 
-Every issue and PR has a named human assignee. AI support may be acknowledged in
-the issue or PR body, but it is not represented as ownership and does not create
-a separate authority field.
+Before work passes its relevant governance checkpoint, every issue and PR has a
+named human assignee. An unassigned intake item remains in `INBOX` or `BLOCKED`;
+an unassigned ARC cannot be frozen or enter controlled execution. AI support
+may be acknowledged in the issue or PR body, but it is not represented as
+ownership and does not create a separate authority field.
 
 This is a default, not a mandatory issue count.
 
