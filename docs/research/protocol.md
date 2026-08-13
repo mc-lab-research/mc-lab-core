@@ -1,4 +1,4 @@
-# SemTL Architectural Research Protocol v0.5 Lean
+# SemTL Architectural Research Protocol v0.8 Lean
 
 This protocol governs SemTL architectural research during M02. It preserves
 falsification, evidence, and claim discipline with the smallest practical
@@ -210,6 +210,17 @@ The Human ARC Owner assesses Challenger evidence and the Project Principal
 approves any resulting Claim or governing decision. AI advisors may support
 that assessment but do not adjudicate it.
 
+When a required independent human is demonstrably unavailable, the Project
+Principal may authorize a disclosed **AI Challenge Advisor** for an R2 case as
+a bounded protocol exception. The exception must be recorded before freeze,
+must not describe the AI as human or independent, and must preserve the AI's
+findings and the human disposition of each material finding. Evidence produced
+under this exception may reach Controlled posture for the narrow experiment,
+but one such case cannot by itself authorize a foundational or strategic
+representation-independence Claim. Such promotion requires later independent
+human challenge or corroborating evidence accepted through a separately
+approved case. This fallback is unavailable for R3 cases.
+
 ### Mission Engineering
 
 Mission Engineering is a human responsibility that turns active research intent
@@ -387,6 +398,37 @@ Do not duplicate freeze state through several documents, Project fields,
 labels, and checklists. Add another mechanism only after a concrete integrity
 or coordination failure demonstrates the need.
 
+### Git evidence history
+
+History may be cleaned before a freeze. After a case or attempt configuration
+is frozen, its controlled evidence history is append-only: do not rewrite,
+squash, force-push, delete, or move its evidence refs. Record the exact SHA as
+the authority and add an annotated, non-moving tag as a human-readable aid.
+
+A materially different controlled configuration starts a fresh branch from the
+applicable immutable baseline. A repair that keeps the same frozen
+configuration stays on the same attempt after First Failure Preservation.
+Production implementation begins separately only after human adjudication.
+
+Examples:
+
+- ARC-001 A01 keeps the owning-value attempt, appends its INCONCLUSIVE human
+  disposition, and tags that corrected evidence state.
+- ARC-001 A02 starts from the ARC-001 freeze record, freezes the ephemeral-proxy
+  configuration, and lets the experimentator branch from that configuration;
+  it does not descend from A01.
+
+### Executable research apparatus
+
+Maintained executable artifacts whose primary purpose is to instantiate,
+discriminate, or reproduce an ARC belong under `tests/research/<arc-id>/`.
+Ordinary supported-contract and production-regression tests remain under their
+engineering test domain. Promotion from research apparatus to an engineering
+test or production abstraction requires a separate post-adjudication decision.
+
+The maintained copy links to immutable evidence SHAs and tags; it does not
+replace them as the authority for an historical observation.
+
 ### First Failure Preservation Rule
 
 When a controlled discriminator fails, the Human Experiment Owner stops
@@ -433,8 +475,10 @@ inconclusion, and the next-question recommendation.
   strengthen, narrow, or contradict an architectural Claim.
 - **R3:** an Independent Human Challenger is mandatory.
 
-ARC-001 retains an Independent Human Challenger because it tests a foundational
-representation-independence hypothesis.
+ARC-001 normally retains an Independent Human Challenger because it tests a
+foundational representation-independence hypothesis. If no such human is
+available, the Project Principal may invoke the disclosed R2 AI Challenge
+Advisor exception above, with the corresponding Claim-promotion limit.
 
 ## Claims and decisions
 
@@ -562,7 +606,8 @@ value, split ARC-001 into at most these initial operational units:
    by Claude;
 2. **Controlled Experiment** - Human Experiment Owner, supported by Claude;
 3. **Challenge & Evidence Review** - Independent Human Challenger, with Codex
-   and GPT Work available as advisors;
+   and GPT Work available as advisors, or the disclosed R2 AI Challenge Advisor
+   exception when explicitly authorized;
 4. **Adjudication** - Human ARC Owner assessment, with Project Principal
    approval where required.
 

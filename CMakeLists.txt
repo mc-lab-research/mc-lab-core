@@ -251,6 +251,9 @@ if(PROJECT_IS_TOP_LEVEL AND BUILD_TESTING)
     add_subdirectory(
         tests/semantic
     )
+    add_subdirectory(
+        tests/research
+    )
 endif()
 
 if(MC_LAB_CORE_BUILD_CLI)
