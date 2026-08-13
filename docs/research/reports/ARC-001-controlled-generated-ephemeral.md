@@ -10,26 +10,37 @@ decision.
 ## Identifiers
 
 - **Frozen commit (immutable experiment boundary):**
-  `f969fa8aa63a9a172e6feb2eeb32636aab24f387`
-- **Freeze-record commit:** `1dec900c899893537c9f1d87b3b26e272d22808f`
+  [`f969fa8aa63a9a172e6feb2eeb32636aab24f387`](https://github.com/mc-lab-research/mc-lab-core/commit/f969fa8aa63a9a172e6feb2eeb32636aab24f387)
+- **Freeze-record commit:**
+  [`1dec900c899893537c9f1d87b3b26e272d22808f`](https://github.com/mc-lab-research/mc-lab-core/commit/1dec900c899893537c9f1d87b3b26e272d22808f)
   (docs-only; verified to make no change to
-  `tests/semantic/support/labelled_successor_consumer.hpp`,
-  `tests/semantic/transition_materialization_calibration_test.cpp`,
-  `tests/semantic/support/transition_materialization_models.hpp`,
-  `include/mc_lab/semantic/facet/transition_relation.hpp`,
-  `include/mc_lab/semantic/facet/transition_labelling.hpp`, or
-  `include/mc_lab/semantic/detail/transition_relation_cpos.hpp`)
-- **Experiment branch:** `experiment/arc-001-generated-ephemeral`
-- **Experiment commit:** `2539f7f741f31f53ebcb7314dc9f9ac989a6ab16`,
+  [`labelled_successor_consumer.hpp`](https://github.com/mc-lab-research/mc-lab-core/blob/f969fa8aa63a9a172e6feb2eeb32636aab24f387/tests/semantic/support/labelled_successor_consumer.hpp),
+  [`transition_materialization_calibration_test.cpp`](https://github.com/mc-lab-research/mc-lab-core/blob/f969fa8aa63a9a172e6feb2eeb32636aab24f387/tests/semantic/transition_materialization_calibration_test.cpp),
+  [`transition_materialization_models.hpp`](https://github.com/mc-lab-research/mc-lab-core/blob/f969fa8aa63a9a172e6feb2eeb32636aab24f387/tests/semantic/support/transition_materialization_models.hpp),
+  [`transition_relation.hpp`](https://github.com/mc-lab-research/mc-lab-core/blob/f969fa8aa63a9a172e6feb2eeb32636aab24f387/include/mc_lab/semantic/facet/transition_relation.hpp),
+  [`transition_labelling.hpp`](https://github.com/mc-lab-research/mc-lab-core/blob/f969fa8aa63a9a172e6feb2eeb32636aab24f387/include/mc_lab/semantic/facet/transition_labelling.hpp),
+  or
+  [`transition_relation_cpos.hpp`](https://github.com/mc-lab-research/mc-lab-core/blob/f969fa8aa63a9a172e6feb2eeb32636aab24f387/include/mc_lab/semantic/detail/transition_relation_cpos.hpp))
+- **Experiment branch:**
+  [`experiment/arc-001-generated-ephemeral`](https://github.com/mc-lab-research/mc-lab-core/tree/experiment/arc-001-generated-ephemeral)
+  (link resolves once the branch is pushed to origin)
+- **Experiment commit:**
+  [`2539f7f741f31f53ebcb7314dc9f9ac989a6ab16`](https://github.com/mc-lab-research/mc-lab-core/commit/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16),
   branched from `1dec900c899893537c9f1d87b3b26e272d22808f`
 - **Consumer:** `CON-SUCCESSORS-01`,
-  `tests/semantic/support/labelled_successor_consumer.hpp`
-- **Oracle:** `tests/semantic/transition_materialization_calibration_test.cpp`
+  [`tests/semantic/support/labelled_successor_consumer.hpp`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/tests/semantic/support/labelled_successor_consumer.hpp)
+- **Oracle:**
+  [`tests/semantic/transition_materialization_calibration_test.cpp`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/tests/semantic/transition_materialization_calibration_test.cpp)
 - **Controlled subject added:** `SUBJECT-LAZY-LTS-01`,
-  `tests/semantic/support/transition_materialization_lazy_model.hpp`
+  [`tests/semantic/support/transition_materialization_lazy_model.hpp`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/tests/semantic/support/transition_materialization_lazy_model.hpp)
 - **Controlled test added:**
-  `tests/semantic/transition_materialization_lazy_test.cpp`
-  (registered as `mc_lab_core.semantic.transition_materialization_lazy`)
+  [`tests/semantic/transition_materialization_lazy_test.cpp`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/tests/semantic/transition_materialization_lazy_test.cpp)
+  (registered as `mc_lab_core.semantic.transition_materialization_lazy` in
+  [`tests/semantic/CMakeLists.txt`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/tests/semantic/CMakeLists.txt))
+
+Commit- and branch-scoped links above resolve once
+`experiment/arc-001-generated-ephemeral` is pushed to origin; until then they
+are correct references, not yet live.
 
 ## Consumer unchanged - proof
 
@@ -54,6 +65,9 @@ none of them frozen files:
 
 ## SUBJECT-LAZY-LTS-01 design
 
+Source:
+[`transition_materialization_lazy_model.hpp`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/tests/semantic/support/transition_materialization_lazy_model.hpp)
+
 - `lazy_reference_system::outgoing_transitions(const int&)` returns
   `lazy_outgoing_transitions`, a range that stores only the queried source
   and a cursor (`step_`); it does not store or construct any transition
@@ -74,7 +88,8 @@ none of them frozen files:
 
 ## Lazy-range category assertions (compile-time)
 
-From `tests/semantic/transition_materialization_lazy_test.cpp`:
+From
+[`transition_materialization_lazy_test.cpp`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/tests/semantic/transition_materialization_lazy_test.cpp):
 
 ```cpp
 static_assert(std::ranges::input_range<lazy_range_t>);
