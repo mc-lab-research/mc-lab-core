@@ -28,10 +28,10 @@ limit.
 
 **Current decision:** No M02 or ARC-001 architectural outcome is authorized.
 Sami Lazreg is Project Principal, Human ARC Owner, and Human Experiment Owner.
-The stored calibration is complete and the freeze is being recorded before
-controlled execution. No independent human Challenger is available; Sami
-Lazreg authorized the disclosed R2 AI Challenge Advisor exception on
-2026-08-13.
+ARC-001 is frozen at commit
+`f969fa8aa63a9a172e6feb2eeb32636aab24f387`; controlled execution has not
+started. No independent human Challenger is available; Sami Lazreg authorized
+the disclosed R2 AI Challenge Advisor exception on 2026-08-13.
 
 **Human governance record:** Project Principal Sami Lazreg approved the governed
 baseline and ARC-001 freeze on 2026-08-13. This approval retains the existing
@@ -41,7 +41,7 @@ bounded Claim wording; it does not approve an ARC-001 outcome or Claim change.
 
 | Case | Tier | Question | Phase | Evidence target |
 | --- | --- | --- | --- | --- |
-| [ARC-001](cases/ARC-001.md) | R2 | Can one single-pass local labelled-transition consumer remain source-unchanged when the same finite labelled transition relation is exposed through stored stable witnesses and generated ephemeral witnesses? | Freeze recording; controlled execution not started. | Controlled |
+| [ARC-001](cases/ARC-001.md) | R2 | Can one single-pass local labelled-transition consumer remain source-unchanged when the same finite labelled transition relation is exposed through stored stable witnesses and generated ephemeral witnesses? | FROZEN at `f969fa8aa63a9a172e6feb2eeb32636aab24f387`; controlled execution not started. | Controlled |
 
 ## Supporting
 
@@ -173,7 +173,8 @@ architecture until a controlled Research Case changes it.
 **Project Principal approval for this review and retained Claim wording:** Sami
 Lazreg, 2026-08-13. No ARC-001 result or Claim change is approved.
 
-**Next principal action:** Complete the ARC-001 freeze record with the exact
-candidate commit, then begin controlled execution against that immutable
-baseline. Preserve the first discriminating failure before repair. Do not
-activate another principal case while ARC-001 remains active.
+**Next principal action:** Begin controlled execution against frozen commit
+`f969fa8aa63a9a172e6feb2eeb32636aab24f387`. Implement only the permitted lazy
+subject and frozen negative test. Preserve the first discriminating failure
+before repair. Do not activate another principal case while ARC-001 remains
+active.

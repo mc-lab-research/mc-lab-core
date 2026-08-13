@@ -6,6 +6,7 @@ status: PASS
 evidence_posture: EXPLORATORY
 controlled_experiment_started: false
 baseline_commit: 16da2757aca384d715347c9839d8a73113540266
+freeze_commit: f969fa8aa63a9a172e6feb2eeb32636aab24f387
 working_branch: research/arc-001-calibration
 ---
 
@@ -122,9 +123,11 @@ report does not freeze them:
 | Release preset | `windows-clangcl-release` |
 | Static-analysis preset | `windows-clangcl-tidy` |
 
-The calibration changes were uncommitted when this report was first written;
-therefore the baseline commit identifies the governed repository context, not
-a freeze commit or result commit.
+The baseline commit identifies the governed repository context from which the
+calibration began. The accepted calibration artifacts and prospective challenge
+resolutions were committed as
+`f969fa8aa63a9a172e6feb2eeb32636aab24f387`, which is the recorded ARC-001
+freeze boundary and is not a controlled result commit.
 
 ## Execution and results
 
