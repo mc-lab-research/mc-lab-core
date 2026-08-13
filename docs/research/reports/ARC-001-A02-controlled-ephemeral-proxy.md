@@ -1,12 +1,12 @@
 # ARC-001 A02 controlled experiment - ephemeral-proxy witnesses
 
-**Status:** Draft. Interpretation is AI-advised (Claude, Implementation and
-Experiment Support). Human assessment, Claim-impact approval, and any
-architectural decision are pending Human ARC Owner / Human Experiment Owner
-Sami Lazreg and Project Principal Sami Lazreg, and design/apparatus review by
-Codex. This report does not close [ARC-001](../cases/ARC-001.md), does not
-approve `CL-001` in [state.md](../state.md), and does not authorize an
-architectural decision.
+**Status:** Accepted Controlled evidence supporting H-A within the frozen
+ARC-001 scope. Sami Lazreg approved the evidence on 2026-08-13 as Human ARC
+Owner, Human Experiment Owner, and Project Principal after Codex completed the
+design/apparatus review and independent validation. This report does not close
+[ARC-001](../cases/ARC-001.md), change `CL-001` in [state.md](../state.md),
+authorize a foundational representation-independence Claim, require an ADR, or
+authorize production promotion.
 
 ## Identifiers
 
@@ -383,10 +383,11 @@ dispatch). Additionally for this run:
 
 ## Evidence disposition and posture
 
-- Evidence disposition: **UNTESTED → this report's contents are proposed
-  Controlled evidence**, pending Human ARC Owner assessment and Codex's
-  design/apparatus review. Claude has not approved this evidence.
-- Evidence posture achieved: **Controlled**, subject to the threats above.
+- Evidence disposition: **SUPPORTED** within the frozen ARC-001 scope.
+- Evidence posture achieved: **Controlled**, accepted by Sami Lazreg on
+  2026-08-13 after Codex's review and independent gate reproduction.
+- Claude supplied implementation and experiment support but did not approve or
+  adjudicate the evidence.
 - Per the disclosed R2 AI Challenge Advisor exception recorded in
   [ARC-001.md](../cases/ARC-001.md) and [state.md](../state.md), this case
   alone cannot support a foundational or strategic representation-
@@ -418,7 +419,7 @@ dispatch). Additionally for this run:
   semantically and both agreed with the oracle (`bypass`, `2`), not merely
   checked via `is_current()`.
 
-### Interpretation (AI-advised, pending human and Codex review)
+### Interpretation (accepted by the Human ARC Owner)
 
 Within this run's bounds, the observation supports **H-A**: a transition
 relation can expose local transition witnesses through a genuinely
@@ -442,20 +443,18 @@ inference from a single instance.
 
 ### Proportionate challenge
 
-Codex, the designer and reviewer of this configuration, independently
-reviewed the proxy implementation, ancestry, frozen-file integrity,
-first-failure preservation, cache boundary, and named-lvalue behavior (all
-reported as passing) and independently reproduced both required workflows
-at `fe44470`. That review predates, and did not cover, the evidence-
-completion revision at `40c5055` authorized afterward. This report's own
-"credible alternative interpretation" above is offered as an additional,
+Codex, the designer and reviewer of this configuration, independently reviewed
+the proxy implementation, ancestry, frozen-file integrity, first-failure
+preservation, cache boundary, named-lvalue behavior, and the evidence-
+completion revision at `40c5055` (all reported as passing). Codex independently
+reproduced both required workflows before and after that completion. This
+report's own "credible alternative interpretation" above is an additional,
 narrower check; per the disclosed exception, none of this - Codex's review
 included - is independent *human* review.
 
 ### Bounded Claim impact
 
-If accepted, this result is additional evidence toward, but does not by
-itself establish, the same bounded wording proposed in
+This accepted result supports the bounded wording proposed in
 [ARC-001.md](../cases/ARC-001.md):
 
 > Within the tested finite labelled-transition domain, the local
@@ -469,24 +468,23 @@ exception.
 
 ### Human decision
 
-**Pending.** Required from Sami Lazreg as Human ARC Owner / Human Experiment
-Owner:
+On 2026-08-13, Sami Lazreg, acting as Human ARC Owner, Human Experiment Owner,
+and Project Principal:
 
-- Codex's review of ancestry, preservation, frozen-file equality, proxy
-  structure, invalidation, storage boundaries, and independent gate results
-  is complete for the revision at `fe44470` (see "Codex independent
-  review"); a corresponding review of the evidence-completion revision
-  (`40c5055`) has not yet been recorded.
-- Accept, request revision of, or reject this evidence and its H-A
-  interpretation.
-- Decide any `CL-001` wording update in [state.md](../state.md).
-- Decide whether an ADR is warranted.
-- Decide how A01 (preserved, nonconforming) and A02 (this attempt) are
-  jointly represented in ARC-001's evidence record.
+- accepted A02 as **Controlled evidence supporting H-A within the frozen
+  ARC-001 scope**;
+- accepted Codex's final review of ancestry, preservation, frozen-file
+  equality, proxy structure, invalidation, storage boundaries, classification,
+  and independently reproduced validation at the final executable evidence;
+- retained A01 as INCONCLUSIVE for the controlled result and Exploratory for
+  its generated by-value observation;
+- made no Claims Ledger change and retained the disclosed AI Challenge Advisor
+  Claim-promotion ceiling;
+- determined that acceptance alone requires no ADR because no governing public
+  architecture changed;
+- did not close ARC-001 or authorize experimental-to-production promotion.
 
-Claude does not approve this evidence, does not choose between H-A and H-B,
-does not update `CL-001`, does not create an ADR, and does not close
-[ARC-001](../cases/ARC-001.md).
+Claude did not approve or adjudicate this evidence.
 
 ## Experimentator completion note
 

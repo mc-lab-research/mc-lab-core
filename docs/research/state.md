@@ -26,25 +26,26 @@ because an independent human Challenger is unavailable; the AI is not recorded
 as human or independent, and the case carries the protocol's Claim-promotion
 limit.
 
-**Current decision:** No M02 or ARC-001 architectural outcome is authorized.
-Sami Lazreg is Project Principal, Human ARC Owner, and Human Experiment Owner.
-ARC-001 is frozen at commit
-`f969fa8aa63a9a172e6feb2eeb32636aab24f387`. Attempt A01 is preserved as
-INCONCLUSIVE because its owning dereference value did not instantiate the
-frozen ephemeral-proxy requirement. Attempt A02 is configured independently
-and frozen at `2460f4d45f21fce49636d820c07c489d1b4598b6` for execution
-by Claude. No independent human Challenger is available; Sami Lazreg authorized
-the disclosed R2 AI Challenge Advisor exception on 2026-08-13.
+**Current decision:** No M02 strategic outcome is authorized. Sami Lazreg is
+Project Principal, Human ARC Owner, and Human Experiment Owner. On 2026-08-13,
+he accepted ARC-001 A02 as Controlled evidence supporting H-A within the frozen
+scope. A01 remains INCONCLUSIVE as the controlled attempt and Exploratory as
+by-value engineering evidence. ARC-001 remains ACTIVE pending its separate
+closure and next-question actions. No independent human Challenger is
+available; the disclosed R2 AI Challenge Advisor exception and its
+Claim-promotion ceiling remain in force.
 
 **Human governance record:** Project Principal Sami Lazreg approved the governed
-baseline and ARC-001 freeze on 2026-08-13. This approval retains the existing
-bounded Claim wording; it does not approve an ARC-001 outcome or Claim change.
+baseline and ARC-001 freeze, then accepted the bounded A02 controlled result on
+2026-08-13 after Codex review and independent validation. This acceptance does
+not change the Claims Ledger, authorize a foundational representation-
+independence Claim, require an ADR, close ARC-001, or promote experimental code.
 
 ## Active
 
 | Case | Tier | Question | Phase | Evidence target |
 | --- | --- | --- | --- | --- |
-| [ARC-001](cases/ARC-001.md) | R2 | Can one single-pass local labelled-transition consumer remain source-unchanged when the same finite labelled transition relation is exposed through stored stable witnesses and generated ephemeral witnesses? | FROZEN; A01 inconclusive; A02 configured for controlled execution. | Controlled |
+| [ARC-001](cases/ARC-001.md) | R2 | Can one single-pass local labelled-transition consumer remain source-unchanged when the same finite labelled transition relation is exposed through stored stable witnesses and generated ephemeral witnesses? | A02 accepted as supporting H-A within scope; closure pending. | Controlled |
 
 ## Supporting
 
@@ -160,8 +161,10 @@ available, Sami Lazreg authorized the disclosed R2 AI Challenge Advisor
 exception with its Claim-promotion ceiling. Added compact append-only Git
 evidence rules after A01 demonstrated the need to separate materially distinct
 attempts. A01 is INCONCLUSIVE as the controlled result and preserved as
-Exploratory by-value engineering evidence. A02 is configured independently
-from the ARC-001 freeze record. No ARC-001 result is yet authorized.
+Exploratory by-value engineering evidence. A02 was executed independently from
+the ARC-001 freeze record and accepted as Controlled evidence supporting H-A
+within scope. No Claims Ledger wording, ADR, ARC closure, or M02 strategic
+decision is authorized by this acceptance step.
 
 **Cases closed:** None.
 
@@ -174,10 +177,9 @@ CL-006. CL-003 and CL-004 remain unauthorized.
 architecture until a controlled Research Case changes it.
 
 **Project Principal approval for this review and retained Claim wording:** Sami
-Lazreg, 2026-08-13. No ARC-001 result or Claim change is approved.
+Lazreg, 2026-08-13. The bounded A02 result is accepted; no Claim wording change
+is approved.
 
-**Next principal action:** Begin controlled execution against frozen commit
-`f969fa8aa63a9a172e6feb2eeb32636aab24f387`. Implement only the permitted lazy
-subject and frozen negative test. Preserve the first discriminating failure
-before repair. Do not activate another principal case while ARC-001 remains
-active.
+**Next principal action:** Record and tag the accepted A02 result, then separate
+the maintained ARC-001 research apparatus from ordinary engineering tests.
+Do not activate another principal case while ARC-001 remains active.
