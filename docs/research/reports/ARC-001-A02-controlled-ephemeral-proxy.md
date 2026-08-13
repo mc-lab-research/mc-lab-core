@@ -4,9 +4,10 @@
 ARC-001 scope. Sami Lazreg approved the evidence on 2026-08-13 as Human ARC
 Owner, Human Experiment Owner, and Project Principal after Codex completed the
 design/apparatus review and independent validation. This report does not close
-[ARC-001](../cases/ARC-001.md), change `CL-001` in [state.md](../state.md),
-authorize a foundational representation-independence Claim, require an ADR, or
-authorize production promotion.
+[ARC-001](../cases/ARC-001.md), authorize a foundational representation-
+independence Claim, require an ADR, or authorize production promotion. A
+separate subsequent Project Principal action authorized this bounded result as
+the revised `CL-001` wording in [state.md](../state.md).
 
 ## Identifiers
 
@@ -454,13 +455,14 @@ included - is independent *human* review.
 
 ### Bounded Claim impact
 
-This accepted result supports the bounded wording proposed in
-[ARC-001.md](../cases/ARC-001.md):
+This accepted result supports the canonical bounded `CL-001` wording in
+[state.md](../state.md):
 
-> Within the tested finite labelled-transition domain, the local
-> successor-enumeration consumer operated unchanged across explicit stored
-> and single-pass lazy transition representations without forcing
-> transition materialization.
+> Within the ARC-001 finite labelled-transition domain,
+> `CON-SUCCESSORS-01` operated unchanged across stable stored transition
+> witnesses and a single-pass generated ephemeral-proxy representation,
+> without requiring a persistent transition collection or
+> stronger-than-`input_range` traversal.
 
 It does not authorize "SemTL is representation-independent," and cannot by
 itself promote a foundational or strategic Claim per the disclosed
@@ -485,6 +487,19 @@ and Project Principal:
 - did not close ARC-001 or authorize experimental-to-production promotion.
 
 Claude did not approve or adjudicate this evidence.
+
+### Subsequent Project Principal Claim decision
+
+The human evidence-acceptance step above made no Claims Ledger change. In a
+separate subsequent action on 2026-08-13, Sami Lazreg, acting as Project
+Principal, authorized the bounded wording quoted above as the revised canonical
+`CL-001` Claim. Its Controlled evidence is this report, human-acceptance commit
+`fa29517dbf9ddc138395f329cfefc0ba9bb167f8`, and annotated result tag
+`arc-001-a02-supports-ha`.
+
+This authorization does not approve `CL-003`, a foundational or strategic
+representation-independence Claim, an ADR, ARC closure, or production
+promotion.
 
 ## Experimentator completion note
 
