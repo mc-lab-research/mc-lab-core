@@ -24,6 +24,12 @@ architectural decision.
 - **A02 fix commit:** `ff4963f9d3430a4d9d12a79650109e7c954c38bf`
   (authorized by Sami Lazreg after the failure was preserved; passing
   revision)
+- **A02 comment-only revision:** `fe44470b4acbcd69ef4731d8d346d55b8e935c4f`
+  (no behavior change; this is the commit Codex independently reproduced the
+  commit-gate and clang-tidy workflows against)
+- **A02 final evidence-tip commit:** `40c50553c1d64a6ed4e74faa951843966d609ca1`
+  (authorized narrow evidence-completion revision - see "Evidence-completion
+  revision" below)
 - **Consumer:** `CON-SUCCESSORS-01`,
   [`tests/semantic/support/labelled_successor_consumer.hpp`](../../../tests/semantic/support/labelled_successor_consumer.hpp)
 - **Oracle:**
@@ -119,8 +125,30 @@ static_assert(std::same_as<decltype(research::observe_labelled_successors(
                            std::vector<observation_t>>);
 ```
 
-All compiled successfully at the fix commit, including the last one, which
-instantiates the unmodified `CON-SUCCESSORS-01` body against the proxy form.
+All compiled successfully at the fix commit. These `static_assert`s establish
+two different things, and it is worth keeping them distinct:
+
+- The first six only check *declarations and return types* -
+  `outgoing_transition_range_t`, `transition_reference_for_t`, and the
+  `TransitionRelation` / `TransitionLabelling` concepts are all evaluated
+  from function signatures and type traits. None of them requires the
+  compiler to actually generate code for `CON-SUCCESSORS-01`'s body.
+- The seventh (`decltype(research::observe_labelled_successors(...))`)
+  forces genuine **instantiation** of `observe_labelled_successors`'s
+  template body against the proxy type - i.e. the compiler must actually
+  compile the frozen consumer's `for (auto&& witness : ...) { ... }` loop,
+  including its calls to `transition_label`/`target` on the named lvalue
+  `witness`, to determine the `decltype`. If the named-lvalue discriminator
+  described in ARC-001.md were going to fire, it would fire here, at
+  compile time, not merely fail one of the declaration-level checks above.
+- The *runtime* calls in `main()` and in
+  `proxy_becomes_stale_after_shared_advancement()` are a second, independent
+  instantiation and execution of that same consumer body (and of the proxy's
+  `target`/`transition_label` accessors) against live objects - they are not
+  redundant with the compile-time check, since a body can compile
+  successfully yet still misbehave at runtime (for example, by reading
+  through a dangling or stale handle). Both layers passing is what the
+  "Second observation" section below reports.
 
 ## First discriminating failure (preserved)
 
@@ -193,12 +221,50 @@ document (`proxy_becomes_stale_after_shared_advancement` in the test file):
   range shared by both handles), `original_proxy.is_current()` becomes
   `false`.
 - Dereferencing either `iterator` or `iterator_copy` afterward yields a new,
-  current proxy observing the shared position's new state (`bypass`, `2`),
-  not the sentinel and not the stale value.
+  current proxy; at the fix commit (`ff4963f`) this was checked only via
+  `is_current()`. See "Evidence-completion revision" below for the
+  authorized follow-up that adds a semantic read.
 - Neither this test nor the unmodified consumer calls `target` or
   `transition_label` on `original_proxy` after it goes stale; the private
   `read()` accessor's `assert(is_current())` was never triggered during this
   run.
+
+## Codex independent review
+
+Codex independently reviewed the proxy implementation, ancestry, frozen-file
+integrity, first-failure preservation, cache boundary, and named-lvalue
+behavior, and reported all as passing. Codex independently reproduced both
+required workflows at remote tip `fe44470b4acbcd69ef4731d8d346d55b8e935c4f`
+(the comment-only revision - see Identifiers). This is a second,
+independent execution of the same commands recorded in "Commands and raw
+results" below, not merely a re-read of this report.
+
+## Evidence-completion revision
+
+Sami Lazreg authorized one narrow evidence-completion revision after
+Codex's review, on the existing append-only branch (no rewrite of prior
+history):
+
+- **Change:** in `proxy_becomes_stale_after_shared_advancement()`,
+  `after_first` and `after_second` (the two proxies obtained by
+  dereferencing `iterator` and `iterator_copy` after `++iterator_copy`) are
+  now read semantically through `sem::transition_label` / `sem::target`, not
+  only checked via `is_current()`. Both are required to report
+  `(bypass, 2)`. `original_proxy` is still never read semantically after it
+  becomes stale.
+- **Rationale:** `is_current()` alone does not distinguish a correct
+  implementation from one that reports a matching generation but happens to
+  serve stale or incorrect data through `read()`; an actual semantic read
+  through both handles is what demonstrates the shared cursor moved to the
+  right position, observably, through either handle.
+- **Commit sequence:** the test change was committed
+  (`40c50553c1d64a6ed4e74faa951843966d609ca1`) *before* either workflow was
+  run, per instruction. No frozen file, and no other part of the lazy
+  model, was touched (`git diff` against both the frozen-file set and
+  `transition_materialization_lazy_model.hpp` is empty for this revision).
+- **Result:** both workflows passed cleanly at `40c5055` - no failure
+  occurred, so no First Failure Preservation stop applied to this revision.
+  See "Commands and raw results" below for the exact re-run.
 
 ### Storage and cache inspection
 
@@ -262,11 +328,22 @@ warnings-as-errors on; all 13 registered tests passed, including
 unaffected) and `mc_lab_core.semantic.transition_materialization_lazy`
 (A02, controlled).
 
+At `fe44470` (comment-only revision): identical result to `ff4963f` -
+formatting check passed, build succeeded, 13/13 tests passed. This is also
+the commit Codex independently reproduced this workflow against.
+
+At `40c5055` (evidence-completion revision, run `--fresh` after committing
+the test change): formatting check passed (33 files); build succeeded with
+warnings-as-errors on; all 13 registered tests passed, including
+`mc_lab_core.semantic.transition_materialization_lazy` with the new
+semantic reads of `after_first`/`after_second` exercised and passing.
+
 ```
 cmake --workflow --preset windows-clangcl-tidy --fresh
 ```
 
-At `ff4963f`: `clang-tidy passed for 7 translation unit(s)`, including
+At `ff4963f`, `fe44470`, and `40c5055`: `clang-tidy passed for
+7 translation unit(s)` each time, including
 [`tests/semantic/transition_materialization_lazy_test.cpp`](../../../tests/semantic/transition_materialization_lazy_test.cpp),
 zero findings.
 
@@ -278,6 +355,11 @@ zero findings.
   human authorization ("fix the code") → single-line fix at `ff4963f` →
   re-run from a clean build (`--fresh`) → pass. No source was edited between
   the failure and its being preserved and reported.
+- A second, narrower cycle followed Codex's independent review: an
+  authorized evidence-completion revision (`40c5055`) was committed before
+  either workflow was re-run, both workflows passed with `--fresh`, and no
+  failure occurred - so no First Failure Preservation stop applied to this
+  revision.
 
 ## Threats to validity
 
@@ -329,7 +411,12 @@ dispatch). Additionally for this run:
   protocol; the underlying cause was apparatus-internal (friend-declaration
   lookup order), not a change to any frozen contract.
 - The full commit-gate and clang-tidy workflows passed with zero findings
-  at the fix commit.
+  at the fix commit, at the comment-only revision (independently reproduced
+  by Codex), and at the evidence-completion revision `40c5055`.
+- After the authorized evidence-completion revision, both fresh proxies
+  obtained post-advancement (`after_first` and `after_second`) were read
+  semantically and both agreed with the oracle (`bypass`, `2`), not merely
+  checked via `is_current()`.
 
 ### Interpretation (AI-advised, pending human and Codex review)
 
@@ -343,20 +430,27 @@ addresses, or a consumer/concept/CPO change.
 
 As in A01: the absence of a named-lvalue discriminating failure may reflect
 the specific `const&` accessor signature chosen rather than an
-architectural property of the contract itself. Separately, the fact that a
-correct ephemeral-proxy implementation required one non-obvious C++
-name-lookup fix (friend visibility across nested-class declaration order)
-suggests this pattern carries real implementation friction even when it
-does not surface as an ARC-001-relevant failure - a fact worth surfacing to
-Codex's apparatus review even though it is not being classified as
-discriminating here.
+architectural property of the contract itself.
+
+The `d64232f` friend-declaration failure is not treated as evidence, general
+or otherwise, of ephemeral-proxy architectural friction. It was a
+class-member-declaration-order name-lookup outcome specific to this
+apparatus's particular arrangement of nested types, independently confirmed
+by Codex's review; it says nothing about whether ephemeral-proxy designs are
+harder to write correctly in general, and this report does not draw that
+inference from a single instance.
 
 ### Proportionate challenge
 
-Codex is the designer and reviewer of this configuration and has not yet
-reviewed this result. This report substitutes no AI challenge pass of its
-own beyond the "credible alternative interpretation" above; per the
-disclosed exception, none of this is independent human review.
+Codex, the designer and reviewer of this configuration, independently
+reviewed the proxy implementation, ancestry, frozen-file integrity,
+first-failure preservation, cache boundary, and named-lvalue behavior (all
+reported as passing) and independently reproduced both required workflows
+at `fe44470`. That review predates, and did not cover, the evidence-
+completion revision at `40c5055` authorized afterward. This report's own
+"credible alternative interpretation" above is offered as an additional,
+narrower check; per the disclosed exception, none of this - Codex's review
+included - is independent *human* review.
 
 ### Bounded Claim impact
 
@@ -376,11 +470,13 @@ exception.
 ### Human decision
 
 **Pending.** Required from Sami Lazreg as Human ARC Owner / Human Experiment
-Owner, and from Codex as designer/reviewer:
+Owner:
 
 - Codex's review of ancestry, preservation, frozen-file equality, proxy
-  structure, invalidation, storage boundaries, independent gate results,
-  and classification.
+  structure, invalidation, storage boundaries, and independent gate results
+  is complete for the revision at `fe44470` (see "Codex independent
+  review"); a corresponding review of the evidence-completion revision
+  (`40c5055`) has not yet been recorded.
 - Accept, request revision of, or reject this evidence and its H-A
   interpretation.
 - Decide any `CL-001` wording update in [state.md](../state.md).
