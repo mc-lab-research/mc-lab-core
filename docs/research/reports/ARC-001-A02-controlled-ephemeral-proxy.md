@@ -487,3 +487,29 @@ Owner:
 Claude does not approve this evidence, does not choose between H-A and H-B,
 does not update `CL-001`, does not create an ADR, and does not close
 [ARC-001](../cases/ARC-001.md).
+
+## Experimentator completion note
+
+As Implementation and Controlled-Experiment Support (not Human ARC Owner,
+Human Experiment Owner, approver, adjudicator, or Independent Human
+Challenger), Claude considers its assigned A02 implementation and
+controlled-execution work finished as of this commit:
+
+- `SUBJECT-LAZY-LTS-01` was implemented per the frozen A02 configuration,
+  the first discriminating failure was preserved before any repair, the
+  authorized fix and the authorized evidence-completion revision were both
+  committed before their respective workflow runs, and both required
+  workflows passed at every revision that was run to completion.
+- Extensive comments were added to every file Claude authored on this
+  branch (the lazy model and its test) and, separately, to the A01 branch's
+  equivalent files; no frozen file was modified on either branch.
+- All commits described in this report are pushed to
+  `experiment/arc-001/a02-ephemeral-proxy` on `origin`, append-only, with no
+  rewrite, squash, force-push, or deletion of any frozen evidence history or
+  tag.
+
+This note does not close ARC-001, does not adjudicate between H-A and H-B,
+does not approve or finalize the evidence, and does not authorize any
+architectural, Claim, or ADR decision - those remain solely for Sami Lazreg
+(and, per the process already exercised above, Codex's independent review)
+to determine.
