@@ -19,25 +19,29 @@ low-to-moderate operational overhead. Process is added only when it prevents a
 demonstrated research failure or material coordination cost.
 
 **Governance:** Human-owned and AI-advised. Named humans hold ownership,
-responsibility, approval, challenge, and adjudication. GPT Work, Codex, Claude,
-and other AI systems may advise or support those humans but cannot occupy an
-accountable governance role.
+responsibility, approval, and adjudication. GPT Work, Codex, Claude, and other
+AI systems may advise or support those humans but cannot occupy an accountable
+governance role. ARC-001 uses the disclosed R2 AI Challenge Advisor exception
+because an independent human Challenger is unavailable; the AI is not recorded
+as human or independent, and the case carries the protocol's Claim-promotion
+limit.
 
 **Current decision:** No M02 or ARC-001 architectural outcome is authorized.
-ARC-001 remains in pre-freeze calibration. Its Human ARC Owner, Human
-Experiment Owner, and Independent Human Challenger are unassigned, so it cannot
-be frozen or enter controlled execution.
+Sami Lazreg is Project Principal, Human ARC Owner, and Human Experiment Owner.
+The stored calibration is complete and the freeze is being recorded before
+controlled execution. No independent human Challenger is available; Sami
+Lazreg authorized the disclosed R2 AI Challenge Advisor exception on
+2026-08-13.
 
-**Human governance record:** PENDING. The named Project Principal approval for
-this state review and its Claim wording has not yet been recorded. Until that
-attribution is added, the ledger below preserves the proposed baseline wording
-and evidence bounds but does not constitute governed human authorization.
+**Human governance record:** Project Principal Sami Lazreg approved the governed
+baseline and ARC-001 freeze on 2026-08-13. This approval retains the existing
+bounded Claim wording; it does not approve an ARC-001 outcome or Claim change.
 
 ## Active
 
 | Case | Tier | Question | Phase | Evidence target |
 | --- | --- | --- | --- | --- |
-| [ARC-001](cases/ARC-001.md) | R2 | Can one single-pass local labelled-transition consumer remain source-unchanged when the same finite labelled transition relation is exposed through stored stable witnesses and generated ephemeral witnesses? | Pre-freeze calibration; controlled execution not started. | Controlled |
+| [ARC-001](cases/ARC-001.md) | R2 | Can one single-pass local labelled-transition consumer remain source-unchanged when the same finite labelled transition relation is exposed through stored stable witnesses and generated ephemeral witnesses? | Freeze recording; controlled execution not started. | Controlled |
 
 ## Supporting
 
@@ -145,17 +149,16 @@ cmake --workflow --preset windows-clangcl-coverage --fresh
 
 **Date:** 2026-08-12
 
-**What changed:** Adopted the Lean Research OS posture and revised the
-operational protocol to v0.5. Made governance explicitly human-owned and
-AI-advised: the Project Principal, named Human ARC Owner, Human Experiment
-Owner, and Independent Human Challenger hold authority and responsibility;
-GPT Work, Codex, and Claude provide advisory or implementation support only.
-Preserved the lightweight Git freeze and First Failure Preservation Rule while
-removing or deferring process that lacks demonstrated value. Reduced the ARC
-template and GitHub operating model, tightened the ARC-001 decision question,
-and kept the case in pre-freeze calibration. Existing implementation evidence
-remains Exploratory; EV-2026-08-12-01 remains engineering validation rather
-than an ARC-001 result.
+**What changed:** Adopted the Lean Research OS posture and subsequently revised
+the operational protocol to v0.6. Governance remains human-owned and
+AI-advised. Sami Lazreg is Project Principal, Human ARC Owner, and Human
+Experiment Owner for ARC-001. Because no independent human Challenger is
+available, Sami Lazreg authorized the disclosed R2 AI Challenge Advisor
+exception with its Claim-promotion ceiling. Preserved the lightweight Git
+freeze and First Failure Preservation Rule. Completed stored calibration and
+accepted the consumer, oracle, requirements, guardrails, and material AI
+challenge dispositions as the freeze candidate. Existing implementation
+evidence remains Exploratory; no ARC-001 result is yet authorized.
 
 **Cases closed:** None.
 
@@ -167,12 +170,10 @@ CL-006. CL-003 and CL-004 remain unauthorized.
 **ADRs changed:** None. Current semantic documentation remains the governing
 architecture until a controlled Research Case changes it.
 
-**Project Principal approval for this review and Claim changes:** PENDING; no
-named human has yet been recorded.
+**Project Principal approval for this review and retained Claim wording:** Sami
+Lazreg, 2026-08-13. No ARC-001 result or Claim change is approved.
 
-**Next principal action:** Appoint the named Human ARC Owner, Human Experiment
-Owner, and Independent Human Challenger; record the named Project Principal's
-approval of the governed baseline; complete the calibration consumer and
-oracle; then review and approve the ARC-001 freeze before controlled execution.
-Do not execute the controlled discriminator or activate another principal case
-before these gates are satisfied.
+**Next principal action:** Complete the ARC-001 freeze record with the exact
+candidate commit, then begin controlled execution against that immutable
+baseline. Preserve the first discriminating failure before repair. Do not
+activate another principal case while ARC-001 remains active.

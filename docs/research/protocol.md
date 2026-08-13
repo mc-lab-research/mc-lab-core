@@ -1,4 +1,4 @@
-# SemTL Architectural Research Protocol v0.5 Lean
+# SemTL Architectural Research Protocol v0.6 Lean
 
 This protocol governs SemTL architectural research during M02. It preserves
 falsification, evidence, and claim discipline with the smallest practical
@@ -209,6 +209,17 @@ The Challenger asks:
 The Human ARC Owner assesses Challenger evidence and the Project Principal
 approves any resulting Claim or governing decision. AI advisors may support
 that assessment but do not adjudicate it.
+
+When a required independent human is demonstrably unavailable, the Project
+Principal may authorize a disclosed **AI Challenge Advisor** for an R2 case as
+a bounded protocol exception. The exception must be recorded before freeze,
+must not describe the AI as human or independent, and must preserve the AI's
+findings and the human disposition of each material finding. Evidence produced
+under this exception may reach Controlled posture for the narrow experiment,
+but one such case cannot by itself authorize a foundational or strategic
+representation-independence Claim. Such promotion requires later independent
+human challenge or corroborating evidence accepted through a separately
+approved case. This fallback is unavailable for R3 cases.
 
 ### Mission Engineering
 
@@ -433,8 +444,10 @@ inconclusion, and the next-question recommendation.
   strengthen, narrow, or contradict an architectural Claim.
 - **R3:** an Independent Human Challenger is mandatory.
 
-ARC-001 retains an Independent Human Challenger because it tests a foundational
-representation-independence hypothesis.
+ARC-001 normally retains an Independent Human Challenger because it tests a
+foundational representation-independence hypothesis. If no such human is
+available, the Project Principal may invoke the disclosed R2 AI Challenge
+Advisor exception above, with the corresponding Claim-promotion limit.
 
 ## Claims and decisions
 
@@ -562,7 +575,8 @@ value, split ARC-001 into at most these initial operational units:
    by Claude;
 2. **Controlled Experiment** - Human Experiment Owner, supported by Claude;
 3. **Challenge & Evidence Review** - Independent Human Challenger, with Codex
-   and GPT Work available as advisors;
+   and GPT Work available as advisors, or the disclosed R2 AI Challenge Advisor
+   exception when explicitly authorized;
 4. **Adjudication** - Human ARC Owner assessment, with Project Principal
    approval where required.
 
