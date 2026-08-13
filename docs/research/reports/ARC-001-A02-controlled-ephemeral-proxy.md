@@ -39,9 +39,9 @@ the revised `CL-001` wording in [state.md](../state.md).
   [`A02 model maintained copy`](../../../tests/research/arc-001/a02-ephemeral-proxy/support/transition_materialization_lazy_model.hpp)
 - **Controlled test:**
   [`A02 test maintained copy`](../../../tests/research/arc-001/a02-ephemeral-proxy/transition_materialization_lazy_test.cpp)
-  (registered as `mc_lab_core.semantic.transition_materialization_lazy`,
-  labels `semantic;research;arc-001;experiment;a02`, in
-  [`tests/semantic/CMakeLists.txt`](../../../tests/semantic/CMakeLists.txt))
+  (maintained registration `mc_lab_core.research.arc_001.a02_ephemeral_proxy`,
+  labels `research;arc-001;a02;controlled;supported`, in
+  [`tests/research/arc-001/CMakeLists.txt`](../../../tests/research/arc-001/CMakeLists.txt))
 
 Links above are repository-relative, in the same convention as
 [ARC-001.md](../cases/ARC-001.md); they resolve against whatever ref you are
@@ -160,7 +160,7 @@ Command: `cmake --workflow --preset windows-clangcl-commit-gate --fresh`
 
 Diagnostic (verbatim):
 
-```
+```text
 tests\semantic\support/transition_materialization_lazy_model.hpp(114,14): error: calling a private constructor of class 'mc_lab::tests::semantic::research::lazy_outgoing_transitions::proxy'
   114 |       return proxy{range_, range_->generation_};
       |              ^
@@ -316,7 +316,7 @@ No portability claim is made beyond this single environment.
 
 ## Commands and raw results
 
-```
+```powershell
 cmake --workflow --preset windows-clangcl-commit-gate --fresh
 ```
 
@@ -339,7 +339,7 @@ warnings-as-errors on; all 13 registered tests passed, including
 `mc_lab_core.semantic.transition_materialization_lazy` with the new
 semantic reads of `after_first`/`after_second` exercised and passing.
 
-```
+```powershell
 cmake --workflow --preset windows-clangcl-tidy --fresh
 ```
 

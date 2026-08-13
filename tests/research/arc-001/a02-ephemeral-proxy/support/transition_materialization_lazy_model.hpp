@@ -1,5 +1,5 @@
-#ifndef MC_LAB_TESTS_SEMANTIC_SUPPORT_TRANSITION_MATERIALIZATION_LAZY_MODEL_HPP
-#define MC_LAB_TESTS_SEMANTIC_SUPPORT_TRANSITION_MATERIALIZATION_LAZY_MODEL_HPP
+#ifndef MC_LAB_RESEARCH_ARC_001_A02_LAZY_MODEL_HPP
+#define MC_LAB_RESEARCH_ARC_001_A02_LAZY_MODEL_HPP
 
 #include "../../common/support/transition_materialization_models.hpp"
 
@@ -347,4 +347,4 @@ struct lazy_reference_system {
 
 }  // namespace mc_lab::tests::semantic::research
 
-#endif  // MC_LAB_TESTS_SEMANTIC_SUPPORT_TRANSITION_MATERIALIZATION_LAZY_MODEL_HPP
+#endif  // MC_LAB_RESEARCH_ARC_001_A02_LAZY_MODEL_HPP
