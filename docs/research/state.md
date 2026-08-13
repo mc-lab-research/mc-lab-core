@@ -45,7 +45,10 @@ bounded Claim wording; it does not approve an ARC-001 outcome or Claim change.
 
 ## Supporting
 
-None. The low-WIP rule permits at most one supporting R2 case.
+No supporting case is active. [ARC-002](cases/ARC-002.md) is an `OPEN`, queued
+design draft for durable transition evidence and deferred execution replay. It
+cannot activate until ARC-001 closes and its result is incorporated. The
+low-WIP rule therefore remains satisfied.
 
 ## Queue
 

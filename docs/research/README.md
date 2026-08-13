@@ -22,6 +22,9 @@ adjudicators, or independent Challengers.
   question backlog, and the Claims Ledger.
 - [ARC-001](cases/ARC-001.md) is the first proposed controlled research case:
   explicit versus lazy transition materialization.
+- [ARC-002](cases/ARC-002.md) is a queued, non-active design draft concerning
+  durable transition evidence and deferred execution replay. It cannot activate
+  until ARC-001 closes.
 - [Research Case template](templates/research-case.md) is the copyable starting
   point for later R2 and R3 investigations.
 
