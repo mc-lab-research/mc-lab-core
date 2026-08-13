@@ -231,11 +231,26 @@ public:
     // ordinary overload resolution elsewhere). "At the sentinel" means
     // "the range has no current witness left" - i.e. the last call to
     // refresh_current() came back empty - not any positional comparison.
+    //
+    // Delegates to the private `at_end()` member below rather than reaching
+    // into `range_->current_` directly here: a hidden friend is not itself
+    // a member of `iterator`, so it does not inherit the
+    // nested-class-to-enclosing-class private-access grant that an actual
+    // `iterator` member function gets. GCC and Clang accept the direct
+    // access as an extension; MSVC does not. Reading the private state
+    // through a genuine member function keeps this portable.
     [[nodiscard]] friend auto operator==(const iterator& it, sentinel) -> bool {
-      return !it.range_->current_.has_value();
+      return it.at_end();
     }
 
   private:
+    // Member of `iterator`, and therefore entitled to the private-access
+    // grant nested classes receive on their enclosing class - this is
+    // where `current_` is actually read.
+    [[nodiscard]] auto at_end() const -> bool {
+      return !range_->current_.has_value();
+    }
+
     lazy_outgoing_transitions* range_ = nullptr;
   };
 
@@ -304,6 +319,14 @@ private:
 // anything the proxy itself is carrying, because it carries nothing
 // semantic at all.
 struct lazy_reference_system {
+  // Local alias kept short and specific to this struct so that `target`'s
+  // and `transition_label`'s signatures fit on one line each without a
+  // line-length-sensitive trailing-return break - the fully-qualified
+  // `lazy_outgoing_transitions::proxy` spelling pushed those declarations
+  // just past the point where different clang-format versions agreed on
+  // how to wrap them.
+  using witness_t = lazy_outgoing_transitions::proxy;
+
   // Every call starts a fresh range at generation 0, step 0, with
   // `current_` already populated (or already empty, for source 2) by the
   // range's constructor.
@@ -312,13 +335,11 @@ struct lazy_reference_system {
     return lazy_outgoing_transitions{source};
   }
 
-  [[nodiscard]] auto target(
-      const lazy_outgoing_transitions::proxy& witness) const -> int {
+  [[nodiscard]] auto target(const witness_t& witness) const -> int {
     return witness.read().target;
   }
 
-  [[nodiscard]] auto transition_label(
-      const lazy_outgoing_transitions::proxy& witness) const
+  [[nodiscard]] auto transition_label(const witness_t& witness) const
       -> reference_label {
     return witness.read().label;
   }

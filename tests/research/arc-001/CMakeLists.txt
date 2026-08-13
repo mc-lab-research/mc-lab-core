@@ -6,7 +6,12 @@ function(mc_lab_core_configure_arc_001_target target)
     set_target_properties(${target} PROPERTIES FOLDER "tests/research/arc-001")
     mc_lab_core_enable_warnings(${target})
     mc_lab_core_enable_sanitizers(${target})
-    mc_lab_core_enable_coverage(${target})
+    # Deliberately not instrumented for product coverage: tests/research/
+    # exists to separate evidence-reproduction apparatus from engineering
+    # code, and product coverage policy measures production implementation,
+    # not the internal branches of a preserved experiment's oracle and
+    # custom range machinery. These targets still build, run under CTest,
+    # and participate in commit gates and static analysis.
     mc_lab_core_register_static_analysis_target(${target})
 endfunction()
 

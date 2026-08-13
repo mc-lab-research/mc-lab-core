@@ -140,12 +140,27 @@ public:
     // Sentinel comparison, implemented as a hidden friend. "At the
     // sentinel" means "there is no transition at the current (source,
     // step)," recomputed on demand rather than tracked as a separate flag.
+    //
+    // Delegates to the private `at_end()` member below rather than reaching
+    // into `range_->source_` / `range_->step_` directly here: a hidden
+    // friend is not itself a member of `iterator`, so it does not inherit
+    // the nested-class-to-enclosing-class private-access grant that an
+    // actual `iterator` member function gets. GCC and Clang accept the
+    // direct access as an extension; MSVC does not. Reading the private
+    // state through a genuine member function keeps this portable.
     [[nodiscard]] friend auto operator==(const iterator& it, sentinel) -> bool {
-      return !compute_lazy_transition(it.range_->source_, it.range_->step_)
-                  .has_value();
+      return it.at_end();
     }
 
   private:
+    // Member of `iterator`, and therefore entitled to the private-access
+    // grant nested classes receive on their enclosing class - this is
+    // where `source_` / `step_` are actually read.
+    [[nodiscard]] auto at_end() const -> bool {
+      return !compute_lazy_transition(range_->source_, range_->step_)
+                  .has_value();
+    }
+
     lazy_outgoing_transitions* range_ = nullptr;
   };
 
