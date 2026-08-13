@@ -32,9 +32,9 @@ ARC-001 is frozen at commit
 `f969fa8aa63a9a172e6feb2eeb32636aab24f387`. Attempt A01 is preserved as
 INCONCLUSIVE because its owning dereference value did not instantiate the
 frozen ephemeral-proxy requirement. Attempt A02 is configured independently
-for execution by Claude. No independent human Challenger is available; Sami
-Lazreg authorized the disclosed R2 AI Challenge Advisor exception on
-2026-08-13.
+and frozen at `2460f4d45f21fce49636d820c07c489d1b4598b6` for execution
+by Claude. No independent human Challenger is available; Sami Lazreg authorized
+the disclosed R2 AI Challenge Advisor exception on 2026-08-13.
 
 **Human governance record:** Project Principal Sami Lazreg approved the governed
 baseline and ARC-001 freeze on 2026-08-13. This approval retains the existing

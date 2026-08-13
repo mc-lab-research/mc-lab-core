@@ -3,18 +3,31 @@ case: ARC-001
 attempt: A02
 report_kind: controlled-attempt-configuration-freeze
 date: 2026-08-13
-status: READY-TO-RECORD
+status: FROZEN
 evidence_disposition: UNTESTED
 evidence_posture: CONTROLLED-TARGET
 technical_freeze_commit: f969fa8aa63a9a172e6feb2eeb32636aab24f387
 freeze_record_commit: 1dec900c899893537c9f1d87b3b26e272d22808f
-attempt_configuration_commit: PENDING
+attempt_configuration_commit: 2460f4d45f21fce49636d820c07c489d1b4598b6
+attempt_configuration_tag: arc-001-a02-config-v1
 human_experiment_owner: Sami Lazreg
 experimentator: Claude
 designer_and_reviewer: Codex
 ---
 
 # ARC-001 A02 ephemeral-proxy configuration freeze
+
+## Freeze record
+
+Project Principal, Human ARC Owner, and Human Experiment Owner Sami Lazreg
+approved configuration commit
+`2460f4d45f21fce49636d820c07c489d1b4598b6` on 2026-08-13. That exact SHA is
+the immutable A02 configuration authority. Annotated tag
+`arc-001-a02-config-v1` is a human-readable aid and must not be moved.
+
+Claude may implement and execute A02 only from the configuration-freeze record
+that adds this approval. Any material configuration change requires a new
+attempt or configuration version under the Git evidence protocol.
 
 ## Authorization and separation
 
