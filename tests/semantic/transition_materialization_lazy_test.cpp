@@ -172,9 +172,20 @@ template <std::size_t Size>
     return false;
   }
 
-  const auto next_label = sem::transition_label(system, after_second);
-  const auto next_target = sem::target(system, after_second);
-  return next_label == research::reference_label::bypass && next_target == 2;
+  // Both fresh proxies are read semantically here - not just checked for
+  // is_current() - because "current" alone would not distinguish a correct
+  // implementation from one that happened to leave stale data behind but
+  // still reported a matching generation. Reading through both handles and
+  // requiring (bypass, 2) from each is what actually proves the shared
+  // cursor moved to the right position, observably, through either handle.
+  const auto first_label = sem::transition_label(system, after_first);
+  const auto first_target = sem::target(system, after_first);
+  const auto second_label = sem::transition_label(system, after_second);
+  const auto second_target = sem::target(system, after_second);
+
+  return first_label == research::reference_label::bypass && first_target == 2
+         && second_label == research::reference_label::bypass
+         && second_target == 2;
 }
 
 int main() try {
