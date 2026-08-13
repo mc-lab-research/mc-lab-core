@@ -4,45 +4,41 @@
 Experiment Support). Human assessment, Claim-impact approval, and any
 architectural decision are pending Human ARC Owner / Human Experiment Owner
 Sami Lazreg and Project Principal Sami Lazreg. This report does not close
-[ARC-001](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/docs/research/cases/ARC-001.md),
-does not approve
-[CL-001](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/docs/research/state.md),
-and does not authorize an architectural decision.
+[ARC-001](../cases/ARC-001.md), does not approve `CL-001` in
+[state.md](../state.md), and does not authorize an architectural decision.
 
 ## Identifiers
 
 - **Frozen commit (immutable experiment boundary):**
-  [`f969fa8aa63a9a172e6feb2eeb32636aab24f387`](https://github.com/mc-lab-research/mc-lab-core/commit/f969fa8aa63a9a172e6feb2eeb32636aab24f387)
-- **Freeze-record commit:**
-  [`1dec900c899893537c9f1d87b3b26e272d22808f`](https://github.com/mc-lab-research/mc-lab-core/commit/1dec900c899893537c9f1d87b3b26e272d22808f)
+  `f969fa8aa63a9a172e6feb2eeb32636aab24f387`
+- **Freeze-record commit:** `1dec900c899893537c9f1d87b3b26e272d22808f`
   (docs-only; verified to make no change to
-  [`labelled_successor_consumer.hpp`](https://github.com/mc-lab-research/mc-lab-core/blob/f969fa8aa63a9a172e6feb2eeb32636aab24f387/tests/semantic/support/labelled_successor_consumer.hpp),
-  [`transition_materialization_calibration_test.cpp`](https://github.com/mc-lab-research/mc-lab-core/blob/f969fa8aa63a9a172e6feb2eeb32636aab24f387/tests/semantic/transition_materialization_calibration_test.cpp),
-  [`transition_materialization_models.hpp`](https://github.com/mc-lab-research/mc-lab-core/blob/f969fa8aa63a9a172e6feb2eeb32636aab24f387/tests/semantic/support/transition_materialization_models.hpp),
-  [`transition_relation.hpp`](https://github.com/mc-lab-research/mc-lab-core/blob/f969fa8aa63a9a172e6feb2eeb32636aab24f387/include/mc_lab/semantic/facet/transition_relation.hpp),
-  [`transition_labelling.hpp`](https://github.com/mc-lab-research/mc-lab-core/blob/f969fa8aa63a9a172e6feb2eeb32636aab24f387/include/mc_lab/semantic/facet/transition_labelling.hpp),
+  [`labelled_successor_consumer.hpp`](../../../tests/semantic/support/labelled_successor_consumer.hpp),
+  [`transition_materialization_calibration_test.cpp`](../../../tests/semantic/transition_materialization_calibration_test.cpp),
+  [`transition_materialization_models.hpp`](../../../tests/semantic/support/transition_materialization_models.hpp),
+  [`transition_relation.hpp`](../../../include/mc_lab/semantic/facet/transition_relation.hpp),
+  [`transition_labelling.hpp`](../../../include/mc_lab/semantic/facet/transition_labelling.hpp),
   or
-  [`transition_relation_cpos.hpp`](https://github.com/mc-lab-research/mc-lab-core/blob/f969fa8aa63a9a172e6feb2eeb32636aab24f387/include/mc_lab/semantic/detail/transition_relation_cpos.hpp))
-- **Experiment branch:**
-  [`experiment/arc-001-generated-ephemeral`](https://github.com/mc-lab-research/mc-lab-core/tree/experiment/arc-001-generated-ephemeral)
-  (link resolves once the branch is pushed to origin)
-- **Experiment commit:**
-  [`2539f7f741f31f53ebcb7314dc9f9ac989a6ab16`](https://github.com/mc-lab-research/mc-lab-core/commit/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16),
+  [`transition_relation_cpos.hpp`](../../../include/mc_lab/semantic/detail/transition_relation_cpos.hpp))
+- **Experiment branch:** `experiment/arc-001-generated-ephemeral`
+- **Experiment commit:** `2539f7f741f31f53ebcb7314dc9f9ac989a6ab16`,
   branched from `1dec900c899893537c9f1d87b3b26e272d22808f`
 - **Consumer:** `CON-SUCCESSORS-01`,
-  [`tests/semantic/support/labelled_successor_consumer.hpp`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/tests/semantic/support/labelled_successor_consumer.hpp)
+  [`tests/semantic/support/labelled_successor_consumer.hpp`](../../../tests/semantic/support/labelled_successor_consumer.hpp)
 - **Oracle:**
-  [`tests/semantic/transition_materialization_calibration_test.cpp`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/tests/semantic/transition_materialization_calibration_test.cpp)
+  [`tests/semantic/transition_materialization_calibration_test.cpp`](../../../tests/semantic/transition_materialization_calibration_test.cpp)
 - **Controlled subject added:** `SUBJECT-LAZY-LTS-01`,
-  [`tests/semantic/support/transition_materialization_lazy_model.hpp`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/tests/semantic/support/transition_materialization_lazy_model.hpp)
+  [`tests/semantic/support/transition_materialization_lazy_model.hpp`](../../../tests/semantic/support/transition_materialization_lazy_model.hpp)
 - **Controlled test added:**
-  [`tests/semantic/transition_materialization_lazy_test.cpp`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/tests/semantic/transition_materialization_lazy_test.cpp)
+  [`tests/semantic/transition_materialization_lazy_test.cpp`](../../../tests/semantic/transition_materialization_lazy_test.cpp)
   (registered as `mc_lab_core.semantic.transition_materialization_lazy` in
-  [`tests/semantic/CMakeLists.txt`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/tests/semantic/CMakeLists.txt))
+  [`tests/semantic/CMakeLists.txt`](../../../tests/semantic/CMakeLists.txt))
 
-Commit- and branch-scoped links above resolve once
-`experiment/arc-001-generated-ephemeral` is pushed to origin; until then they
-are correct references, not yet live.
+Links above are repository-relative, in the same convention as
+[ARC-001.md](../cases/ARC-001.md); they resolve against whatever ref you are
+viewing this file on, so they only show experiment-branch content once
+`experiment/arc-001-generated-ephemeral` is pushed and you are viewing that
+ref.
 
 ## Consumer unchanged - proof
 
@@ -61,17 +57,17 @@ frozen contracts are byte-for-byte unchanged in the experiment commit
 relative to the frozen boundary. Only the following were added or touched,
 none of them frozen files:
 
-- [`tests/semantic/support/transition_materialization_lazy_model.hpp`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/tests/semantic/support/transition_materialization_lazy_model.hpp)
+- [`tests/semantic/support/transition_materialization_lazy_model.hpp`](../../../tests/semantic/support/transition_materialization_lazy_model.hpp)
   (new)
-- [`tests/semantic/transition_materialization_lazy_test.cpp`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/tests/semantic/transition_materialization_lazy_test.cpp)
+- [`tests/semantic/transition_materialization_lazy_test.cpp`](../../../tests/semantic/transition_materialization_lazy_test.cpp)
   (new)
-- [`tests/semantic/CMakeLists.txt`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/tests/semantic/CMakeLists.txt)
+- [`tests/semantic/CMakeLists.txt`](../../../tests/semantic/CMakeLists.txt)
   (new build target/test registration only)
 
 ## SUBJECT-LAZY-LTS-01 design
 
 Source:
-[`transition_materialization_lazy_model.hpp`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/tests/semantic/support/transition_materialization_lazy_model.hpp)
+[`transition_materialization_lazy_model.hpp`](../../../tests/semantic/support/transition_materialization_lazy_model.hpp)
 
 - `lazy_reference_system::outgoing_transitions(const int&)` returns
   `lazy_outgoing_transitions`, a range that stores only the queried source
@@ -94,7 +90,7 @@ Source:
 ## Lazy-range category assertions (compile-time)
 
 From
-[`transition_materialization_lazy_test.cpp`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/tests/semantic/transition_materialization_lazy_test.cpp):
+[`transition_materialization_lazy_test.cpp`](../../../tests/semantic/transition_materialization_lazy_test.cpp):
 
 ```cpp
 static_assert(std::ranges::input_range<lazy_range_t>);
@@ -117,7 +113,7 @@ instantiates the unmodified `CON-SUCCESSORS-01` body against
 ## Storage and cache inspection
 
 Manual source inspection of
-[`transition_materialization_lazy_model.hpp`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/tests/semantic/support/transition_materialization_lazy_model.hpp):
+[`transition_materialization_lazy_model.hpp`](../../../tests/semantic/support/transition_materialization_lazy_model.hpp):
 
 - `lazy_reference_system` holds no data members.
 - `lazy_outgoing_transitions` holds exactly two `int`s: `source_` and
@@ -203,16 +199,16 @@ applied to the two new files); build succeeded with warnings-as-errors on;
 all 13 registered tests passed, including
 `mc_lab_core.semantic.transition_materialization_calibration` (frozen,
 unaffected -
-[`transition_materialization_calibration_test.cpp`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/tests/semantic/transition_materialization_calibration_test.cpp))
+[`transition_materialization_calibration_test.cpp`](../../../tests/semantic/transition_materialization_calibration_test.cpp))
 and `mc_lab_core.semantic.transition_materialization_lazy` (new, controlled -
-[`transition_materialization_lazy_test.cpp`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/tests/semantic/transition_materialization_lazy_test.cpp)).
+[`transition_materialization_lazy_test.cpp`](../../../tests/semantic/transition_materialization_lazy_test.cpp)).
 
 ```
 cmake --workflow --preset windows-clangcl-tidy --fresh
 ```
 
 Result: `clang-tidy passed for 7 translation unit(s)`, including
-[`tests/semantic/transition_materialization_lazy_test.cpp`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/tests/semantic/transition_materialization_lazy_test.cpp),
+[`tests/semantic/transition_materialization_lazy_test.cpp`](../../../tests/semantic/transition_materialization_lazy_test.cpp),
 with zero findings reported.
 
 Raw command transcripts were produced in-session and are not separately
@@ -231,15 +227,10 @@ consumer without any compile or runtime failure.
 
 - None to the frozen contracts, consumer, or oracle.
 - Operationally: the initial pre-implementation verification pass found that
-  the frozen commits and
-  [`research/arc-001-calibration`](https://github.com/mc-lab-research/mc-lab-core/tree/research/arc-001-calibration)
-  branch were not yet present on the `mc-lab-research/mc-lab-core` remote,
-  and that
-  [`docs/research/state.md`](https://github.com/mc-lab-research/mc-lab-core/blob/master/docs/research/state.md)
-  /
-  [`docs/research/cases/ARC-001.md`](https://github.com/mc-lab-research/mc-lab-core/blob/master/docs/research/cases/ARC-001.md)
-  on `master` still recorded `freeze: NOT-FROZEN` with all research roles
-  unassigned.
+  the frozen commits and the `research/arc-001-calibration` branch were not
+  yet present on the `mc-lab-research/mc-lab-core` remote, and that
+  [state.md](../state.md) / [ARC-001.md](../cases/ARC-001.md) on `master`
+  still recorded `freeze: NOT-FROZEN` with all research roles unassigned.
   Execution was paused and reported rather than proceeding. The branch and
   freeze-record commit were pushed afterward; re-verification confirmed the
   freeze, role assignments, and disclosed AI Challenge Advisor exception
@@ -256,12 +247,11 @@ consumer without any compile or runtime failure.
 
 ## Threats to validity
 
-Threats already identified in
-[`ARC-001.md`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/docs/research/cases/ARC-001.md)
-remain in force unchanged (single
-formalism, oracle-copy vs. model-materialization distinction, custom-view
-apparatus complexity, small-model scale, no persistent-trace test, held-
-constant member-backed dispatch). Additionally for this run:
+Threats already identified in [ARC-001.md](../cases/ARC-001.md) remain in
+force unchanged (single formalism, oracle-copy vs. model-materialization
+distinction, custom-view apparatus complexity, small-model scale, no
+persistent-trace test, held-constant member-backed dispatch). Additionally
+for this run:
 
 - The lazy subject's accessor signatures (`const lazy_transition_witness&`)
   were a specific, permitted design choice among several the ARC's
@@ -289,11 +279,8 @@ constant member-backed dispatch). Additionally for this run:
 - The disclosed AI Challenge Advisor exception means no independent human
   Challenger reviewed this result. **This report and its AI-advised
   interpretation are not a substitute for human-independent review** and,
-  per
-  [`ARC-001.md`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/docs/research/cases/ARC-001.md)
-  and
-  [`state.md`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/docs/research/state.md),
-  this case alone cannot support a foundational or strategic
+  per [ARC-001.md](../cases/ARC-001.md) and [state.md](../state.md), this
+  case alone cannot support a foundational or strategic
   representation-independence Claim even if its result supports H-A.
 
 ## Observation → Interpretation → Alternative explanation → Challenge → Bounded Claim impact → Human decision
@@ -339,18 +326,18 @@ without further review.
 ### Proportionate challenge
 
 The disclosed AI Challenge Advisor review already recorded in
-[`docs/research/reports/ARC-001-pre-freeze-calibration.md`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/docs/research/reports/ARC-001-pre-freeze-calibration.md)
-covered the prospective named-lvalue classification and the adversarial acceptance
-checks before freeze. No new AI challenge pass was run against this specific
-result in this report; the "credible alternative interpretation" above is
-offered in its place as the required proportionate challenge for this
-report, but it is not independent human review.
+[ARC-001-pre-freeze-calibration.md](ARC-001-pre-freeze-calibration.md)
+covered the prospective named-lvalue classification and the adversarial
+acceptance checks before freeze. No new AI challenge pass was run against
+this specific result in this report; the "credible alternative
+interpretation" above is offered in its place as the required proportionate
+challenge for this report, but it is not independent human review.
 
 ### Bounded Claim impact
 
 If accepted by the Human ARC Owner, this result is evidence toward, but does
 not by itself establish, the bounded wording proposed in
-[`ARC-001.md`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/docs/research/cases/ARC-001.md):
+[ARC-001.md](../cases/ARC-001.md):
 
 > Within the tested finite labelled-transition domain, the local
 > successor-enumeration consumer operated unchanged across explicit stored
@@ -372,12 +359,10 @@ Owner:
 - Decide whether the "credible alternative interpretation" above (rvalue-
   only accessor variant) should be run as a follow-up controlled probe
   before the ARC's evidence disposition is finalized.
-- Decide any `CL-001` wording update in
-  [`docs/research/state.md`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/docs/research/state.md).
+- Decide any `CL-001` wording update in [state.md](../state.md).
 - Decide whether an ADR is warranted (not indicated by this result alone,
-  per [`ARC-001.md`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/docs/research/cases/ARC-001.md)'s ADR-required condition).
+  per [ARC-001.md](../cases/ARC-001.md)'s ADR-required condition).
 
 Claude does not approve this evidence, does not close
-[ARC-001](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/docs/research/cases/ARC-001.md),
-and does not update
-[`CL-001`](https://github.com/mc-lab-research/mc-lab-core/blob/2539f7f741f31f53ebcb7314dc9f9ac989a6ab16/docs/research/state.md).
+[ARC-001](../cases/ARC-001.md), and does not update `CL-001` in
+[state.md](../state.md).
