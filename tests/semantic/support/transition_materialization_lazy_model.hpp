@@ -67,6 +67,8 @@ public:
 
   struct sentinel {};
 
+  class iterator;
+
   /**
    * Ephemeral proxy: a non-owning handle to the range's current-witness
    * state, plus the generation observed at dereference. It carries no
