@@ -1,4 +1,4 @@
-# SemTL Architectural Research Protocol v0.6 Lean
+# SemTL Architectural Research Protocol v0.7 Lean
 
 This protocol governs SemTL architectural research during M02. It preserves
 falsification, evidence, and claim discipline with the smallest practical
@@ -397,6 +397,26 @@ Project Principal approval
 Do not duplicate freeze state through several documents, Project fields,
 labels, and checklists. Add another mechanism only after a concrete integrity
 or coordination failure demonstrates the need.
+
+### Git evidence history
+
+History may be cleaned before a freeze. After a case or attempt configuration
+is frozen, its controlled evidence history is append-only: do not rewrite,
+squash, force-push, delete, or move its evidence refs. Record the exact SHA as
+the authority and add an annotated, non-moving tag as a human-readable aid.
+
+A materially different controlled configuration starts a fresh branch from the
+applicable immutable baseline. A repair that keeps the same frozen
+configuration stays on the same attempt after First Failure Preservation.
+Production implementation begins separately only after human adjudication.
+
+Examples:
+
+- ARC-001 A01 keeps the owning-value attempt, appends its INCONCLUSIVE human
+  disposition, and tags that corrected evidence state.
+- ARC-001 A02 starts from the ARC-001 freeze record, freezes the ephemeral-proxy
+  configuration, and lets the experimentator branch from that configuration;
+  it does not descend from A01.
 
 ### First Failure Preservation Rule
 

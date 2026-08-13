@@ -1,7 +1,7 @@
 ---
 principal_case: ARC-001
 supporting_case: null
-last_review: 2026-08-12
+last_review: 2026-08-13
 ---
 
 # SemTL research state
@@ -29,9 +29,12 @@ limit.
 **Current decision:** No M02 or ARC-001 architectural outcome is authorized.
 Sami Lazreg is Project Principal, Human ARC Owner, and Human Experiment Owner.
 ARC-001 is frozen at commit
-`f969fa8aa63a9a172e6feb2eeb32636aab24f387`; controlled execution has not
-started. No independent human Challenger is available; Sami Lazreg authorized
-the disclosed R2 AI Challenge Advisor exception on 2026-08-13.
+`f969fa8aa63a9a172e6feb2eeb32636aab24f387`. Attempt A01 is preserved as
+INCONCLUSIVE because its owning dereference value did not instantiate the
+frozen ephemeral-proxy requirement. Attempt A02 is configured independently
+for execution by Claude. No independent human Challenger is available; Sami
+Lazreg authorized the disclosed R2 AI Challenge Advisor exception on
+2026-08-13.
 
 **Human governance record:** Project Principal Sami Lazreg approved the governed
 baseline and ARC-001 freeze on 2026-08-13. This approval retains the existing
@@ -41,7 +44,7 @@ bounded Claim wording; it does not approve an ARC-001 outcome or Claim change.
 
 | Case | Tier | Question | Phase | Evidence target |
 | --- | --- | --- | --- | --- |
-| [ARC-001](cases/ARC-001.md) | R2 | Can one single-pass local labelled-transition consumer remain source-unchanged when the same finite labelled transition relation is exposed through stored stable witnesses and generated ephemeral witnesses? | FROZEN at `f969fa8aa63a9a172e6feb2eeb32636aab24f387`; controlled execution not started. | Controlled |
+| [ARC-001](cases/ARC-001.md) | R2 | Can one single-pass local labelled-transition consumer remain source-unchanged when the same finite labelled transition relation is exposed through stored stable witnesses and generated ephemeral witnesses? | FROZEN; A01 inconclusive; A02 configured for controlled execution. | Controlled |
 
 ## Supporting
 
@@ -147,18 +150,18 @@ cmake --workflow --preset windows-clangcl-coverage --fresh
 
 ## Last review
 
-**Date:** 2026-08-12
+**Date:** 2026-08-13
 
 **What changed:** Adopted the Lean Research OS posture and subsequently revised
-the operational protocol to v0.6. Governance remains human-owned and
+the operational protocol to v0.7. Governance remains human-owned and
 AI-advised. Sami Lazreg is Project Principal, Human ARC Owner, and Human
 Experiment Owner for ARC-001. Because no independent human Challenger is
 available, Sami Lazreg authorized the disclosed R2 AI Challenge Advisor
-exception with its Claim-promotion ceiling. Preserved the lightweight Git
-freeze and First Failure Preservation Rule. Completed stored calibration and
-accepted the consumer, oracle, requirements, guardrails, and material AI
-challenge dispositions as the freeze candidate. Existing implementation
-evidence remains Exploratory; no ARC-001 result is yet authorized.
+exception with its Claim-promotion ceiling. Added compact append-only Git
+evidence rules after A01 demonstrated the need to separate materially distinct
+attempts. A01 is INCONCLUSIVE as the controlled result and preserved as
+Exploratory by-value engineering evidence. A02 is configured independently
+from the ARC-001 freeze record. No ARC-001 result is yet authorized.
 
 **Cases closed:** None.
 
