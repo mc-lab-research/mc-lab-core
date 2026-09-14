@@ -23,7 +23,10 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-
+      
+      - name: Create visualization output directory
+        run: mkdir -p artifacts
+      
       - name: Generate repository structure diagram
         uses: githubocto/repo-visualizer@a999615bdab757559bf94bda1fe6eef232765f85 # v0.9.1
         with:
